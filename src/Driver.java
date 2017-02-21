@@ -11,17 +11,41 @@ import java.util.Arrays;
 public class Driver {
 
 	public static void main(String[] args) {
+		
+		boolean outputMode = true;
+		boolean emptyMode = false;
+		
 		ArgumentMap argsMap = new ArgumentMap();
 		argsMap.parse(args);
 		
-		Path rootPath = Paths.get(argsMap.getValue("-path"));
-		
-		Path index = null;
+		String pathtxt = null;
+		String indexPath = null;
 		
 		if(argsMap.hasFlag("-index"))
 		{
-			index = Paths.get(argsMap.getValue("-index"));
+			indexPath = argsMap.getValue("-index");
+			if(indexPath == null || indexPath.equals(""))
+			{
+				indexPath = "index.json";
+			}
+		}else{
+			outputMode = false;
+			indexPath = "";
 		}
+		if(argsMap.hasFlag("-path") && (argsMap.getValue("-path")!= null))
+		{
+			pathtxt = argsMap.getValue("-path");
+		}else if(!argsMap.hasFlag("-path") && argsMap.hasFlag("-index")){
+			emptyMode = true;
+			pathtxt = "";
+		}else{
+			return;
+		}
+		
+		
+		
+		Path rootPath = Paths.get(pathtxt);
+		Path index = Paths.get(indexPath);
 		
 		ArrayList<Path> htmlFiles = HTMLLocator.find(rootPath);
 		
@@ -34,18 +58,26 @@ public class Driver {
 			{
 				String line = "";
 				String content = "";
-				while((line = input.readLine())!= null)
+				if(!emptyMode)
 				{
-					content+= line + "\n";
+					while((line = input.readLine())!= null)
+					{
+						content+= line + "\n";
+					}
+				}else{
+					content = "";
 				}
+				
 				
 				String words[] = HTMLCleaner.stripHTML(content).split("\\p{Space}+");
 				for(int i = 0 ; i < words.length;i++)
 				{
 					wordIndex.addWord(words[i], path, i);
 				}
-				JSONWriter.write(wordIndex.getStructure(), index);
-				
+				if(outputMode)
+				{
+					JSONWriter.write(wordIndex.getStructure(), index);
+				}
 			}catch(IOException ioe)
 			{
 				ioe.printStackTrace();
