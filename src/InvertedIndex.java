@@ -2,11 +2,11 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class InvertedIndex {
-	private Map<String, Map<Path, Set<Integer>>> invertedMap;
+	private TreeMap<String, TreeMap<Path, TreeSet<Integer>>> invertedMap;
 	
 	public InvertedIndex()
 	{
-		invertedMap = new TreeMap<String, Map<Path, Set<Integer>>>();
+		invertedMap = new TreeMap<String, TreeMap<Path, TreeSet<Integer>>>();
 	}
 	
 	public void addWord(String word, Path path, int index)
@@ -16,10 +16,10 @@ public class InvertedIndex {
 		
 		if(invertedMap.containsKey(word))
 		{
-			Map<Path, Set<Integer>> tempMap = (TreeMap<Path, Set<Integer>>)invertedMap.get(word);
+			TreeMap<Path, TreeSet<Integer>> tempMap = invertedMap.get(word);
 			if(tempMap.containsKey(path))
 			{
-				Set<Integer> tempSet = (TreeSet<Integer>)tempMap.get(path);
+				TreeSet<Integer> tempSet = tempMap.get(path);
 				tempSet.add(index);
 			}else{
 				TreeSet<Integer> newSet = new TreeSet<>();
@@ -27,14 +27,26 @@ public class InvertedIndex {
 				tempMap.put(path, newSet);
 			}
 		}else{
-			Set<Integer> indices = new TreeSet<>();
+			TreeSet<Integer> indices = new TreeSet<>();
 			indices.add(index);
-			Map<Path, Set<Integer>> paths =  new TreeMap<>();
+			TreeMap<Path, TreeSet<Integer>> paths =  new TreeMap<>();
 			paths.put(path, indices);
 			invertedMap.put(word, paths);
 		}
 		
 	}
+	
+	public int size()
+	{
+		return invertedMap.size();
+	}
+	
+	
+	public TreeMap<String, TreeMap<Path, TreeSet<Integer>>> getStructure()
+	{
+		return invertedMap;
+	}
+	
 	
 	
 	public String toString()
@@ -42,6 +54,8 @@ public class InvertedIndex {
 		String output = "";
 		for(String s: invertedMap.keySet())
 		{
+			if(s.equals(""))
+			{continue;}else{
 			output += s + "\n";
 			for(Path p: invertedMap.get(s).keySet())
 			{
@@ -50,7 +64,7 @@ public class InvertedIndex {
 				{
 					output += "\t\t"+i+ "\n";
 				}
-			}
+			}}
 		}
 		return output;
 	}

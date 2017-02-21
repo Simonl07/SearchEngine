@@ -15,17 +15,21 @@ public class HTMLCleaner {
 		
 		html = stripEntities(html);
 		
-		html = stripSpaces(html);
-		
 		html = stripPunct(html);
 
 		html = stripNumbers(html);
 		
 		html = stripInWordNumbers(html);
 		
+		html = stripA0(html);
+		
+		html = stripAp(html);
+		
+		html = stripNonWord(html);
+		
 		html = stripSpaces(html);
 		
-		return html;
+		return html.toLowerCase();
 	}
 	
 	public static String[] stripHTML(String[] html)
@@ -56,31 +60,49 @@ public class HTMLCleaner {
 
 	public static String stripElement(String html, String name) 
 	{
-		String output = html.replaceAll("(?s)(?i)(?x)<"+name+".*?</"+name+".*?>", " ");
+		String output = html.replaceAll("(?s)(?i)<"+name+".*?</"+name+".*?>", " ");
 		return output;
 	}
 	
 	public static String stripSpaces(String html)
 	{
-		String output = html.replaceAll("[\\s]+", " ");
+		String output = html.replaceAll("\\p{Space}+", " ");
 		return output;
 	}
 	
 	public static String stripPunct(String html)
 	{
-		String output= html.replaceAll("\\p{Punct}", " ");
+		String output= html.replaceAll("\\p{Punct}+", " ");
 		return output;
 	}
 	
 	public static String stripNumbers(String html)
 	{
-		String output = html.replaceAll("\\b\\d+\\b", "");
+		String output = html.replaceAll("\\b\\d+\\b", " ");
 		return output;
 	}
 	
 	public static String stripInWordNumbers(String html)
 	{
 		String output = html.replaceAll("\\d", " ");
+		return output;
+	}
+	
+	public static String stripA0(String html)
+	{
+		String output = html.replaceAll("\\xa0", " ");
+		return output;
+	}
+
+	public static String stripAp(String html)
+	{
+		String output = html.replaceAll("[¡°¡¯¡±]", " ");
+		return output;
+	}
+	
+	public static String stripNonWord(String html)
+	{
+		String output = html.replaceAll("[\\W&&[^\\p{L}]]"," ");
 		return output;
 	}
 	

@@ -17,7 +17,17 @@ public class ArgumentMap {
 		parse(args);
 	}
 	
+	
+	public int numFlags()
+	{
+		return map.size();
+	}
 
+	public boolean hasFlag(String flag)
+	{
+		return map.containsKey(flag);
+	}
+	
 	public void parse(String[] args)
 	{
 		for(int i = 0; i < args.length;i++)
