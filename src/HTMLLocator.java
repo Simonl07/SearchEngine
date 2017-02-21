@@ -18,12 +18,13 @@ public class HTMLLocator {
 		return HTMLs;
 		
 		
+		
 	}
 	
 	public static void find(Path path, ArrayList<Path> paths) throws IOException
 	{
 		
-		if(!Files.isDirectory(path) && !Files.isSymbolicLink(path) && Files.isExecutable(path) && !Files.isHidden(path))
+		if(!Files.isDirectory(path) && !Files.isSymbolicLink(path) && !Files.isHidden(path))
 		{
 			if(path.getFileName().toString().toLowerCase().endsWith(".html") || path.getFileName().toString().toLowerCase().endsWith(".htm"))
 			{

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.*;
 
 public class Driver {
 
@@ -24,10 +25,22 @@ public class Driver {
 		if(argsMap.hasFlag("-index"))
 		{
 			indexPath = argsMap.getValue("-index");
-			if(indexPath == null || indexPath.equals(""))
+			if(indexPath == null)
 			{
-				indexPath = "index.json";
+				try{
+					File a = new File("index.json");
+					a.createNewFile();
+					return;
+				}catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}else if(!argsMap.hasFlag("-path"))
+			{
+				emptyMode = true;
+				pathtxt = "";
 			}
+			System.out.println(indexPath);
 		}else{
 			outputMode = false;
 			indexPath = "";
@@ -35,9 +48,6 @@ public class Driver {
 		if(argsMap.hasFlag("-path") && (argsMap.getValue("-path")!= null))
 		{
 			pathtxt = argsMap.getValue("-path");
-		}else if(!argsMap.hasFlag("-path") && argsMap.hasFlag("-index")){
-			emptyMode = true;
-			pathtxt = "";
 		}else{
 			return;
 		}
@@ -50,6 +60,8 @@ public class Driver {
 		ArrayList<Path> htmlFiles = HTMLLocator.find(rootPath);
 		
 		InvertedIndex wordIndex = new InvertedIndex();
+		
+		System.out.println(emptyMode);
 		
 		for(Path path: htmlFiles)
 		{
@@ -65,10 +77,8 @@ public class Driver {
 						content+= line + "\n";
 					}
 				}else{
-					content = "";
+					content = " ";
 				}
-				
-				
 				String words[] = HTMLCleaner.stripHTML(content).split("\\p{Space}+");
 				for(int i = 0 ; i < words.length;i++)
 				{
