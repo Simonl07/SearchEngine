@@ -96,7 +96,7 @@ public class HTMLCleaner {
 
 	public static String stripAp(String html)
 	{
-		String output = html.replaceAll("[¡°¡¯¡±]", " ");
+		String output = html.replaceAll("[\"\'\"]", " ");
 		return output;
 	}
 	
