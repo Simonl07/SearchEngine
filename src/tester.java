@@ -7,46 +7,23 @@ import java.util.*;
 public class tester {
 	public static void main(String args[])
 	{
-		ArgumentMap argsMap = new ArgumentMap();
-		argsMap.parse(args);
-		
-		Path rootPath = Paths.get(argsMap.getValue("-path"));
-		
-		Path index = null;
-		
-		if(argsMap.hasFlag("-index"))
+		try(BufferedReader input = Files.newBufferedReader(Paths.get(args[0]),StandardCharsets.UTF_8);)
 		{
-			index = Paths.get(argsMap.getValue("-index"));
-		}
-		
-		ArrayList<Path> htmlFiles = HTMLLocator.find(rootPath);
-		
-		InvertedIndex wordIndex = new InvertedIndex();
-		
-		for(Path path: htmlFiles)
-		{
-			System.out.println("Working on: " + path.toString());
-			try(BufferedReader input = Files.newBufferedReader(path,StandardCharsets.UTF_8);)
+			String line = "";
+			String content = "";
+			while((line = input.readLine())!= null)
 			{
-				String line = "";
-				String content = "";
-				while((line = input.readLine())!= null)
-				{
-					content+= line + "\n";
-				}
-				
-				String words[] = HTMLCleaner.stripHTML(content).split("\\p{Space}+");
-				for(int i = 0 ; i < words.length;i++)
-				{
-					wordIndex.addWord(words[i], path, i);
-				}
-				JSONWriter.write(wordIndex.getStructure(), index);
-				
-			}catch(IOException ioe)
-			{
-				ioe.printStackTrace();
+				content+= line + "\n";
 			}
 			
+			
+			
+			System.out.println(HTMLCleaner.stripHTML(content));
+			
+			
+		}catch(IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

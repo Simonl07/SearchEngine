@@ -28,6 +28,22 @@ public class ArgumentMap {
 		return map.containsKey(flag);
 	}
 	
+	public boolean hasValue(String flag)
+	{
+		if(hasFlag(flag))
+		{
+			return map.get(flag) != null;
+		}
+		return false;
+	}
+	
+	public boolean hasBoth(String flag)
+	{
+		return hasFlag(flag) && hasValue(flag);
+	}
+	
+	
+	
 	public void parse(String[] args)
 	{
 		for(int i = 0; i < args.length;i++)

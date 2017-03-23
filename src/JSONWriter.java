@@ -37,7 +37,6 @@ public class JSONWriter
 	
 	public static void write(TreeMap<String, TreeMap<Path, TreeSet<Integer>>> map, Path path) throws IOException
 	{
-		System.out.println("Writing to " + path.toAbsolutePath());
 		try(BufferedWriter output = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
 		{
 			output.write("{\n");

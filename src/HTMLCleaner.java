@@ -15,21 +15,14 @@ public class HTMLCleaner {
 		
 		html = stripEntities(html);
 		
-		html = stripPunct(html);
-
-		html = stripNumbers(html);
-		
-		html = stripInWordNumbers(html);
-		
 		html = stripA0(html);
 		
-		html = stripAp(html);
+		html = stripNonAlpha(html);
 		
-		html = stripNonWord(html);
-		
-		html = stripSpaces(html);
-		
+		html = stripThinSpace(html);
+
 		return html.toLowerCase();
+		
 	}
 	
 	public static String[] stripHTML(String[] html)
@@ -76,21 +69,16 @@ public class HTMLCleaner {
 		return output;
 	}
 	
-	public static String stripNumbers(String html)
-	{
-		String output = html.replaceAll("\\b\\d+\\b", " ");
-		return output;
-	}
-	
-	public static String stripInWordNumbers(String html)
-	{
-		String output = html.replaceAll("\\d", " ");
-		return output;
-	}
 	
 	public static String stripA0(String html)
 	{
 		String output = html.replaceAll("\\xa0", " ");
+		return output;
+	}
+	
+	public static String stripThinSpace(String html)
+	{
+		String output = html.replaceAll("\u2009", " ");
 		return output;
 	}
 
@@ -100,9 +88,9 @@ public class HTMLCleaner {
 		return output;
 	}
 	
-	public static String stripNonWord(String html)
+	public static String stripNonAlpha(String html)
 	{
-		String output = html.replaceAll("[\\W&&[^\\p{L}]]"," ");
+		String output = html.replaceAll("(?U)[^\\p{Alpha}\\p{Space}]+"," ");
 		return output;
 	}
 	

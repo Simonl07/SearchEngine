@@ -12,87 +12,68 @@ import java.io.*;
 public class Driver {
 
 	public static void main(String[] args) {
-		
-		boolean outputMode = true;
-		boolean emptyMode = false;
-		
+
 		ArgumentMap argsMap = new ArgumentMap();
 		argsMap.parse(args);
 		
-		String pathtxt = null;
-		String indexPath = null;
+		Path path = null;
+		Path index = null;
 		
-		if(argsMap.hasFlag("-index"))
+		
+		if(argsMap.hasBoth("-path"))
 		{
-			indexPath = argsMap.getValue("-index");
-			if(indexPath == null)
+			path = Paths.get(argsMap.getValue("-path"));
+			if(argsMap.hasBoth("-index"))
 			{
-				try{
-					File a = new File("index.json");
-					a.createNewFile();
-					return;
-				}catch(IOException e)
-				{
-					e.printStackTrace();
-				}
-			}else if(!argsMap.hasFlag("-path"))
+				index = Paths.get(argsMap.getValue("-index"));
+			}else if(argsMap.hasFlag("-index"))
 			{
-				emptyMode = true;
-				pathtxt = "";
+				index = Paths.get("index.json");
+			}else{
+				index = null;
 			}
-			System.out.println(indexPath);
 		}else{
-			outputMode = false;
-			indexPath = "";
-		}
-		if(argsMap.hasFlag("-path") && (argsMap.getValue("-path")!= null))
-		{
-			pathtxt = argsMap.getValue("-path");
-		}else{
-			return;
+			index = Paths.get("index.json");
 		}
 		
-		
-		
-		Path rootPath = Paths.get(pathtxt);
-		Path index = Paths.get(indexPath);
-		
-		ArrayList<Path> htmlFiles = HTMLLocator.find(rootPath);
-		
-		InvertedIndex wordIndex = new InvertedIndex();
-		
-		System.out.println(emptyMode);
-		
-		for(Path path: htmlFiles)
+		if(path != null)
 		{
-			System.out.println("Working on: " + path.toString());
-			try(BufferedReader input = Files.newBufferedReader(path,StandardCharsets.UTF_8);)
+			ArrayList<Path> htmlFiles = HTMLLocator.find(path);
+			
+			InvertedIndex wordIndex = new InvertedIndex();
+			
+			for(Path p: htmlFiles)
 			{
-				String line = "";
-				String content = "";
-				if(!emptyMode)
+				try(BufferedReader input = Files.newBufferedReader(p,StandardCharsets.UTF_8);)
 				{
+					String line = "";
+					String content = "";
 					while((line = input.readLine())!= null)
 					{
 						content+= line + "\n";
 					}
-				}else{
-					content = " ";
-				}
-				String words[] = HTMLCleaner.stripHTML(content).split("\\p{Space}+");
-				for(int i = 0 ; i < words.length;i++)
+					String words[] = HTMLCleaner.stripHTML(content).split("\\s+");
+					for(int i = 0 ; i < words.length;i++)
+					{
+						wordIndex.addWord(words[i].trim(), p, i);
+					}
+					if(index != null)
+					{
+						JSONWriter.write(wordIndex.getStructure(), index);
+					}
+				}catch(IOException ioe)
 				{
-					wordIndex.addWord(words[i], path, i);
+					ioe.printStackTrace();
 				}
-				if(outputMode)
-				{
-					JSONWriter.write(wordIndex.getStructure(), index);
-				}
+			}
+		}else{
+			try
+			{
+				JSONWriter.write(new InvertedIndex().getStructure(), index);
 			}catch(IOException ioe)
 			{
 				ioe.printStackTrace();
 			}
-			
 		}
-	}	
+	}		
 }
