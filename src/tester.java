@@ -3,7 +3,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
-
+// TODO That is okay to have... but please use an uppercase first letter
 public class tester {
 	public static void main(String args[])
 	{
