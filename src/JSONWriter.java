@@ -33,6 +33,9 @@ public class JSONWriter
 		}
 		writer.write(indent(level -1) + "]");
 	}
+	
+	// TODO Provide some public way for anyone with a TreeSet to use your asArray
+	// TODO Create a similar helper method for TreeMap<Path, TreeSet<Integer>
 		
 	
 	public static void write(TreeMap<String, TreeMap<Path, TreeSet<Integer>>> map, Path path) throws IOException

@@ -9,8 +9,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.*;
 
+// TODO Always resolve your warnings
+// TODO Configure Eclipse to "Organize Imports" on save, and you'll never again see that warning
+// TODO Add Javadoc comments to ALL classes and ALL methods
+
+/**
+ * Parses command-line arguments to build an inverted index.
+ * 
+ * @author Simonl0425
+ */
 public class Driver {
 
+	/**
+	 * Parses command-line arguments to build an inverted index.
+	 * 
+	 * @param args the command line parameters
+	 */
 	public static void main(String[] args) {
 
 		ArgumentMap argsMap = new ArgumentMap();
@@ -63,6 +77,7 @@ public class Driver {
 					}
 				}catch(IOException ioe)
 				{
+					// TODO Remove stack traces and output user-friendly error messages
 					ioe.printStackTrace();
 				}
 			}
@@ -76,4 +91,19 @@ public class Driver {
 			}
 		}
 	}		
+	
+	/*
+	 * Driver is project specific, all other "generally useful" code should be in other classes.
+	 * 
+	 * ArgumentMap map = new ArgumentMap(args);
+	 * InvertedIndex index = new InvertedIndex();
+	 * 
+	 * if (-path) {
+	 * 
+	 * }
+	 * 
+	 * if (-index) {
+	 * 		String path = map.getString("-index", "index.json");
+	 * }
+	 */
 }

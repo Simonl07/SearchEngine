@@ -3,16 +3,18 @@ import java.nio.*;
 import java.nio.file.*;
 import java.util.*;
 
+// TODO Refactor DirectoryTraverser
 public class HTMLLocator {
 	
-	public static ArrayList<Path> find(Path path)
+	public static ArrayList<Path> find(Path path) // TODO findHTML
 	{
-		ArrayList<Path> HTMLs = new ArrayList<>();
+		ArrayList<Path> HTMLs = new ArrayList<>(); // TODO refactor paths
 		try
 		{
 			find(path, HTMLs);
 		}catch(IOException e)
 		{
+			// TODO The easy way (also more general) is to throw everything to Driver and let Driver catch
 			e.printStackTrace();
 		}
 		return HTMLs;
@@ -20,6 +22,8 @@ public class HTMLLocator {
 		
 		
 	}
+	
+	// TODO Format code more consistently
 	
 	public static void find(Path path, ArrayList<Path> paths) throws IOException
 	{

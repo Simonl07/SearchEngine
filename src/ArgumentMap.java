@@ -3,8 +3,8 @@ import java.util.*;
 
 public class ArgumentMap {
 
-	
-	private HashMap<String,String> map;
+	// TODO Make this final
+	private HashMap<String, String> map;
 	
 	public ArgumentMap()
 	{
@@ -32,14 +32,14 @@ public class ArgumentMap {
 	{
 		if(hasFlag(flag))
 		{
-			return map.get(flag) != null;
+			return map.get(flag) != null; // TODO The only line you need in this method
 		}
 		return false;
 	}
 	
-	public boolean hasBoth(String flag)
+	public boolean hasBoth(String flag) // TODO Remove?
 	{
-		return hasFlag(flag) && hasValue(flag);
+		return hasFlag(flag) && hasValue(flag); 
 	}
 	
 	
@@ -49,6 +49,7 @@ public class ArgumentMap {
 		for(int i = 0; i < args.length;i++)
 		{
 			String input = args[i];
+			
 			if(isFlag(input))
 			{
 				map.put(input, null);
@@ -60,10 +61,16 @@ public class ArgumentMap {
 	
 	private boolean isFlag(String input)
 	{
+		// TODO Always use braces with if/else even if a 1 line block 
+		// TODO See the goto fail; apple bug
 		if(input == null)
 			return false;
 		else
 			return (input.startsWith("-")) && (input.length() >= 2) && (input.indexOf(" ") == -1);
+		
+		// TODO Rethink this and isValue
+//		input = input.trim();
+//		return input.startsWith("-") && input.length() >= 2; 
 	}
 	
 	private boolean isValue(String input)
@@ -74,12 +81,15 @@ public class ArgumentMap {
 			return (!input.startsWith("-")) && (input.length() >= 1) && !(input.startsWith(" ")) && !input.contains("\t");
 	}
 	
+	// TODO Add back in... getString(String flag, String defaultValue) and the getInteger version
+	
 	public String getValue(String flag)
 	{
 		return map.get(flag);
 	}
 	
-	
+	// TODO @Override 
+	// TODO map.toString() or... use a StringBuilder
 	public String toString()
 	{
 		String output = "";

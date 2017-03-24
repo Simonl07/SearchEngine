@@ -2,6 +2,7 @@ import java.util.*;
 
 public class HTMLCleaner {
 	
+	// TODO Uh oh... We should debug what happened that you had to modify stripHTML
 	
 	public static String stripHTML(String html)
 	{
@@ -45,6 +46,7 @@ public class HTMLCleaner {
 		String output = html.replaceAll("(?s)<!-.*?->", " ");
 		return output;
 	}
+	
 	public static String stripTags(String html) 
 	{	
 		String output = html.replaceAll("<[^>]*?>", " ");
@@ -87,6 +89,8 @@ public class HTMLCleaner {
 		String output = html.replaceAll("[\"\'\"]", " ");
 		return output;
 	}
+	
+	// TODO Include WordParser in your project (its also useful for project 2 and 3)
 	
 	public static String stripNonAlpha(String html)
 	{

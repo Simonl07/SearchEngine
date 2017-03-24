@@ -2,6 +2,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class InvertedIndex {
+	// TODO final
 	private TreeMap<String, TreeMap<Path, TreeSet<Integer>>> invertedMap;
 	
 	public InvertedIndex()
@@ -11,7 +12,7 @@ public class InvertedIndex {
 	
 	public void addWord(String word, Path path, int index)
 	{
-		if(word == null)
+		if(word == null) // TODO Don't check
 			return;
 		
 		if(invertedMap.containsKey(word))
@@ -41,14 +42,18 @@ public class InvertedIndex {
 		return invertedMap.size();
 	}
 	
-	
+	// TODO Breaks encapsulation, need to remove
 	public TreeMap<String, TreeMap<Path, TreeSet<Integer>>> getStructure()
 	{
 		return invertedMap;
 	}
+
+	// TODO 
+//	public void toJSON(Path path) throws IOException {
+//		JSONWriter.write(this.invertedMap, path);
+//	}
 	
-	
-	
+	// TODO Either invertedMap.toString() or use a StringBuilder
 	public String toString()
 	{
 		String output = "";
@@ -69,5 +74,9 @@ public class InvertedIndex {
 		return output;
 	}
 	
-	
+	/*
+	 * TODO Add some more data-structure like methods to make more general
+	 * contains(String word), contains(String word, String path), etc.
+	 * size(String word), size(String word, String path), etc. 
+	 */
 }
