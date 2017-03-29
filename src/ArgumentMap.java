@@ -1,39 +1,75 @@
 import java.util.*;
 
 
+/**
+ * Parse command line arguments into a hashmap of flag and value.
+ * 
+ * @author Simonl0425
+ *
+ */
 public class ArgumentMap {
 
 	// TODO Make this final
 	private final HashMap<String, String> map;
 	
+	/**
+	 * Constructor to Initialize the HashMap.
+	 */
 	public ArgumentMap()
 	{
 		map = new HashMap<>();
 	}
 	
+	/**
+	 * Constructor that initialize the map and parse the arguments.
+	 * 
+	 * @param args String array of arguments for parsing.
+	 */
 	public ArgumentMap(String[] args) 
 	{
 		this();
 		parse(args);
 	}
 	
-	
+	/**
+	 * Return number of flags in the map.
+	 * 
+	 * @return number of flags in the map.
+	 */
 	public int numFlags()
 	{
 		return map.size();
 	}
 
+	/**
+	 * Return whether the map contains specific flag.
+	 * 
+	 * @param flag to check.
+	 * @return true if map contain the flag, false otherwise.
+	 */
 	public boolean hasFlag(String flag)
 	{
 		return map.containsKey(flag);
 	}
 	
+	
+	/**
+	 * Return whether the map contains value of a specific flag.
+	 * 
+	 * @param flag to check if the map contains value.
+	 * @return true if map contain the flag and has value, false otherwise.
+	 */
 	public boolean hasValue(String flag)
 	{
 		return map.get(flag) != null; // TODO The only line you need in this method
 	}
 	
 	
+	/**
+	 * parse arguments into HashMap<String, String>, if flag has no value, add null as value.
+	 * 
+	 * @param args arguments for parsing.
+	 */
 	public void parse(String[] args)
 	{
 		for(int i = 0; i < args.length;i++)
@@ -49,6 +85,13 @@ public class ArgumentMap {
 		}
 	}
 	
+	
+	/**
+	 * Helper method to check if the input follow the format of a flag.
+	 * 
+	 * @param input String to check if it is a flag.
+	 * @return true if format correct, false otherwise.
+	 */
 	private boolean isFlag(String input)
 	{
 		// TODO Always use braces with if/else even if a 1 line block 
@@ -66,6 +109,13 @@ public class ArgumentMap {
 //		return input.startsWith("-") && input.length() >= 2; 
 	}
 	
+	
+	/**
+	 * Helper method to check if the input follow the format of a value.
+	 * 
+	 * @param input String to check if it is a value.
+	 * @return true if format correct, false otherwise.
+	 */
 	private boolean isValue(String input)
 	{
 		input = input.trim();
@@ -76,6 +126,8 @@ public class ArgumentMap {
 			return (!input.startsWith("-")) && (input.length() >= 1);
 		}
 	}
+	
+	
 	/**
 	 * Returns the value for the specified flag as String.
 	 *
@@ -129,7 +181,14 @@ public class ArgumentMap {
 		}
 	}
 	
+	
+	
 	@Override
+	/**
+	 * Redefined toString method that return the toString() result of HashMap.
+	 * 
+	 * @return toString result of HashMap.
+	 */
 	public String toString()
 	{
 		return map.toString();

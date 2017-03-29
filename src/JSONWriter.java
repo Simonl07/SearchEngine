@@ -9,10 +9,18 @@ import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+/**
+ * Writing data structures into specified path in JSON format.
+ * 
+ * @author Simonl0425
+ *
+ */
 public class JSONWriter 
 {
+	
 	/**
-	 *  A private helper method that returns the amount of indentation.
+	 * A private helper method that returns the String of indentation
+	 *  .
 	 * @param times how many time is the String indented.
 	 * @return The indenting empty String that fill with times amount of \t
 	 * 
@@ -96,8 +104,9 @@ public class JSONWriter
 			for(String s: map.keySet())
 			{
 				if(s.equals(""))
-				{continue;}else
 				{
+					continue;
+				}else{
 					output.write(indent(1) + "\"" + s + "\": ");
 					asNestedObject(output, map.get(s),2);
 					if(s== map.lastKey())
