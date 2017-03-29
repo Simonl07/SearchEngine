@@ -26,9 +26,9 @@ public class HTMLCleaner {
 		
 		html = stripEntities(html);
 		
-		html = stripNonAlpha(html);
+		html = stripNonAlpha(html); // TODO Remove
 
-		return html.toLowerCase();
+		return html.toLowerCase(); // TODO Remove tolowercase
 		
 	}
 	
@@ -99,7 +99,7 @@ public class HTMLCleaner {
 
 	
 	// TODO Include WordParser in your project (its also useful for project 2 and 3)
-	
+	// TODO Remove this method here
 	/**
 	 * Replace non-alphabetic character inside the HTML with a single space
 	 * 

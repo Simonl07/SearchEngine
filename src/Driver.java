@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.nio.file.Paths;
 
+// TODO Always remove old TODO comments once addressed
+
 // TODO Always resolve your warnings
 // TODO Configure Eclipse to "Organize Imports" on save, and you'll never again see that warning
 // TODO Add Javadoc comments to ALL classes and ALL methods
@@ -28,8 +30,9 @@ public class Driver {
 			try
 			{
 				wordIndex.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))));
-			}catch(IOException e)
+			} catch(IOException e)
 			{
+				// TODO Encountered error when building the inverted index.
 				System.out.println("IOException when building wordIndex.");
 				return;
 			}
@@ -44,12 +47,14 @@ public class Driver {
 				wordIndex.toJSON(Paths.get(indexPath));
 			} catch (IOException e) 
 			{
+				// TODO Make a little more user friendly.
 				System.out.println("IOException when writing JSON file.");
 				return;
 			}
 		}
 	}		
 	
+	// TODO Remove this
 	/*
 	 * Driver is project specific, all other "generally useful" code should be in other classes.
 	 * 
