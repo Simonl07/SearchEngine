@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class InvertedIndex {
 	
-	
+	// TODO Change "Path" to "String"
 	// TODO final
 	private final TreeMap<String, TreeMap<Path, TreeSet<Integer>>> invertedMap;
 	
@@ -28,7 +28,8 @@ public class InvertedIndex {
 		invertedMap = new TreeMap<String, TreeMap<Path, TreeSet<Integer>>>();
 	}
 	
-	
+	// TODO Most data structures don't handle any kind of file or string parsing.
+	// TODO Move this into some kind of builder class.
 	/**
 	 * Take an ArrayList of HTML files, read the content, clean the HTML and construct the inverted Index.
 	 * 
@@ -39,16 +40,27 @@ public class InvertedIndex {
 	{
 		for(Path p: htmlFiles)
 		{
+			// TODO Make a method in your builder class that handles 1 file
+			
+			// TODO Must use try-with-resources here
 			BufferedReader input = Files.newBufferedReader(p,StandardCharsets.UTF_8);
+			
+			// TODO Doing string concatenation... use a StringBuilder instead!
 			String line = "";
 			String content = "";
 			while((line = input.readLine())!= null)
 			{
 				content+= line + "\n";
 			}
+			
 			String words[] = HTMLCleaner.stripHTML(content).split("(?U)\\p{Space}+");
+			
+			// TODO String[] words = WordParser.parseWords(HTMLCleaner.stripHTML(content));
+			
+			// TODO index.addAll() method
 			for(int i = 0 ; i < words.length;i++)
 			{
+				// TODO Remove the trim
 				addWord(words[i].trim(), p, i);
 			}
 		}
@@ -83,7 +95,18 @@ public class InvertedIndex {
 			paths.put(path, indices);
 			invertedMap.put(word, paths);
 		}
+	
 		
+		// TODO
+//		if (!invertedMap.containsKey(word)) {
+//			invertedMap.put(word, new TreeMap<>());
+//		}
+//		
+//		if (invertedMap.get(word).containsKey(path)) {
+//			invertedMap.get(word).put(path, new TreeSet<>());
+//		}
+//		
+//		invertedMap.get(word).get(path).add(index);
 	}
 	
 	
