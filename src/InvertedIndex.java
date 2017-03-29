@@ -1,20 +1,43 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class InvertedIndex {
 	// TODO final
-	private TreeMap<String, TreeMap<Path, TreeSet<Integer>>> invertedMap;
+	private final TreeMap<String, TreeMap<Path, TreeSet<Integer>>> invertedMap;
 	
 	public InvertedIndex()
 	{
 		invertedMap = new TreeMap<String, TreeMap<Path, TreeSet<Integer>>>();
 	}
 	
+	
+	public void build(ArrayList<Path> htmlFiles) throws IOException
+	{
+		for(Path p: htmlFiles)
+		{
+			BufferedReader input = Files.newBufferedReader(p,StandardCharsets.UTF_8);
+			String line = "";
+			String content = "";
+			while((line = input.readLine())!= null)
+			{
+				content+= line + "\n";
+			}
+			String words[] = HTMLCleaner.stripHTML(content).split("(?U)\\p{Space}+");
+			for(int i = 0 ; i < words.length;i++)
+			{
+				addWord(words[i].trim(), p, i);
+			}
+		}
+	}
+	
+	
+	
 	public void addWord(String word, Path path, int index)
 	{
-		if(word == null) // TODO Don't check
-			return;
-		
 		if(invertedMap.containsKey(word))
 		{
 			TreeMap<Path, TreeSet<Integer>> tempMap = invertedMap.get(word);
@@ -37,42 +60,40 @@ public class InvertedIndex {
 		
 	}
 	
+	/**
+	 * Return the size of the TreeMap invertedMap, in other words the amount of words in the 
+	 * word index.
+	 * 
+	 * @return the size of the inverted index.
+	 */
 	public int size()
 	{
 		return invertedMap.size();
 	}
 	
-	// TODO Breaks encapsulation, need to remove
-	public TreeMap<String, TreeMap<Path, TreeSet<Integer>>> getStructure()
-	{
-		return invertedMap;
+	/**
+	 * Send invertedMap to JSONWriter class to output the invertedMap in JSON format.
+	 * @param path, the path to write JSON file.
+	 * 
+	 * @throws IOException
+	 */
+	public void toJSON(Path path) throws IOException {
+		JSONWriter.write(invertedMap, path);
 	}
-
-	// TODO 
-//	public void toJSON(Path path) throws IOException {
-//		JSONWriter.write(this.invertedMap, path);
-//	}
 	
-	// TODO Either invertedMap.toString() or use a StringBuilder
+	/**
+	 * Re-defined toString method that return the toString of the TreeMap invertedMap.
+	 * 
+	 * @return the toString of invertedMap.
+	 */
+	@Override
 	public String toString()
 	{
-		String output = "";
-		for(String s: invertedMap.keySet())
-		{
-			if(s.equals(""))
-			{continue;}else{
-			output += s + "\n";
-			for(Path p: invertedMap.get(s).keySet())
-			{
-				output += "\t"+p+ "\n";
-				for(Integer i: invertedMap.get(s).get(p))
-				{
-					output += "\t\t"+i+ "\n";
-				}
-			}}
-		}
-		return output;
+		return invertedMap.toString();
 	}
+	
+	
+	
 	
 	/*
 	 * TODO Add some more data-structure like methods to make more general

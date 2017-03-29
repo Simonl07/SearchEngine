@@ -4,7 +4,7 @@ import java.util.*;
 public class ArgumentMap {
 
 	// TODO Make this final
-	private HashMap<String, String> map;
+	private final HashMap<String, String> map;
 	
 	public ArgumentMap()
 	{
@@ -30,18 +30,8 @@ public class ArgumentMap {
 	
 	public boolean hasValue(String flag)
 	{
-		if(hasFlag(flag))
-		{
-			return map.get(flag) != null; // TODO The only line you need in this method
-		}
-		return false;
+		return map.get(flag) != null; // TODO The only line you need in this method
 	}
-	
-	public boolean hasBoth(String flag) // TODO Remove?
-	{
-		return hasFlag(flag) && hasValue(flag); 
-	}
-	
 	
 	
 	public void parse(String[] args)
@@ -63,10 +53,13 @@ public class ArgumentMap {
 	{
 		// TODO Always use braces with if/else even if a 1 line block 
 		// TODO See the goto fail; apple bug
+		input = input.trim();
 		if(input == null)
+		{
 			return false;
-		else
-			return (input.startsWith("-")) && (input.length() >= 2) && (input.indexOf(" ") == -1);
+		}else{
+			return (input.startsWith("-")) && (input.length() >= 2);
+		}
 		
 		// TODO Rethink this and isValue
 //		input = input.trim();
@@ -75,28 +68,70 @@ public class ArgumentMap {
 	
 	private boolean isValue(String input)
 	{
+		input = input.trim();
 		if(input == null)
+		{
 			return false;
-		else
-			return (!input.startsWith("-")) && (input.length() >= 1) && !(input.startsWith(" ")) && !input.contains("\t");
+		}else{
+			return (!input.startsWith("-")) && (input.length() >= 1);
+		}
 	}
-	
-	// TODO Add back in... getString(String flag, String defaultValue) and the getInteger version
-	
-	public String getValue(String flag)
+	/**
+	 * Returns the value for the specified flag as String.
+	 *
+	 * @param flag flag to get value for
+	 * @return value as a String.
+	 */
+	public String getString(String flag)
 	{
 		return map.get(flag);
 	}
 	
-	// TODO @Override 
-	// TODO map.toString() or... use a StringBuilder
+	
+	/**
+	 * Return the value of a specific flag, if the flag has no value, return the default value.
+	 * 
+	 * @param flag flag to get value
+	 * @param defaultValue return default Value if the flag or value is missing
+	 * @return the value of the flag, if the flag or the value does not exist, return default value.
+	 */
+	public String getString(String flag, String defaultValue)
+	{
+		if(hasValue(flag))
+		{
+			return getString(flag);
+		}else{
+			return defaultValue;
+		}
+	}
+	
+	/**
+	 * Returns the value of a specific flag, if the flag has no value or cannot be parse to int
+	 * return default value.
+	 *
+	 * @param flag flag to get value for
+	 * @param defaultValue value to return if the flag or value is missing       
+	 * @return value of flag as an int, or the default value.
+	 */
+	public int getInteger(String flag, int defaultValue)
+	{
+		if(hasValue(flag))
+		{
+			try
+			{
+				return Integer.parseInt(map.get(flag));
+			}catch(NumberFormatException e)
+			{
+				return defaultValue;
+			}
+		}else{ 
+			return defaultValue;
+		}
+	}
+	
+	@Override
 	public String toString()
 	{
-		String output = "";
-		for(String key: map.keySet())
-		{
-			output += "Flag: " + key + "  Value: " + map.get(key) + "\n";
-		}
-		return output;
+		return map.toString();
 	}
 }
