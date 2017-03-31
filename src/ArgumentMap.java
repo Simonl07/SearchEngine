@@ -1,19 +1,15 @@
 import java.util.*;
 
-
-// TODO Format
-
 /**
  * Parse command line arguments into a hashmap of flag and value.
  * 
  * @author Simonl0425
  *
  */
-public class ArgumentMap {
-
-	// TODO Make this final
+public class ArgumentMap
+{
 	private final HashMap<String, String> map;
-	
+
 	/**
 	 * Constructor to Initialize the HashMap.
 	 */
@@ -21,18 +17,18 @@ public class ArgumentMap {
 	{
 		map = new HashMap<>();
 	}
-	
+
 	/**
 	 * Constructor that initialize the map and parse the arguments.
 	 * 
 	 * @param args String array of arguments for parsing.
 	 */
-	public ArgumentMap(String[] args) 
+	public ArgumentMap(String[] args)
 	{
 		this();
 		parse(args);
 	}
-	
+
 	/**
 	 * Return number of flags in the map.
 	 * 
@@ -53,8 +49,7 @@ public class ArgumentMap {
 	{
 		return map.containsKey(flag);
 	}
-	
-	
+
 	/**
 	 * Return whether the map contains value of a specific flag.
 	 * 
@@ -63,31 +58,31 @@ public class ArgumentMap {
 	 */
 	public boolean hasValue(String flag)
 	{
-		return map.get(flag) != null; // TODO The only line you need in this method
+		return map.get(flag) != null;
 	}
-	
-	
+
 	/**
-	 * parse arguments into HashMap<String, String>, if flag has no value, add null as value.
+	 * parse arguments into HashMap<String, String>, if flag has no value, add
+	 * null as value.
 	 * 
 	 * @param args arguments for parsing.
 	 */
 	public void parse(String[] args)
 	{
-		for(int i = 0; i < args.length;i++)
+		for (int i = 0; i < args.length; i++)
 		{
 			String input = args[i];
-			
-			if(isFlag(input))
+
+			if (isFlag(input))
 			{
 				map.put(input, null);
-			}else if(isValue(input) && i != 0 && isFlag(args[i-1])){
-				map.put(args[i-1], input);
+			} else if (isValue(input) && i != 0 && isFlag(args[i - 1]))
+			{
+				map.put(args[i - 1], input);
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Helper method to check if the input follow the format of a flag.
 	 * 
@@ -96,22 +91,16 @@ public class ArgumentMap {
 	 */
 	private boolean isFlag(String input)
 	{
-		// TODO Always use braces with if/else even if a 1 line block 
-		// TODO See the goto fail; apple bug
 		input = input.trim();
-		if(input == null)
+		if (input == null)
 		{
 			return false;
-		}else{
+		} else
+		{
 			return (input.startsWith("-")) && (input.length() >= 2);
 		}
-		
-		// TODO Rethink this and isValue
-//		input = input.trim();
-//		return input.startsWith("-") && input.length() >= 2; 
 	}
-	
-	
+
 	/**
 	 * Helper method to check if the input follow the format of a value.
 	 * 
@@ -121,15 +110,15 @@ public class ArgumentMap {
 	private boolean isValue(String input)
 	{
 		input = input.trim();
-		if(input == null)
+		if (input == null)
 		{
 			return false;
-		}else{
+		} else
+		{
 			return (!input.startsWith("-")) && (input.length() >= 1);
 		}
 	}
-	
-	
+
 	/**
 	 * Returns the value for the specified flag as String.
 	 *
@@ -140,51 +129,52 @@ public class ArgumentMap {
 	{
 		return map.get(flag);
 	}
-	
-	
+
 	/**
-	 * Return the value of a specific flag, if the flag has no value, return the default value.
+	 * Return the value of a specific flag, if the flag has no value, return the
+	 * default value.
 	 * 
 	 * @param flag flag to get value
 	 * @param defaultValue return default Value if the flag or value is missing
-	 * @return the value of the flag, if the flag or the value does not exist, return default value.
+	 * @return the value of the flag, if the flag or the value does not exist,
+	 *         return default value.
 	 */
 	public String getString(String flag, String defaultValue)
 	{
-		if(hasValue(flag))
+		if (hasValue(flag))
 		{
 			return getString(flag);
-		}else{
+		} else
+		{
 			return defaultValue;
 		}
 	}
-	
+
 	/**
-	 * Returns the value of a specific flag, if the flag has no value or cannot be parse to int
-	 * return default value.
+	 * Returns the value of a specific flag, if the flag has no value or cannot
+	 * be parse to int return default value.
 	 *
 	 * @param flag flag to get value for
-	 * @param defaultValue value to return if the flag or value is missing       
+	 * @param defaultValue value to return if the flag or value is missing
 	 * @return value of flag as an int, or the default value.
 	 */
 	public int getInteger(String flag, int defaultValue)
 	{
-		if(hasValue(flag))
+		if (hasValue(flag))
 		{
 			try
 			{
 				return Integer.parseInt(map.get(flag));
-			}catch(NumberFormatException e)
+			} catch (NumberFormatException e)
 			{
 				return defaultValue;
 			}
-		}else{ 
+		} else
+		{
 			return defaultValue;
 		}
 	}
-	
-	
-	
+
 	@Override
 	/**
 	 * Redefined toString method that return the toString() result of HashMap.
