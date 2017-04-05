@@ -1,5 +1,8 @@
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -71,6 +74,63 @@ public class InvertedIndex
 		}
 	}
 
+	public ArrayList<SearchResult> exactSearch(String[] words)
+	{
+
+		HashMap<String, SearchResult> results = new HashMap<>();
+		ArrayList<SearchResult> finalResults = new ArrayList<>();
+		
+		for (String s: words)
+		{
+			if (this.contains(s))
+			{
+				search(s, results);
+			}
+		}
+		
+		
+		for(String s: results.keySet())
+		{
+			finalResults.add(results.get(s));
+		}
+
+	
+
+		Collections.sort(finalResults);
+		return finalResults;
+	}
+
+	public void search(String word, HashMap<String, SearchResult> results)
+	{
+		for (String s: invertedMap.get(word).keySet())
+		{
+			search(word, s, results);
+		}
+	}
+
+	public void search(String word, String path, HashMap<String, SearchResult> results)
+	{
+		if (this.contains(word, path))
+		{
+			SearchResult temp = new SearchResult(word, path, invertedMap.get(word).get(path).size(), invertedMap.get(word).get(path).iterator().next());
+			SearchResult output;
+			if(results.containsKey(temp.getPath()))
+			{
+				output = mergeResult(results.get(path),temp);
+			}else{
+				output = temp;
+			}
+			results.put(path, output);
+		}
+	}
+
+	private SearchResult mergeResult(SearchResult a, SearchResult b)
+	{
+		int totalFrequency = a.getFrequency() + b.getFrequency();
+		int initialPosition = Math.min(a.getInitialPosition(), b.getInitialPosition());
+		return new SearchResult(a.getWord(), a.getPath(), totalFrequency, initialPosition);
+	}
+
 	/**
 	 * Send invertedMap to JSONWriter class to output the invertedMap in JSON
 	 * format.
@@ -96,6 +156,19 @@ public class InvertedIndex
 		return invertedMap.toString();
 	}
 
+	public void display()
+	{
+		for (String word: invertedMap.keySet())
+		{
+			System.out.println(word);
+			for (String path: invertedMap.get(word).keySet())
+			{
+				System.out.println("\t" + path);
+				System.out.println("\t\t" + invertedMap.get(word).get(path));
+			}
+		}
+	}
+
 	/**
 	 * Check if the map contains the specific word.
 	 * 
@@ -116,7 +189,7 @@ public class InvertedIndex
 	 * @param path to check if the word contains the path.
 	 * @return
 	 */
-	public boolean contains(String word, Path path)
+	public boolean contains(String word, String path)
 	{
 		return contains(word) ? invertedMap.get(word).containsKey(path) : false;
 	}
@@ -130,7 +203,7 @@ public class InvertedIndex
 	 * @param index to check if the path contains the index.
 	 * @return
 	 */
-	public boolean contains(String word, Path path, int index)
+	public boolean contains(String word, String path, int index)
 	{
 		return contains(word, path) ? invertedMap.get(word).get(path).contains(index) : false;
 	}
@@ -165,7 +238,7 @@ public class InvertedIndex
 	 * @return the amount of indices under the path, 0 if the word or path is
 	 *         not found.
 	 */
-	public int size(String word, Path path)
+	public int size(String word, String path)
 	{
 		return contains(word, path) ? invertedMap.get(word).get(path).size() : 0;
 	}
