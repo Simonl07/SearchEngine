@@ -54,6 +54,17 @@ public class DirectoryTraverser
 			}
 		}
 
+		// TODO
+//		if (Files.isHidden(path)) {
+//			return;
+//		}
+//		
+//		if (Files.isDirectory(path)) {
+//			
+//		}
+//		else if (html file ) {
+//			
+//		}
 	}
 
 }
