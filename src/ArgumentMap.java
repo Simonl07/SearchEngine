@@ -160,16 +160,10 @@ public class ArgumentMap
 	 */
 	public int getInteger(String flag, int defaultValue)
 	{
-		if (hasValue(flag)) // TODO REmove if/else, let the catch get the NullPointer
+		try
 		{
-			try
-			{
-				return Integer.parseInt(map.get(flag));
-			} catch (NumberFormatException e) // TODO catch Exception 
-			{
-				return defaultValue;
-			}
-		} else
+			return Integer.parseInt(map.get(flag));
+		} catch (Exception e)
 		{
 			return defaultValue;
 		}

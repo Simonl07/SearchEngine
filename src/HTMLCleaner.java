@@ -30,21 +30,6 @@ public class HTMLCleaner
 	}
 
 	/**
-	 * Clean an array of HTML String.
-	 * 
-	 * @param html String array of HTML to be cleaned
-	 * @return Cleaned array of HTML in the given order.
-	 */
-	public static String[] stripHTML(String[] html)
-	{
-		for (int i = 0; i < html.length; i++)
-		{
-			html[i] = stripHTML(html[i]);
-		}
-		return html;
-	}
-
-	/**
 	 * Replaces all HTML entities with a single space.
 	 *
 	 * @param html text including HTML entities to remove

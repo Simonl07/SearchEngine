@@ -12,7 +12,6 @@ import java.nio.file.Path;
  */
 public class InvertedIndexBuilder
 {
-	// TODO build(Iterable<Path> htmlFiles, InvertedIndex index)
 	/**
 	 * Take any iterable collection of HTML files, read the content, clean the
 	 * HTML and construct the inverted Index.
@@ -20,30 +19,28 @@ public class InvertedIndexBuilder
 	 * @param htmlFiles ArrayList of HTML Path to read from.
 	 * @throws IOException
 	 */
-	public static InvertedIndex build(Iterable<Path> htmlFiles) throws IOException
+	public static void build(Iterable<Path> htmlFiles, InvertedIndex index) throws IOException
 	{
-		InvertedIndex invertedMap = new InvertedIndex(); // TODO Remove
-
 		for (Path p: htmlFiles)
 		{
-			invertedMap = build(p, invertedMap);
+			build(p, index);
 		}
-		return invertedMap; // TODO Return void
+		return;
 	}
 
 	/**
 	 * Take a path and an invertedIndex, read through the content, clean HTML
 	 * and add words from the file to the given InvertedIndex
 	 * 
-	 * @param p path for the File
-	 * @param i InvertedIndex for adding
+	 * @param path path for the File
+	 * @param index InvertedIndex for adding
 	 * 
 	 * @return the InvertedIndex with new words added form the file.
 	 * @throws IOException
 	 */
-	public static InvertedIndex build(Path p, InvertedIndex i) throws IOException // TODO Better variable names
+	public static void build(Path path, InvertedIndex index) throws IOException
 	{
-		try (BufferedReader input = Files.newBufferedReader(p, StandardCharsets.UTF_8))
+		try (BufferedReader input = Files.newBufferedReader(path, StandardCharsets.UTF_8))
 		{
 			String line = "";
 			StringBuilder content = new StringBuilder("");
@@ -53,11 +50,10 @@ public class InvertedIndexBuilder
 				content.append("\n");
 			}
 
-			// TODO Do  not convert to lowercase...
-			String[] words = WordParser.parseWords(HTMLCleaner.stripHTML(content.toString()).toLowerCase());
+			String[] words = WordParser.parseWords(HTMLCleaner.stripHTML(content.toString()));
 
-			i.addAll(p.toString(), words);
+			index.addAll(path.toString(), words);
 		}
-		return i;
+		return;
 	}
 }

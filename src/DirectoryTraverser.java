@@ -36,14 +36,13 @@ public class DirectoryTraverser
 	 */
 	public static void find(Path path, ArrayList<Path> paths) throws IOException
 	{
-
-		if (!Files.isDirectory(path) && !Files.isHidden(path))
+		if (!Files.isDirectory(path))
 		{
 			if (path.getFileName().toString().toLowerCase().endsWith(".html") || path.getFileName().toString().toLowerCase().endsWith(".htm"))
 			{
 				paths.add(path);
 			}
-		} else if (Files.isDirectory(path) && !Files.isHidden(path))
+		} else if (Files.isDirectory(path))
 		{
 			try (DirectoryStream<Path> stream = Files.newDirectoryStream(path))
 			{
@@ -53,18 +52,6 @@ public class DirectoryTraverser
 				}
 			}
 		}
-
-		// TODO
-//		if (Files.isHidden(path)) {
-//			return;
-//		}
-//		
-//		if (Files.isDirectory(path)) {
-//			
-//		}
-//		else if (html file ) {
-//			
-//		}
 	}
 
 }

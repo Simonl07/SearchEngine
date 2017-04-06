@@ -25,7 +25,7 @@ public class Driver
 		{
 			try
 			{
-				wordIndex = InvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))));
+				InvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), wordIndex);
 			} catch (IOException e)
 			{
 				System.out.println("Encountered error when reading from file and building the Inverted Index.");
