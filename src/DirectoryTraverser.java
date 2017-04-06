@@ -42,7 +42,7 @@ public class DirectoryTraverser
 			{
 				paths.add(path);
 			}
-		} else if (Files.isDirectory(path))
+		} else if (Files.isDirectory(path)) // TODO Just make this else, not else if (you already tested isDirectory, if you are here you know it WAS a directory)
 		{
 			try (DirectoryStream<Path> stream = Files.newDirectoryStream(path))
 			{
