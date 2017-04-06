@@ -74,61 +74,81 @@ public class InvertedIndex
 		}
 	}
 
-	public ArrayList<SearchResult> exactSearch(String[] words)
+	public ArrayList<SearchResult> exactSearch(String[] queries)
 	{
-
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
-		
-		for (String s: words)
+
+		for (String query: queries)
 		{
-			if (this.contains(s))
+			if (this.contains(query))
 			{
-				search(s, results);
+				search(query, results);
 			}
 		}
-		
-		
-		for(String s: results.keySet())
+		for (String s: results.keySet())
 		{
 			finalResults.add(results.get(s));
 		}
 
+		Collections.sort(finalResults);
+		return finalResults;
+	}
 	
+	public ArrayList<SearchResult> partialSearch(String[] queries)
+	{
+		HashMap<String, SearchResult> results = new HashMap<>();
+		ArrayList<SearchResult> finalResults = new ArrayList<>();
+
+		for (String query: queries)
+		{
+			for(String word: invertedMap.keySet())
+			{
+				if (word.startsWith(query))
+				{
+					search(word, results);
+				}
+			}
+		}
+		for (String s: results.keySet())
+		{
+			finalResults.add(results.get(s));
+		}
 
 		Collections.sort(finalResults);
 		return finalResults;
 	}
-
+	
+	
 	public void search(String word, HashMap<String, SearchResult> results)
 	{
-		for (String s: invertedMap.get(word).keySet())
+		for (String path: invertedMap.get(word).keySet())
 		{
-			search(word, s, results);
+			search(word, path, results);
 		}
 	}
 
 	public void search(String word, String path, HashMap<String, SearchResult> results)
 	{
-		if (this.contains(word, path))
+		TreeSet<Integer> indices = invertedMap.get(word).get(path);
+		SearchResult newResult = new SearchResult(word, path, indices.size(), indices.iterator().next());
+		SearchResult finalResult;
+		if (results.containsKey(path))
 		{
-			SearchResult temp = new SearchResult(word, path, invertedMap.get(word).get(path).size(), invertedMap.get(word).get(path).iterator().next());
-			SearchResult output;
-			if(results.containsKey(temp.getPath()))
-			{
-				output = mergeResult(results.get(path),temp);
-			}else{
-				output = temp;
-			}
-			results.put(path, output);
+			finalResult = mergeResult(results.get(path), newResult);
+		} else
+		{
+			finalResult = newResult;
 		}
+		results.put(path, finalResult);
+		
 	}
 
 	private SearchResult mergeResult(SearchResult a, SearchResult b)
 	{
-		int totalFrequency = a.getFrequency() + b.getFrequency();
-		int initialPosition = Math.min(a.getInitialPosition(), b.getInitialPosition());
-		return new SearchResult(a.getWord(), a.getPath(), totalFrequency, initialPosition);
+		a.addFrequency(b.getFrequency());
+		a.setInitialPosition(Math.min(a.getInitialPosition(), b.getInitialPosition()));
+		return a;
 	}
 
 	/**

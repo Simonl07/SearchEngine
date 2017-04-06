@@ -10,7 +10,7 @@ public class SearchResult implements Comparable<SearchResult>
 	private int frequency;
 	private int initialPosition;
 	private String path;
-	
+
 	public SearchResult(String word, String path, int frequency, int initialPosition)
 	{
 		this.word = word;
@@ -18,30 +18,39 @@ public class SearchResult implements Comparable<SearchResult>
 		this.frequency = frequency;
 		this.initialPosition = initialPosition;
 	}
-	
 
 	public int compareTo(SearchResult s)
 	{
-		if(this.frequency == s.frequency) 
+		if (this.frequency == s.frequency)
 		{
-			if(this.initialPosition == s.initialPosition)
+			if (this.initialPosition == s.initialPosition)
 			{
 				return getFileName(path).compareTo(getFileName(s.path));
-			}else{
+			} else
+			{
 				return Integer.compare(initialPosition, s.initialPosition);
 			}
-		}else{
+		} else
+		{
 			return Integer.compare(frequency, s.frequency);
 		}
 	}
-	
-	
+
+	public void addFrequency(int frequency)
+	{
+		this.frequency += frequency;
+	}
+
+	public void setInitialPosition(int position)
+	{
+		this.initialPosition = position;
+	}
+
 	private String getFileName(String path)
 	{
 		return Paths.get(path).getFileName().toString();
 	}
-	
-	
+
 	/**
 	 * @return the word
 	 */
@@ -49,7 +58,7 @@ public class SearchResult implements Comparable<SearchResult>
 	{
 		return word;
 	}
-	
+
 	/**
 	 * @return the frequency
 	 */
@@ -57,7 +66,6 @@ public class SearchResult implements Comparable<SearchResult>
 	{
 		return frequency;
 	}
-
 
 	/**
 	 * @return the initialPosition
@@ -74,7 +82,6 @@ public class SearchResult implements Comparable<SearchResult>
 	{
 		return path;
 	}
-
 
 	@Override
 	public String toString()

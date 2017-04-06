@@ -8,7 +8,7 @@ public class Tester
 		try
 		{
 			InvertedIndex index = new InvertedIndex();
-			String path = "/home/simon/Desktop/Repositories/project-tests/html/simple";
+			String path = "C:\\Users\\Simon Lu\\Desktop\\Repositories\\project-tests\\html\\simple";
 			
 			index = InvertedIndexBuilder.build((DirectoryTraverser.findHTML(Paths.get(path))));
 			
@@ -16,8 +16,8 @@ public class Tester
 			//index.display();
 			
 			
-			String queries[] = "four".split(" ");
-			System.out.println(index.exactSearch(queries));
+			String queries[] = "aar alpaca elephant".split(" ");
+			System.out.println(index.partialSearch(queries));
 			
 			
 		}catch(Exception e)
