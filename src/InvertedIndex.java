@@ -27,7 +27,7 @@ public class InvertedIndex
 	}
 
 	/**
-	 * Add spedific word to the invertedIndex
+	 * Add specific word to the invertedIndex
 	 * 
 	 * @param word the word to add
 	 * @param path the path of HTML where the word is find
