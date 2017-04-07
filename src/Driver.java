@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * Parses command-line arguments to build an inverted index.
@@ -21,6 +23,8 @@ public class Driver
 
 		InvertedIndex wordIndex = new InvertedIndex();
 
+		TreeMap<String, ArrayList<SearchResult>> searchResults = new TreeMap<>();
+
 		if (argsMap.hasValue("-path"))
 		{
 			try
@@ -41,7 +45,38 @@ public class Driver
 				wordIndex.toJSON(Paths.get(indexPath));
 			} catch (IOException e)
 			{
-				System.out.println("Encountered erroe when writing index into JSON file.");
+				System.out.println("Encountered error when writing index into JSON file.");
+				return;
+			}
+		}
+
+		if (argsMap.hasValue("-query"))
+		{
+			try
+			{
+				if (argsMap.hasFlag("-exact"))
+				{
+					searchResults = QueryHandler.parseAndSearch(argsMap.getString("-query"), wordIndex, "-exact");
+				} else
+				{
+					searchResults = QueryHandler.parseAndSearch(argsMap.getString("-query"), wordIndex, "-partial");
+				}
+			} catch (IOException e)
+			{
+				System.out.println("Encountered error when searching through the index.");
+				return;
+			}
+		}
+
+		if (argsMap.hasFlag("-results"))
+		{
+			String path = argsMap.getString("-results", "results.json");
+			try
+			{
+				JSONWriter.writeSearchResults(Paths.get(path), searchResults);
+			} catch (IOException e)
+			{
+				System.out.println("Encountered error when writing search results into " + path);
 				return;
 			}
 		}

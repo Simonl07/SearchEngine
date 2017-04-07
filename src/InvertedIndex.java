@@ -131,7 +131,7 @@ public class InvertedIndex
 	public void search(String word, String path, HashMap<String, SearchResult> results)
 	{
 		TreeSet<Integer> indices = invertedMap.get(word).get(path);
-		SearchResult newResult = new SearchResult(word, path, indices.size(), indices.iterator().next());
+		SearchResult newResult = new SearchResult(path, indices.size(), indices.iterator().next());
 		SearchResult finalResult;
 		if (results.containsKey(path))
 		{
@@ -161,7 +161,7 @@ public class InvertedIndex
 	 */
 	public void toJSON(Path path) throws IOException
 	{
-		JSONWriter.write(invertedMap, path);
+		JSONWriter.writeInvertedIndex(invertedMap, path);
 	}
 
 	/**

@@ -8,7 +8,7 @@ public class Tester
 		try
 		{
 			InvertedIndex index = new InvertedIndex();
-			String path = "C:\\Users\\Simon Lu\\Desktop\\Repositories\\project-tests\\html\\simple";
+			String path = "/Users/simon/Desktop/Repos/project-tests/html/simple";
 			
 			index = InvertedIndexBuilder.build((DirectoryTraverser.findHTML(Paths.get(path))));
 			

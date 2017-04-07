@@ -4,7 +4,9 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -21,8 +23,7 @@ public class JSONWriter
 	/**
 	 * A private helper method that returns the String of indentation .
 	 * 
-	 * @param times
-	 *            how many time is the String indented.
+	 * @param times how many time is the String indented.
 	 * @return The indenting empty String that fill with times amount of \t
 	 * 
 	 */
@@ -36,12 +37,9 @@ public class JSONWriter
 	/**
 	 * Writes the set of elements as a JSON array at the specified indent level.
 	 *
-	 * @param writer
-	 *            writer to use for output
-	 * @param elements
-	 *            to write as JSON array
-	 * @param level
-	 *            number of times to indent the array itself
+	 * @param writer writer to use for output
+	 * @param elements to write as JSON array
+	 * @param level number of times to indent the array itself
 	 * @throws IOException
 	 */
 	public static void asArray(Writer writer, Iterable<Integer> elements, int level) throws IOException
@@ -67,14 +65,11 @@ public class JSONWriter
 	 * Writes the set of elements as a JSON object with a nested array to the
 	 * path, using asArray method
 	 *
-	 * @param elements
-	 *            to write as a JSON object with a nested array
-	 * @param path
-	 *            path of the file
+	 * @param elements to write as a JSON object with a nested array
+	 * @param path path of the file
 	 * @throws IOException
 	 */
-	public static void asNestedObject(Writer writer, TreeMap<String, TreeSet<Integer>> elements, int level)
-			throws IOException
+	public static void asNestedObject(Writer writer, TreeMap<String, TreeSet<Integer>> elements, int level) throws IOException
 	{
 		writer.write("{\n");
 		for (String p: elements.keySet())
@@ -101,7 +96,7 @@ public class JSONWriter
 	 * @param path the path to write in
 	 * @throws IOException
 	 */
-	public static void write(TreeMap<String, TreeMap<String, TreeSet<Integer>>> map, Path path) throws IOException
+	public static void writeInvertedIndex(TreeMap<String, TreeMap<String, TreeSet<Integer>>> map, Path path) throws IOException
 	{
 		try (BufferedWriter output = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
 		{
@@ -128,6 +123,61 @@ public class JSONWriter
 			output.write("}\n");
 			output.flush();
 		}
+	}
+
+	public static void writeSearchResults(Path path, TreeMap<String, ArrayList<SearchResult>> input) throws IOException
+	{
+		try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
+		{
+			writer.write("[\n");
+			for (String queries: input.keySet())
+			{
+				asSingleSearch(writer, queries, input.get(queries), 1);
+				if(queries == input.lastKey())
+				{
+					writer.write("\n");
+				}else{
+					writer.write(",\n");
+				}
+			}
+			writer.write("]\n");
+		}
+	}
+
+	public static void asSingleSearch(Writer writer, String queries, ArrayList<SearchResult> results, int level) throws IOException
+	{
+		writer.write(indent(level) + "{\n");
+		writer.write(indent(level + 1) + "\"queries\": " + "\"" + queries + "\",\n");
+		writer.write(indent(level + 1) + "\"results\": ");
+		asSearchResults(writer, results, level + 1);
+		writer.write("\n" + indent(level) + "}");
+	}
+
+	public static void asSearchResults(Writer writer, Iterable<SearchResult> results, int level) throws IOException
+	{
+		writer.write("[");
+		Iterator<SearchResult> iterator = results.iterator();
+		if (iterator.hasNext())
+		{
+			writer.write("\n");
+			asSearchResult(writer, iterator.next(), level + 1);
+			while (iterator.hasNext())
+			{
+				writer.write(",\n");
+				asSearchResult(writer, iterator.next(), level + 1);
+			}
+		}
+		writer.write("\n" + indent(level) + "]");
+
+	}
+
+	public static void asSearchResult(Writer writer, SearchResult result, int level) throws IOException
+	{
+		writer.write(indent(level) + "{\n");
+		writer.write(indent(level + 1) + "\"where\": " + "\"" + result.getPath() + "\"" + ",\n");
+		writer.write(indent(level + 1) + "\"count\": " + result.getFrequency() + ",\n");
+		writer.write(indent(level + 1) + "\"index\": " + result.getInitialPosition() + "\n");
+		writer.write(indent(level) + "}");
 	}
 
 }
