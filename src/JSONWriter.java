@@ -10,6 +10,9 @@ import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Writing data structures into specified path in JSON format.
  * 
@@ -19,6 +22,8 @@ import java.util.TreeSet;
 public class JSONWriter
 {
 
+	private static Logger log = LogManager.getLogger();
+	
 	/**
 	 * A private helper method that returns the String of indentation .
 	 * 
@@ -97,6 +102,7 @@ public class JSONWriter
 	 */
 	public static void writeInvertedIndex(TreeMap<String, TreeMap<String, TreeSet<Integer>>> map, Path path) throws IOException
 	{
+		log.trace("Writing invertedIndex into " + path.toString());
 		try (BufferedWriter output = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
 		{
 			output.write("{\n");
@@ -126,6 +132,7 @@ public class JSONWriter
 
 	public static void writeSearchResults(Path path, TreeMap<String, ArrayList<SearchResult>> input) throws IOException
 	{
+		log.trace("Writing search results into " + path.toString());
 		try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
 		{
 			writer.write("[\n");

@@ -1,10 +1,14 @@
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Customized data structure to store words, paths and indices, with other data
@@ -15,7 +19,8 @@ import java.util.TreeSet;
  */
 public class InvertedIndex
 {
-
+	private static Logger log = LogManager.getLogger();
+	
 	private final TreeMap<String, TreeMap<String, TreeSet<Integer>>> invertedMap;
 
 	/**
@@ -24,6 +29,7 @@ public class InvertedIndex
 	public InvertedIndex()
 	{
 		invertedMap = new TreeMap<String, TreeMap<String, TreeSet<Integer>>>();
+		log.trace("invertedMap initialized.");
 	}
 
 	/**
@@ -76,6 +82,7 @@ public class InvertedIndex
 
 	public ArrayList<SearchResult> exactSearch(String[] queries)
 	{
+		log.trace("performing exact search on " + Arrays.toString(queries));
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
 
@@ -97,6 +104,7 @@ public class InvertedIndex
 	
 	public ArrayList<SearchResult> partialSearch(String[] queries)
 	{
+		log.trace("performing partial search on " + Arrays.toString(queries));
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
 
