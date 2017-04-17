@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class InvertedIndex
 {
 	private static Logger log = LogManager.getLogger();
-	
+
 	private final TreeMap<String, TreeMap<String, TreeSet<Integer>>> invertedMap;
 
 	/**
@@ -80,6 +80,13 @@ public class InvertedIndex
 		}
 	}
 
+	/**
+	 * perform exact search in the inverted index, and return an ArrayList of
+	 * search results
+	 * 
+	 * @param queries String array of queries for searching
+	 * @return ArrayList of SearchResult objects
+	 */
 	public ArrayList<SearchResult> exactSearch(String[] queries)
 	{
 		log.trace("performing exact search on " + Arrays.toString(queries));
@@ -101,7 +108,14 @@ public class InvertedIndex
 		Collections.sort(finalResults);
 		return finalResults;
 	}
-	
+
+	/**
+	 * perform partial search in the inverted index, and return an ArrayList of
+	 * search results
+	 * 
+	 * @param queries String array of queries for searching
+	 * @return ArrayList of SearchResult objects
+	 */
 	public ArrayList<SearchResult> partialSearch(String[] queries)
 	{
 		log.trace("performing partial search on " + Arrays.toString(queries));
@@ -110,7 +124,7 @@ public class InvertedIndex
 
 		for (String query: queries)
 		{
-			for(String word: invertedMap.keySet())
+			for (String word: invertedMap.keySet())
 			{
 				if (word.startsWith(query))
 				{
@@ -126,8 +140,13 @@ public class InvertedIndex
 		Collections.sort(finalResults);
 		return finalResults;
 	}
-	
-	
+
+	/**
+	 * search individual word
+	 * 
+	 * @param word the query to seach for.
+	 * @param results HashMap of the query and the SearchResult object
+	 */
 	public void search(String word, HashMap<String, SearchResult> results)
 	{
 		for (String path: invertedMap.get(word).keySet())
@@ -136,6 +155,13 @@ public class InvertedIndex
 		}
 	}
 
+	/**
+	 * Search for the given query under given path.
+	 * 
+	 * @param word the query to seach for
+	 * @param path the path of the query
+	 * @param results HashMap of the query and the SearchResult object
+	 */
 	public void search(String word, String path, HashMap<String, SearchResult> results)
 	{
 		TreeSet<Integer> indices = invertedMap.get(word).get(path);
@@ -149,10 +175,17 @@ public class InvertedIndex
 			finalResult = newResult;
 		}
 		results.put(path, finalResult);
-		
+
 	}
 
-	private SearchResult mergeResult(SearchResult a, SearchResult b)
+	/**
+	 * Private helper method to help merge two SearchResult object into one.
+	 * 
+	 * @param a input SearchResult object
+	 * @param b input SearchResult object
+	 * @return the merged SearchResult object
+	 */
+	private static SearchResult mergeResult(SearchResult a, SearchResult b)
 	{
 		a.addFrequency(b.getFrequency());
 		a.setInitialPosition(Math.min(a.getInitialPosition(), b.getInitialPosition()));
