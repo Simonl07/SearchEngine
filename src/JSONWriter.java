@@ -6,9 +6,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+
+
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Writing data structures into specified path in JSON format.
@@ -18,6 +24,8 @@ import java.util.TreeSet;
  */
 public class JSONWriter
 {
+
+	private static Logger log = LogManager.getLogger();
 
 	/**
 	 * A private helper method that returns the String of indentation .
@@ -88,8 +96,9 @@ public class JSONWriter
 	 * @param path the path to write in
 	 * @throws IOException
 	 */
-	public static void write(TreeMap<String, TreeMap<String, TreeSet<Integer>>> map, Path path) throws IOException
+	public static void writeInvertedIndex(TreeMap<String, TreeMap<String, TreeSet<Integer>>> map, Path path) throws IOException
 	{
+		log.trace("Writing invertedIndex into " + path.toString());
 		try (BufferedWriter output = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
 		{
 			output.write("{\n");
@@ -115,6 +124,96 @@ public class JSONWriter
 			output.write("}\n");
 			output.flush();
 		}
+	}
+
+	/**
+	 * Write the TreeMap of query and a list of SearchResult objects into the
+	 * given path in JSON format.
+	 * 
+	 * @param path to write JSON file
+	 * @param input the data structure for writing search results
+	 * @throws IOException
+	 */
+	public static void writeSearchResults(Path path, TreeMap<String, List<SearchResult>> input) throws IOException
+	{
+		log.trace("Writing search results into " + path.toString());
+		try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8))
+		{
+			writer.write("[\n");
+			for (String queries: input.keySet())
+			{
+				asSingleSearch(writer, queries, input.get(queries), 1);
+				if (queries == input.lastKey())
+				{
+					writer.write("\n");
+				} else
+				{
+					writer.write(",\n");
+				}
+			}
+			writer.write("]\n");
+		}
+	}
+
+	/**
+	 * Helper method to write a single Search with queries.
+	 * 
+	 * @param writer
+	 * @param queries String of queries used in this search
+	 * @param results a list of SearchResult objects.
+	 * @param level indentation level
+	 * @throws IOException
+	 */
+	public static void asSingleSearch(Writer writer, String queries, List<SearchResult> results, int level) throws IOException
+	{
+		writer.write(indent(level) + "{\n");
+		writer.write(indent(level + 1) + "\"queries\": " + "\"" + queries + "\",\n");
+		writer.write(indent(level + 1) + "\"results\": ");
+		asSearchResults(writer, results, level + 1);
+		writer.write("\n" + indent(level) + "}");
+	}
+
+	/**
+	 * Write a list of search results
+	 * 
+	 * @param writer
+	 * @param results an Iterable collection of SearchResult objects
+	 * @param level indentation level
+	 * @throws IOException
+	 */
+	public static void asSearchResults(Writer writer, Iterable<SearchResult> results, int level) throws IOException
+	{
+		writer.write("[");
+		Iterator<SearchResult> iterator = results.iterator();
+		if (iterator.hasNext())
+		{
+			writer.write("\n");
+			asSearchResult(writer, iterator.next(), level + 1);
+			while (iterator.hasNext())
+			{
+				writer.write(",\n");
+				asSearchResult(writer, iterator.next(), level + 1);
+			}
+		}
+		writer.write("\n" + indent(level) + "]");
+
+	}
+
+	/**
+	 * write individual search results in JSON format
+	 * 
+	 * @param writer
+	 * @param result SearchResult object
+	 * @param level indentation level
+	 * @throws IOException
+	 */
+	public static void asSearchResult(Writer writer, SearchResult result, int level) throws IOException
+	{
+		writer.write(indent(level) + "{\n");
+		writer.write(indent(level + 1) + "\"where\": " + "\"" + result.getPath() + "\"" + ",\n");
+		writer.write(indent(level + 1) + "\"count\": " + result.getFrequency() + ",\n");
+		writer.write(indent(level + 1) + "\"index\": " + result.getInitialPosition() + "\n");
+		writer.write(indent(level) + "}");
 	}
 
 }

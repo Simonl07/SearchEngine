@@ -1,7 +1,14 @@
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Customized data structure to store words, paths and indices, with other data
@@ -12,6 +19,7 @@ import java.util.TreeSet;
  */
 public class InvertedIndex
 {
+	private static Logger log = LogManager.getLogger();
 
 	private final TreeMap<String, TreeMap<String, TreeSet<Integer>>> invertedMap;
 
@@ -21,10 +29,11 @@ public class InvertedIndex
 	public InvertedIndex()
 	{
 		invertedMap = new TreeMap<String, TreeMap<String, TreeSet<Integer>>>();
+		log.trace("invertedMap initialized.");
 	}
 
 	/**
-	 * Add spedific word to the invertedIndex
+	 * Add specific word to the invertedIndex
 	 * 
 	 * @param word the word to add
 	 * @param path the path of HTML where the word is find
@@ -72,6 +81,118 @@ public class InvertedIndex
 	}
 
 	/**
+	 * perform exact search in the inverted index, and return an ArrayList of
+	 * search results
+	 * 
+	 * @param queries String array of queries for searching
+	 * @return ArrayList of SearchResult objects
+	 */
+	public ArrayList<SearchResult> exactSearch(String[] queries)
+	{
+		log.trace("performing exact search on " + Arrays.toString(queries));
+		HashMap<String, SearchResult> results = new HashMap<>();
+		ArrayList<SearchResult> finalResults = new ArrayList<>();
+
+		for (String query: queries)
+		{
+			if (this.contains(query))
+			{
+				search(query, results);
+			}
+		}
+		for (String s: results.keySet())
+		{
+			finalResults.add(results.get(s));
+		}
+
+		Collections.sort(finalResults);
+		return finalResults;
+	}
+
+	/**
+	 * perform partial search in the inverted index, and return an ArrayList of
+	 * search results
+	 * 
+	 * @param queries String array of queries for searching
+	 * @return ArrayList of SearchResult objects
+	 */
+	public ArrayList<SearchResult> partialSearch(String[] queries)
+	{
+		log.trace("performing partial search on " + Arrays.toString(queries));
+		HashMap<String, SearchResult> results = new HashMap<>();
+		ArrayList<SearchResult> finalResults = new ArrayList<>();
+
+		for (String query: queries)
+		{
+			for (String word: invertedMap.keySet())
+			{
+				if (word.startsWith(query))
+				{
+					search(word, results);
+				}
+			}
+		}
+		for (String s: results.keySet())
+		{
+			finalResults.add(results.get(s));
+		}
+
+		Collections.sort(finalResults);
+		return finalResults;
+	}
+
+	/**
+	 * search individual word
+	 * 
+	 * @param word the query to seach for.
+	 * @param results HashMap of the query and the SearchResult object
+	 */
+	public void search(String word, HashMap<String, SearchResult> results)
+	{
+		for (String path: invertedMap.get(word).keySet())
+		{
+			search(word, path, results);
+		}
+	}
+
+	/**
+	 * Search for the given query under given path.
+	 * 
+	 * @param word the query to seach for
+	 * @param path the path of the query
+	 * @param results HashMap of the query and the SearchResult object
+	 */
+	public void search(String word, String path, HashMap<String, SearchResult> results)
+	{
+		TreeSet<Integer> indices = invertedMap.get(word).get(path);
+		SearchResult newResult = new SearchResult(path, indices.size(), indices.iterator().next());
+		SearchResult finalResult;
+		if (results.containsKey(path))
+		{
+			finalResult = mergeResult(results.get(path), newResult);
+		} else
+		{
+			finalResult = newResult;
+		}
+		results.put(path, finalResult);
+
+	}
+
+	/**
+	 * Private helper method to help merge two SearchResult object into one.
+	 * 
+	 * @param a input SearchResult object
+	 * @param b input SearchResult object
+	 * @return the merged SearchResult object
+	 */
+	private static SearchResult mergeResult(SearchResult a, SearchResult b)
+	{
+		a.addFrequency(b.getFrequency());
+		a.setInitialPosition(Math.min(a.getInitialPosition(), b.getInitialPosition()));
+		return a;
+	}
+
+	/**
 	 * Send invertedMap to JSONWriter class to output the invertedMap in JSON
 	 * format.
 	 * 
@@ -81,7 +202,7 @@ public class InvertedIndex
 	 */
 	public void toJSON(Path path) throws IOException
 	{
-		JSONWriter.write(invertedMap, path);
+		JSONWriter.writeInvertedIndex(invertedMap, path);
 	}
 
 	/**
@@ -94,6 +215,19 @@ public class InvertedIndex
 	public String toString()
 	{
 		return invertedMap.toString();
+	}
+
+	public void display()
+	{
+		for (String word: invertedMap.keySet())
+		{
+			System.out.println(word);
+			for (String path: invertedMap.get(word).keySet())
+			{
+				System.out.println("\t" + path);
+				System.out.println("\t\t" + invertedMap.get(word).get(path));
+			}
+		}
 	}
 
 	/**
@@ -116,7 +250,7 @@ public class InvertedIndex
 	 * @param path to check if the word contains the path.
 	 * @return
 	 */
-	public boolean contains(String word, Path path)
+	public boolean contains(String word, String path)
 	{
 		return contains(word) ? invertedMap.get(word).containsKey(path) : false;
 	}
@@ -130,7 +264,7 @@ public class InvertedIndex
 	 * @param index to check if the path contains the index.
 	 * @return
 	 */
-	public boolean contains(String word, Path path, int index)
+	public boolean contains(String word, String path, int index)
 	{
 		return contains(word, path) ? invertedMap.get(word).get(path).contains(index) : false;
 	}
@@ -165,7 +299,7 @@ public class InvertedIndex
 	 * @return the amount of indices under the path, 0 if the word or path is
 	 *         not found.
 	 */
-	public int size(String word, Path path)
+	public int size(String word, String path)
 	{
 		return contains(word, path) ? invertedMap.get(word).get(path).size() : 0;
 	}

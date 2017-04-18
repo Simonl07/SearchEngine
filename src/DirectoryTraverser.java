@@ -4,6 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Traverse through a given path and locate specfic files.
  * 
@@ -11,7 +14,7 @@ import java.util.ArrayList;
  */
 public class DirectoryTraverser
 {
-
+	private static Logger log = LogManager.getLogger();
 	/**
 	 * Traverse through given path and return Path of all HTML files found.
 	 * 
@@ -21,6 +24,7 @@ public class DirectoryTraverser
 	 */
 	public static ArrayList<Path> findHTML(Path path) throws IOException
 	{
+		log.trace("Traversing through path " + path.toString() + " to locate HTML");
 		ArrayList<Path> paths = new ArrayList<>();
 		find(path, paths);
 		return paths;
