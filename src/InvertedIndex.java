@@ -97,9 +97,13 @@ public class InvertedIndex
 		{
 			if (this.contains(query))
 			{
-				search(query, results);
+				search(query, results); // TODO Pass in the arraylist and the result map at the same time
 			}
 		}
+		
+		// TODO Not efficientttttt
+		// TODO Always slow to add one at at time... finalResults.addAll(results.values());
+		// TODO Also don't need this step at all!
 		for (String s: results.keySet())
 		{
 			finalResults.add(results.get(s));
@@ -124,6 +128,9 @@ public class InvertedIndex
 
 		for (String query: queries)
 		{
+			// TODO Make more efficient, start and stop in the correct place
+			// TODO https://github.com/usf-cs212-2017/lectures/blob/master/Data%20Structures/src/FindDemo.java#L144
+			// TODO instead of using tailSet use tailMap.keySet
 			for (String word: invertedMap.keySet())
 			{
 				if (word.startsWith(query))
@@ -141,6 +148,7 @@ public class InvertedIndex
 		return finalResults;
 	}
 
+	// TODO Combine the following two search methods into a single private method
 	/**
 	 * search individual word
 	 * 
@@ -162,22 +170,35 @@ public class InvertedIndex
 	 * @param path the path of the query
 	 * @param results HashMap of the query and the SearchResult object
 	 */
-	public void search(String word, String path, HashMap<String, SearchResult> results)
+	public void search(String word, String path, HashMap<String, SearchResult> results)// TODO Add the arraylist of results here as a parameter
 	{
 		TreeSet<Integer> indices = invertedMap.get(word).get(path);
+		
+		// TODO Do not always do this... only do this if you need a new one
 		SearchResult newResult = new SearchResult(path, indices.size(), indices.iterator().next());
 		SearchResult finalResult;
+		
 		if (results.containsKey(path))
 		{
+			// TODO get the search result from your map and update the values
+			// TODO results.get(...).addFrequency(...);
+			
 			finalResult = mergeResult(results.get(path), newResult);
 		} else
 		{
 			finalResult = newResult;
+			
+			// TODO Create the new result here
+			// TODO Add to the map here
+			// TODO add to the list here
 		}
+		
+		// TODO Remove
 		results.put(path, finalResult);
 
 	}
 
+	// TODO Remove
 	/**
 	 * Private helper method to help merge two SearchResult object into one.
 	 * 
