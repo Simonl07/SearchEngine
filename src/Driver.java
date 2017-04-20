@@ -6,7 +6,6 @@ import java.util.TreeMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-// TODO Need to integrate project 1 changes into your project 2, and integrate project 2 into your master branch
 
 /**
  * Parses command-line arguments to build an inverted index.
