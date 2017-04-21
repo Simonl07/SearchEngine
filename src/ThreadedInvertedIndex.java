@@ -1,5 +1,7 @@
 
-public class ThreadedInvertedIndex
-{
 
+
+public class ThreadedInvertedIndex extends InvertedIndex
+{
+	
 }
