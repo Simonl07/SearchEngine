@@ -120,10 +120,6 @@ public class InvertedIndex
 
 		for (String query: queries)
 		{
-			// TODO Make more efficient, start and stop in the correct place
-			// TODO
-			// https://github.com/usf-cs212-2017/lectures/blob/master/Data%20Structures/src/FindDemo.java#L144
-			// TODO instead of using tailSet use tailMap.keySet
 			boolean found = false;
 			for (String word: invertedMap.tailMap(query).keySet())
 			{
@@ -196,19 +192,6 @@ public class InvertedIndex
 	public String toString()
 	{
 		return invertedMap.toString();
-	}
-
-	public void display()
-	{
-		for (String word: invertedMap.keySet())
-		{
-			System.out.println(word);
-			for (String path: invertedMap.get(word).keySet())
-			{
-				System.out.println("\t" + path);
-				System.out.println("\t\t" + invertedMap.get(word).get(path));
-			}
-		}
 	}
 
 	/**

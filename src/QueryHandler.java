@@ -21,17 +21,26 @@ public class QueryHandler
 {
 	private static Logger log = LogManager.getLogger();
 
-	// TODO Move away from the static methods here (more of a collector than a builder)
-	
-
 	private final TreeMap<String, List<SearchResult>> results;
 	private final InvertedIndex index;
 	
+	/**
+	 * Construct QueryHandler object
+	 * 
+	 * @param index for InvertedIndex
+	 */
 	public QueryHandler(InvertedIndex index) {
 		this.results = new TreeMap<>();
 		this.index = index;
 	}
 	
+	/**
+	 * Parse the given path and store into the TreeMap.
+	 * 
+	 * @param path of queries
+	 * @param exact search methods
+	 * @throws IOException
+	 */
 	public void parse(String path, boolean exact) throws IOException{
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8))
 		{
