@@ -97,7 +97,7 @@ public class InvertedIndex
 		{
 			if (this.contains(query))
 			{
-				search(query, results,finalResults);
+				search(query, results, finalResults);
 			}
 		}
 
@@ -121,13 +121,22 @@ public class InvertedIndex
 		for (String query: queries)
 		{
 			// TODO Make more efficient, start and stop in the correct place
-			// TODO https://github.com/usf-cs212-2017/lectures/blob/master/Data%20Structures/src/FindDemo.java#L144
+			// TODO
+			// https://github.com/usf-cs212-2017/lectures/blob/master/Data%20Structures/src/FindDemo.java#L144
 			// TODO instead of using tailSet use tailMap.keySet
+			boolean found = false;
 			for (String word: invertedMap.tailMap(query).keySet())
 			{
 				if (word.startsWith(query))
 				{
 					search(word, results, finalResults);
+					found = true;
+				} else
+				{
+					if (found)
+					{
+						break;
+					}
 				}
 			}
 		}
