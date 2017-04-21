@@ -66,8 +66,10 @@ public class SearchResult implements Comparable<SearchResult>
 	 */
 	public void setInitialPosition(int position)
 	{
-		// TODO Only update if new position is less than the current one
-		this.initialPosition = position;
+		if(position < this.initialPosition)
+		{
+			this.initialPosition = position;
+		}
 	}
 
 	/**

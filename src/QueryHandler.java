@@ -23,7 +23,7 @@ public class QueryHandler
 
 	// TODO Move away from the static methods here (more of a collector than a builder)
 	
-	/*
+
 	private final TreeMap<String, List<SearchResult>> results;
 	private final InvertedIndex index;
 	
@@ -32,7 +32,7 @@ public class QueryHandler
 		this.index = index;
 	}
 	
-	public void parse(String path, boolean exact) {
+	public void parse(String path, boolean exact) throws IOException{
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8))
 		{
 			String line = "";
@@ -44,12 +44,18 @@ public class QueryHandler
 					log.warn("zero length queries detected");
 					continue;
 				}
+				
 				Arrays.sort(queries);
-				results.put(String.join(" ", queries), index.exactSearch(queries));
+				
+				if(exact)
+				{
+					results.put(String.join(" ", queries), index.exactSearch(queries));
+				}else{
+					results.put(String.join(" ", queries), index.partialSearch(queries));
+				}
 			}
 		}
 	}
-	*/
 	
 	/**
 	 * parse the query for given path and perform search on the invertedIndex.

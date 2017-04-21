@@ -97,16 +97,8 @@ public class InvertedIndex
 		{
 			if (this.contains(query))
 			{
-				search(query, results); // TODO Pass in the arraylist and the result map at the same time
+				search(query, results,finalResults);
 			}
-		}
-		
-		// TODO Not efficientttttt
-		// TODO Always slow to add one at at time... finalResults.addAll(results.values());
-		// TODO Also don't need this step at all!
-		for (String s: results.keySet())
-		{
-			finalResults.add(results.get(s));
 		}
 
 		Collections.sort(finalResults);
@@ -131,86 +123,45 @@ public class InvertedIndex
 			// TODO Make more efficient, start and stop in the correct place
 			// TODO https://github.com/usf-cs212-2017/lectures/blob/master/Data%20Structures/src/FindDemo.java#L144
 			// TODO instead of using tailSet use tailMap.keySet
-			for (String word: invertedMap.keySet())
+			for (String word: invertedMap.tailMap(query).keySet())
 			{
 				if (word.startsWith(query))
 				{
-					search(word, results);
+					search(word, results, finalResults);
 				}
 			}
-		}
-		for (String s: results.keySet())
-		{
-			finalResults.add(results.get(s));
 		}
 
 		Collections.sort(finalResults);
 		return finalResults;
 	}
 
-	// TODO Combine the following two search methods into a single private method
-	/**
-	 * search individual word
-	 * 
-	 * @param word the query to seach for.
-	 * @param results HashMap of the query and the SearchResult object
-	 */
-	public void search(String word, HashMap<String, SearchResult> results)
-	{
-		for (String path: invertedMap.get(word).keySet())
-		{
-			search(word, path, results);
-		}
-	}
-
 	/**
 	 * Search for the given query under given path.
 	 * 
-	 * @param word the query to seach for
+	 * @param word the query to search for
 	 * @param path the path of the query
 	 * @param results HashMap of the query and the SearchResult object
 	 */
-	public void search(String word, String path, HashMap<String, SearchResult> results)// TODO Add the arraylist of results here as a parameter
+	private void search(String word, HashMap<String, SearchResult> results, ArrayList<SearchResult> finalResults)
 	{
-		TreeSet<Integer> indices = invertedMap.get(word).get(path);
-		
-		// TODO Do not always do this... only do this if you need a new one
-		SearchResult newResult = new SearchResult(path, indices.size(), indices.iterator().next());
-		SearchResult finalResult;
-		
-		if (results.containsKey(path))
+		for (String path: invertedMap.get(word).keySet())
 		{
-			// TODO get the search result from your map and update the values
-			// TODO results.get(...).addFrequency(...);
-			
-			finalResult = mergeResult(results.get(path), newResult);
-		} else
-		{
-			finalResult = newResult;
-			
-			// TODO Create the new result here
-			// TODO Add to the map here
-			// TODO add to the list here
+			TreeSet<Integer> indices = invertedMap.get(word).get(path);
+
+			if (results.containsKey(path))
+			{
+				SearchResult result = results.get(path);
+				result.addFrequency(indices.size());
+				result.setInitialPosition(indices.iterator().next());
+			} else
+			{
+				SearchResult result = new SearchResult(path, indices.size(), indices.iterator().next());
+				results.put(path, result);
+				finalResults.add(result);
+			}
 		}
-		
-		// TODO Remove
-		results.put(path, finalResult);
 
-	}
-
-	// TODO Remove
-	/**
-	 * Private helper method to help merge two SearchResult object into one.
-	 * 
-	 * @param a input SearchResult object
-	 * @param b input SearchResult object
-	 * @return the merged SearchResult object
-	 */
-	private static SearchResult mergeResult(SearchResult a, SearchResult b)
-	{
-		a.addFrequency(b.getFrequency());
-		a.setInitialPosition(Math.min(a.getInitialPosition(), b.getInitialPosition()));
-		return a;
 	}
 
 	/**
