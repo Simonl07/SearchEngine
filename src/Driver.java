@@ -64,13 +64,15 @@ public class Driver
 			log.info("-query flag detected");
 			try
 			{
+				QueryHandler queryHandler = new QueryHandler(wordIndex);
 				if (argsMap.hasFlag("-exact"))
 				{
-					searchResults = QueryHandler.parseAndSearch(argsMap.getString("-query"), wordIndex, "-exact");
+					queryHandler.parse(argsMap.getString("-query"), true);
 				} else
 				{
-					searchResults = QueryHandler.parseAndSearch(argsMap.getString("-query"), wordIndex, "-partial");
+					queryHandler.parse(argsMap.getString("-query"), false);
 				}
+				searchResults = queryHandler.getResult();
 			} catch (IOException e)
 			{
 				log.catching(e);
