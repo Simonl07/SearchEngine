@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ThreadedInvertedIndex extends InvertedIndex
 {
-	private static Logger log = LogManager.getLogger();
+	private static Logger logger = LogManager.getLogger();
 	private final ReadWriteLock lock;
 
 	public ThreadedInvertedIndex()
@@ -32,6 +32,7 @@ public class ThreadedInvertedIndex extends InvertedIndex
 	public void addWord(String word, String path, int index)
 	{
 		lock.lockReadWrite();
+		logger.info("adding word" + word);
 		if (!invertedMap.containsKey(word))
 		{
 			invertedMap.put(word, new TreeMap<>());
@@ -55,7 +56,7 @@ public class ThreadedInvertedIndex extends InvertedIndex
 	 */
 	public ArrayList<SearchResult> exactSearch(String[] queries)
 	{
-		log.trace("performing synchronized exact search on " + Arrays.toString(queries));
+		logger.trace("performing synchronized exact search on " + Arrays.toString(queries));
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
 
@@ -101,36 +102,7 @@ public class ThreadedInvertedIndex extends InvertedIndex
 
 	}
 	
-	public class SearchTask implements Runnable
-	{		
-		private String queries[];
-		private boolean exact;
-		private TreeMap<String, List<SearchResult>> results;
-		
-		public SearchTask(String queries[], boolean exact, TreeMap<String, List<SearchResult>> results)
-		{
-			this.queries = queries;
-			this.exact = exact;
-			this.results = results;
-			log.trace("Search Task " + Arrays.toString(queries) + " " + exact);
-		}
-		public void run()
-		{
-			List<SearchResult> local;
-			if(exact)
-			{
-				local = exactSearch(queries);
-			}else{
-				local = partialSearch(queries);
-			}
-			
-			synchronized(results)
-			{
-				results.put(String.join(" ", queries), local);
-			}
-		}
-		
-	}
+	
 	
 	
 	

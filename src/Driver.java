@@ -4,7 +4,6 @@ import java.nio.file.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 /**
  * Parses command-line arguments to build an inverted index.
  * 
@@ -22,28 +21,40 @@ public class Driver
 	 */
 	public static void main(String[] args)
 	{
+		boolean multithreaded = false;
+
 		ArgumentMap argsMap = new ArgumentMap(args);
 
 		InvertedIndex wordIndex = null;
-		
+
 		QueryHandler queryHandler = null;
 
-		
-		
-		if(argsMap.hasValue("-thread"))
+		WorkQueue queue = null;
+
+		if (argsMap.hasValue("-thread"))
 		{
-			log.info("-thread flag detected");
-			WorkQueue queue = new WorkQueue(argsMap.getInteger("-thread", 5));
+			multithreaded = true;
+			queue = new WorkQueue(argsMap.getInteger("-thread", 5));
 			wordIndex = new ThreadedInvertedIndex();
 			queryHandler = new ThreadedQueryHandler(wordIndex, queue);
+		}else{
+			wordIndex = new InvertedIndex();
+			queryHandler = new QueryHandler(wordIndex);
 		}
+
 		
 		if (argsMap.hasValue("-path"))
 		{
 			log.info("-path flag detected");
 			try
 			{
-				InvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), wordIndex);
+				if (multithreaded)
+				{
+					ThreadedInvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), (ThreadedInvertedIndex)wordIndex, queue);
+				} else
+				{
+					InvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), wordIndex);
+				}
 			} catch (IOException e)
 			{
 				log.catching(e);
@@ -72,6 +83,14 @@ public class Driver
 			log.info("-query flag detected");
 			try
 			{
+				if (multithreaded)
+				{
+					queryHandler = new ThreadedQueryHandler(wordIndex, queue);
+				} else
+				{
+					queryHandler = new QueryHandler(wordIndex);
+				}
+
 				if (argsMap.hasFlag("-exact"))
 				{
 					queryHandler.parse(argsMap.getString("-query"), true);
@@ -79,6 +98,7 @@ public class Driver
 				{
 					queryHandler.parse(argsMap.getString("-query"), false);
 				}
+
 			} catch (IOException e)
 			{
 				log.catching(e);
@@ -101,7 +121,6 @@ public class Driver
 				return;
 			}
 		}
-		
-		
+
 	}
 }
