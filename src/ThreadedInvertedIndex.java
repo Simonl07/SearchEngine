@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ThreadedInvertedIndex extends InvertedIndex
 {
-	private static Logger logger = LogManager.getLogger();
+	private static Logger log = LogManager.getLogger();
 	private final ReadWriteLock lock;
 
 	public ThreadedInvertedIndex()
@@ -32,7 +32,6 @@ public class ThreadedInvertedIndex extends InvertedIndex
 	public void addWord(String word, String path, int index)
 	{
 		lock.lockReadWrite();
-		logger.info("adding word" + word);
 		if (!invertedMap.containsKey(word))
 		{
 			invertedMap.put(word, new TreeMap<>());
@@ -56,7 +55,7 @@ public class ThreadedInvertedIndex extends InvertedIndex
 	 */
 	public ArrayList<SearchResult> exactSearch(String[] queries)
 	{
-		logger.trace("performing synchronized exact search on " + Arrays.toString(queries));
+		log.trace("performing synchronized exact search on " + Arrays.toString(queries));
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
 

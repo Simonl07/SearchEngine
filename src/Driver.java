@@ -31,10 +31,11 @@ public class Driver
 
 		WorkQueue queue = null;
 
-		if (argsMap.hasValue("-thread"))
+		if (argsMap.hasValue("-threads"))
 		{
+			log.info("-thread flag detected");
 			multithreaded = true;
-			queue = new WorkQueue(argsMap.getInteger("-thread", 5));
+			queue = new WorkQueue(argsMap.getInteger("-threads", 5));
 			wordIndex = new ThreadedInvertedIndex();
 			queryHandler = new ThreadedQueryHandler(wordIndex, queue);
 		}else{
@@ -66,6 +67,14 @@ public class Driver
 		if (argsMap.hasFlag("-index"))
 		{
 			log.info("-index flag detected");
+			if(multithreaded)
+			{
+				synchronized(queue)
+				{
+					queue.finish();
+				}
+			}
+			
 			String indexPath = argsMap.getString("-index", "index.json");
 			try
 			{
@@ -110,6 +119,13 @@ public class Driver
 		if (argsMap.hasFlag("-results"))
 		{
 			log.info("-results flag detected");
+			if(multithreaded)
+			{
+				synchronized(queue)
+				{
+					queue.finish();
+				}
+			}
 			String path = argsMap.getString("-results", "results.json");
 			try
 			{

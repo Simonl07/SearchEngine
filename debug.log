@@ -1,16 +1,1 @@
-[19:08:13.664] TRACE main InvertedIndex:<init> invertedMap initialized.
-[19:08:13.665] INFO  main Driver:main -path flag detected
-[19:08:13.668] TRACE main DirectoryTraverser:findHTML Traversing through path C:\Users to locate HTML
-[19:08:13.675] ERROR main Driver:main Catching java.nio.file.AccessDeniedException: C:\Users\All Users\Desktop
-	at sun.nio.fs.WindowsException.translateToIOException(Unknown Source)
-	at sun.nio.fs.WindowsException.rethrowAsIOException(Unknown Source)
-	at sun.nio.fs.WindowsException.rethrowAsIOException(Unknown Source)
-	at sun.nio.fs.WindowsDirectoryStream.<init>(Unknown Source)
-	at sun.nio.fs.WindowsFileSystemProvider.newDirectoryStream(Unknown Source)
-	at java.nio.file.Files.newDirectoryStream(Unknown Source)
-	at DirectoryTraverser.find(DirectoryTraverser.java:51)
-	at DirectoryTraverser.find(DirectoryTraverser.java:55)
-	at DirectoryTraverser.find(DirectoryTraverser.java:55)
-	at DirectoryTraverser.findHTML(DirectoryTraverser.java:29)
-	at Driver.main(Driver.java:56)
-
+[10:54:30.060] TRACE main InvertedIndex:<init> invertedMap initialized.

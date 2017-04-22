@@ -44,7 +44,6 @@ public class WorkQueue
 		{
 			
 			pending++;
-			log.info(pending + " Runnables are pending");
 			queue.addLast(r);
 			queue.notifyAll();
 			//log.info("add r into queue, pending increased to " + pending + " queue size: " + queue.size());
@@ -58,7 +57,6 @@ public class WorkQueue
 		{
 			
 			pending--;
-			log.info(pending + " Runnables are pending");
 			if(pending <= 0)
 			{
 				queue.notifyAll();
