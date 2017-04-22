@@ -27,8 +27,8 @@ public class Driver
 		ArgumentMap argsMap = new ArgumentMap(args);
 
 		InvertedIndex wordIndex = new InvertedIndex();
-
-		TreeMap<String, List<SearchResult>> searchResults = new TreeMap<>();
+		
+		QueryHandler queryHandler = new QueryHandler(wordIndex);
 
 		if (argsMap.hasValue("-path"))
 		{
@@ -64,7 +64,6 @@ public class Driver
 			log.info("-query flag detected");
 			try
 			{
-				QueryHandler queryHandler = new QueryHandler(wordIndex);
 				if (argsMap.hasFlag("-exact"))
 				{
 					queryHandler.parse(argsMap.getString("-query"), true);
@@ -72,7 +71,6 @@ public class Driver
 				{
 					queryHandler.parse(argsMap.getString("-query"), false);
 				}
-				searchResults = queryHandler.getResult();
 			} catch (IOException e)
 			{
 				log.catching(e);
@@ -87,7 +85,7 @@ public class Driver
 			String path = argsMap.getString("-results", "results.json");
 			try
 			{
-				JSONWriter.writeSearchResults(Paths.get(path), searchResults);
+				queryHandler.toJSON(Paths.get(path));
 			} catch (IOException e)
 			{
 				log.catching(e);

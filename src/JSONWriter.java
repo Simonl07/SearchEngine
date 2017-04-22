@@ -167,20 +167,6 @@ public class JSONWriter
 		writer.write(indent(level) + "{\n");
 		writer.write(indent(level + 1) + "\"queries\": " + "\"" + queries + "\",\n");
 		writer.write(indent(level + 1) + "\"results\": ");
-		asSearchResults(writer, results, level + 1);
-		writer.write("\n" + indent(level) + "}");
-	}
-
-	/**
-	 * Write a list of search results
-	 * 
-	 * @param writer
-	 * @param results an Iterable collection of SearchResult objects
-	 * @param level indentation level
-	 * @throws IOException
-	 */
-	public static void asSearchResults(Writer writer, Iterable<SearchResult> results, int level) throws IOException
-	{
 		writer.write("[");
 		Iterator<SearchResult> iterator = results.iterator();
 		if (iterator.hasNext())
@@ -194,7 +180,7 @@ public class JSONWriter
 			}
 		}
 		writer.write("\n" + indent(level) + "]");
-
+		writer.write("\n" + indent(level) + "}");
 	}
 
 	/**
