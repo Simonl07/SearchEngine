@@ -22,7 +22,7 @@ public class WorkQueue
 	
 	public WorkQueue(int threads)
 	{
-		//log.info("Begin initializing work queue.");
+		log.info("Begin initializing work queue.");
 		workers = new Worker[threads];
 		queue = new LinkedList<Runnable>();
 		SHUTDOWN = false;
@@ -33,7 +33,7 @@ public class WorkQueue
 			workers[i] = new Worker();
 			workers[i].start();
 		}
-		//log.info("WorkQueue initialization complete.");
+		log.info("WorkQueue initialization complete.");
 	}
 	
 	
@@ -42,7 +42,9 @@ public class WorkQueue
 	{
 		synchronized(queue)
 		{
+			
 			pending++;
+			log.info(pending + " Runnables are pending");
 			queue.addLast(r);
 			queue.notifyAll();
 			//log.info("add r into queue, pending increased to " + pending + " queue size: " + queue.size());
@@ -54,7 +56,9 @@ public class WorkQueue
 	{
 		synchronized(queue)
 		{
+			
 			pending--;
+			log.info(pending + " Runnables are pending");
 			if(pending <= 0)
 			{
 				queue.notifyAll();
@@ -126,9 +130,6 @@ public class WorkQueue
 				{
 					System.err.println("Encounter err when running runnable r");
 				}	
-				
-				
-				
 			}
 		}
 	}

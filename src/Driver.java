@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.TreeMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,10 +24,20 @@ public class Driver
 	{
 		ArgumentMap argsMap = new ArgumentMap(args);
 
-		InvertedIndex wordIndex = new InvertedIndex();
+		InvertedIndex wordIndex = null;
 		
-		QueryHandler queryHandler = new QueryHandler(wordIndex);
+		QueryHandler queryHandler = null;
 
+		
+		
+		if(argsMap.hasValue("-thread"))
+		{
+			log.info("-thread flag detected");
+			WorkQueue queue = new WorkQueue(argsMap.getInteger("-thread", 5));
+			wordIndex = new ThreadedInvertedIndex();
+			queryHandler = new ThreadedQueryHandler(wordIndex, queue);
+		}
+		
 		if (argsMap.hasValue("-path"))
 		{
 			log.info("-path flag detected");
@@ -93,5 +101,7 @@ public class Driver
 				return;
 			}
 		}
+		
+		
 	}
 }

@@ -100,24 +100,33 @@ public class ThreadedInvertedIndex extends InvertedIndex
 		lock.unlockReadOnly();
 
 	}
-
 	
-	
-	
-	private class SearchTask implements Runnable
+	public class SearchTask implements Runnable
 	{		
-		private String query;
+		private String queries[];
 		private boolean exact;
+		private TreeMap<String, List<SearchResult>> results;
 		
-		public SearchTask(String query, boolean exact)
+		public SearchTask(String queries[], boolean exact, TreeMap<String, List<SearchResult>> results)
 		{
-			this.query = query;
+			this.queries = queries;
 			this.exact = exact;
+			this.results = results;
+			log.trace("Search Task " + Arrays.toString(queries) + " " + exact);
 		}
 		public void run()
 		{
+			List<SearchResult> local;
 			if(exact)
 			{
+				local = exactSearch(queries);
+			}else{
+				local = partialSearch(queries);
+			}
+			
+			synchronized(results)
+			{
+				results.put(String.join(" ", queries), local);
 			}
 		}
 		
