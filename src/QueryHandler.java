@@ -70,7 +70,7 @@ public class QueryHandler
 	
 	public TreeMap<String, List<SearchResult>> getResult()
 	{
-		return (TreeMap<String, List<SearchResult>>)results.clone();
+		return new TreeMap<String, List<SearchResult>>(results);
 	}
 	
 }
