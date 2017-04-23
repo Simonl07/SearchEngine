@@ -66,8 +66,6 @@ public class QueryHandler
 		}
 	}
 	
-	
-	
 	public void toJSON(Path path) throws IOException
 	{
 		JSONWriter.writeSearchResults(path, results);
