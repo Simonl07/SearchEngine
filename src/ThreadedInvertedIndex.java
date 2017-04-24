@@ -46,27 +46,42 @@ public class ThreadedInvertedIndex extends InvertedIndex
 		lock.unlockReadWrite();
 	}
 
+	
 	/**
-	 * perform exact search in the inverted index, and return an ArrayList of
+	 * perform partial search in the inverted index, and return an ArrayList of
 	 * search results
 	 * 
 	 * @param queries String array of queries for searching
 	 * @return ArrayList of SearchResult objects
 	 */
-	public ArrayList<SearchResult> exactSearch(String[] queries)
+	public ArrayList<SearchResult> partialSearch(String[] queries)
 	{
-		log.trace("performing synchronized exact search on " + Arrays.toString(queries));
+		log.trace("performing partial search on " + Arrays.toString(queries));
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
 
 		for (String query: queries)
 		{
-			if (this.contains(query))
+			boolean found = false;
+			lock.lockReadOnly();
+			for (String word: invertedMap.tailMap(query).keySet())
 			{
-				search(query, results, finalResults);
+				if (word.startsWith(query))
+				{
+					search(word, results, finalResults);
+					found = true;
+				} else
+				{
+					if (found)
+					{
+						break;
+					}
+				}
 			}
+			lock.unlockReadOnly();
 		}
-
+		
+		
 		Collections.sort(finalResults);
 		return finalResults;
 	}
@@ -78,7 +93,7 @@ public class ThreadedInvertedIndex extends InvertedIndex
 	 * @param path the path of the query
 	 * @param results HashMap of the query and the SearchResult object
 	 */
-	private void search(String word, HashMap<String, SearchResult> results, ArrayList<SearchResult> finalResults)
+	public void search(String word, HashMap<String, SearchResult> results, ArrayList<SearchResult> finalResults)
 	{
 		lock.lockReadOnly();
 		for (String path: invertedMap.get(word).keySet())
@@ -170,14 +185,7 @@ public class ThreadedInvertedIndex extends InvertedIndex
 	 */
 	public boolean contains(String word, String path)
 	{
-		lock.lockReadOnly();
-		try
-		{
 			return contains(word) ? invertedMap.get(word).containsKey(path) : false;
-		} finally
-		{
-			lock.unlockReadOnly();
-		}
 	}
 
 	/**
@@ -191,14 +199,7 @@ public class ThreadedInvertedIndex extends InvertedIndex
 	 */
 	public boolean contains(String word, String path, int index)
 	{
-		lock.lockReadOnly();
-		try
-		{
 			return contains(word, path) ? invertedMap.get(word).get(path).contains(index) : false;
-		} finally
-		{
-			lock.unlockReadOnly();
-		}
 	}
 
 	/**

@@ -22,7 +22,6 @@ public class WorkQueue
 	
 	public WorkQueue(int threads)
 	{
-		log.info("Begin initializing work queue.");
 		workers = new Worker[threads];
 		queue = new LinkedList<Runnable>();
 		SHUTDOWN = false;
@@ -33,7 +32,7 @@ public class WorkQueue
 			workers[i] = new Worker();
 			workers[i].start();
 		}
-		log.info("WorkQueue initialization complete.");
+		log.info("WorkQueue with " + threads + " workers initialized");
 	}
 	
 	
@@ -70,6 +69,7 @@ public class WorkQueue
 		{
 			while(pending > 0)
 			{
+				log.info(pending);
 				try
 				{
 					queue.wait();
@@ -127,6 +127,8 @@ public class WorkQueue
 				}catch(RuntimeException e)
 				{
 					System.err.println("Encounter err when running runnable r");
+					e.printStackTrace();
+					log.fatal("Stuck on " + r.getClass() + " on thread " + Thread.currentThread().getName());
 				}	
 			}
 		}

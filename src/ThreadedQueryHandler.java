@@ -16,7 +16,6 @@ public class ThreadedQueryHandler extends QueryHandler
 	public ThreadedQueryHandler(InvertedIndex index, WorkQueue queue)
 	{
 		super(index);
-		logger.info("initializing ThreadedQueryHandler");
 		this.queue = queue;
 	}
 
@@ -35,7 +34,6 @@ public class ThreadedQueryHandler extends QueryHandler
 				}
 
 				Arrays.sort(queries);
-				logger.info("executing search task with " + Arrays.toString(queries));
 				queue.execute(new SearchTask(queries,exact, (ThreadedInvertedIndex)index, results));
 			}
 		}

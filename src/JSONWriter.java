@@ -172,14 +172,14 @@ public class JSONWriter
 		if (iterator.hasNext())
 		{
 			writer.write("\n");
-			asSearchResult(writer, iterator.next(), level + 1);
+			asSearchResult(writer, iterator.next(), level + 2);
 			while (iterator.hasNext())
 			{
 				writer.write(",\n");
-				asSearchResult(writer, iterator.next(), level + 1);
+				asSearchResult(writer, iterator.next(), level + 2);
 			}
 		}
-		writer.write("\n" + indent(level) + "]");
+		writer.write("\n" + indent(level+1) + "]");
 		writer.write("\n" + indent(level) + "}");
 	}
 

@@ -31,7 +31,7 @@ public class Driver
 
 		WorkQueue queue = null;
 
-		if (argsMap.hasValue("-threads"))
+		if (argsMap.hasValue("-threads") && argsMap.getInteger("-threads") > 0)
 		{
 			log.info("-thread flag detected");
 			multithreaded = true;
@@ -74,11 +74,11 @@ public class Driver
 					queue.finish();
 				}
 			}
-			
 			String indexPath = argsMap.getString("-index", "index.json");
 			try
 			{
 				wordIndex.toJSON(Paths.get(indexPath));
+				log.info("CHECK");
 			} catch (IOException e)
 			{
 				log.catching(e);
@@ -94,6 +94,13 @@ public class Driver
 			{
 				if (multithreaded)
 				{
+					if(multithreaded)
+					{
+						synchronized(queue)
+						{
+							queue.finish();
+						}
+					}
 					queryHandler = new ThreadedQueryHandler(wordIndex, queue);
 				} else
 				{
