@@ -8,7 +8,7 @@ public class SearchResult implements Comparable<SearchResult>
 {
 	private int frequency;
 	private int initialPosition;
-	private String path; // TODO Make final
+	private final String path;
 
 	/**
 	 * Constructor for building SearchResult object

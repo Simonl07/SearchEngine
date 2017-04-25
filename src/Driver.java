@@ -62,15 +62,7 @@ public class Driver
 			log.info("-query flag detected");
 			try
 			{
-				// TODO queryHandler.parse(argsMap.getString("-query"), argsMap.hasFlag("-exact"));
-				
-				if (argsMap.hasFlag("-exact"))
-				{
-					queryHandler.parse(argsMap.getString("-query"), true);
-				} else
-				{
-					queryHandler.parse(argsMap.getString("-query"), false);
-				}
+				queryHandler.parse(argsMap.getString("-query"), argsMap.hasFlag("-exact"));
 			} catch (IOException e)
 			{
 				log.catching(e);
