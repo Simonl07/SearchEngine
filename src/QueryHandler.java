@@ -48,6 +48,7 @@ public class QueryHandler
 			while ((line = reader.readLine()) != null)
 			{
 				String queries[] = WordParser.parseWords(line);
+				
 				if (queries.length == 0)
 				{
 					log.warn("zero length queries detected");
@@ -56,7 +57,7 @@ public class QueryHandler
 				
 				Arrays.sort(queries);
 				
-				if(exact)
+				if (exact)
 				{
 					results.put(String.join(" ", queries), index.exactSearch(queries));
 				}else{
@@ -66,6 +67,7 @@ public class QueryHandler
 		}
 	}
 	
+	// TODO Javadoc
 	public void toJSON(Path path) throws IOException
 	{
 		JSONWriter.writeSearchResults(path, results);

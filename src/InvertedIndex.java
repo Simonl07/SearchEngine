@@ -120,7 +120,7 @@ public class InvertedIndex
 
 		for (String query: queries)
 		{
-			boolean found = false;
+			boolean found = false; // TODO Remove
 			for (String word: invertedMap.tailMap(query).keySet())
 			{
 				if (word.startsWith(query))
@@ -131,7 +131,7 @@ public class InvertedIndex
 				{
 					if (found)
 					{
-						break;
+						break; // TODO Always break here
 					}
 				}
 			}
@@ -158,7 +158,7 @@ public class InvertedIndex
 			{
 				SearchResult result = results.get(path);
 				result.addFrequency(indices.size());
-				result.setInitialPosition(indices.iterator().next());
+				result.setInitialPosition(indices.iterator().next()); // TODO indicies.first()
 			} else
 			{
 				SearchResult result = new SearchResult(path, indices.size(), indices.iterator().next());
