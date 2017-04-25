@@ -41,11 +41,9 @@ public class WorkQueue
 	{
 		synchronized(queue)
 		{
-			
 			pending++;
 			queue.addLast(r);
 			queue.notifyAll();
-			//log.info("add r into queue, pending increased to " + pending + " queue size: " + queue.size());
 		}
 	}
 
@@ -81,6 +79,13 @@ public class WorkQueue
 		}
 	}
 	
+	public int getPending()
+	{
+		synchronized(queue)
+		{
+			return pending;
+		}
+	}
 	
 	public void shutdown()
 	{
@@ -124,6 +129,7 @@ public class WorkQueue
 				try{
 					r.run();
 					decrementPending();
+					log.info("Job done, " + pending + " tasks are left in workqueue.");
 				}catch(RuntimeException e)
 				{
 					System.err.println("Encounter err when running runnable r");

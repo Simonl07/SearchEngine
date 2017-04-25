@@ -14,7 +14,7 @@ public class BuildTask implements Runnable
 	
 	public BuildTask(Path path, ThreadedInvertedIndex index)
 	{
-		log.info("Build task for path" + path + "constructed");
+		log.info("Build task for path" + path + " constructed");
 		this.path = path;
 		this.index = index;
 	}
