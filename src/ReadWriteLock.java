@@ -1,6 +1,3 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
  * A simple custom lock that allows simultaneously read operations, but
  * disallows simultaneously write and read/write operations.
@@ -12,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 public class ReadWriteLock {
 	private int readers;
 	private int writers;
-	private Logger log = LogManager.getLogger();
 	/**
 	 * Initializes a multi-reader single-writer lock.
 	 */
