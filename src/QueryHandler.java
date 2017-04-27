@@ -21,19 +21,20 @@ public class QueryHandler
 {
 	private static Logger log = LogManager.getLogger();
 
-	private final TreeMap<String, List<SearchResult>> results;
-	private final InvertedIndex index;
-	
+	protected final TreeMap<String, List<SearchResult>> results;
+	protected final InvertedIndex index;
+
 	/**
 	 * Construct QueryHandler object
 	 * 
 	 * @param index for InvertedIndex
 	 */
-	public QueryHandler(InvertedIndex index) {
+	public QueryHandler(InvertedIndex index)
+	{
 		this.results = new TreeMap<>();
 		this.index = index;
 	}
-	
+
 	/**
 	 * Parse the given path and store into the TreeMap.
 	 * 
@@ -41,7 +42,8 @@ public class QueryHandler
 	 * @param exact search methods
 	 * @throws IOException
 	 */
-	public void parse(String path, boolean exact) throws IOException{
+	public void parse(String path, boolean exact) throws IOException
+	{
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8))
 		{
 			String line = "";
@@ -54,19 +56,18 @@ public class QueryHandler
 					log.warn("zero length queries detected");
 					continue;
 				}
-				
+
 				Arrays.sort(queries);
-				
 				if (exact)
 				{
 					results.put(String.join(" ", queries), index.exactSearch(queries));
-				}else{
+				} else
+				{
 					results.put(String.join(" ", queries), index.partialSearch(queries));
 				}
 			}
 		}
 	}
-	
 	/**
 	 * output the SearchResults objects to JSON Writer.
 	 * 
@@ -77,5 +78,5 @@ public class QueryHandler
 	{
 		JSONWriter.writeSearchResults(path, results);
 	}
-	
+
 }

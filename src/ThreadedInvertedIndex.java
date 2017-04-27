@@ -4,32 +4,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Customized data structure to store words, paths and indices, with other data
- * structure-like methods.
- * 
- * @author Simonl0425
- *
- */
-public class InvertedIndex
+public class ThreadedInvertedIndex extends InvertedIndex
 {
 	private static Logger log = LogManager.getLogger();
+	private final ReadWriteLock lock;
 
-	protected final TreeMap<String, TreeMap<String, TreeSet<Integer>>> invertedMap;
-
-	/**
-	 * Initialize the TreeMap<String, TreeMap<Path, TreeSet<Integer>>>
-	 */
-	public InvertedIndex()
+	public ThreadedInvertedIndex()
 	{
-		invertedMap = new TreeMap<String, TreeMap<String, TreeSet<Integer>>>();
-		log.trace("invertedMap initialized.");
+		super();
+		lock = new ReadWriteLock();
 	}
 
 	/**
@@ -41,6 +31,7 @@ public class InvertedIndex
 	 */
 	public void addWord(String word, String path, int index)
 	{
+		lock.lockReadWrite();
 		if (!invertedMap.containsKey(word))
 		{
 			invertedMap.put(word, new TreeMap<>());
@@ -52,59 +43,10 @@ public class InvertedIndex
 		}
 
 		invertedMap.get(word).get(path).add(index);
+		lock.unlockReadWrite();
 	}
 
-	/**
-	 * Adds the array of words at once with default start at position 1
-	 *
-	 * @param words array of words to add
-	 *
-	 * @see #addAll(String[], int)
-	 */
-	public void addAll(String path, String[] words)
-	{
-		addAll(path, words, 1);
-	}
-
-	/**
-	 * Adds the array of words at once with provided start position.
-	 *
-	 * @param words array of words to add
-	 * @param start starting position
-	 */
-	public void addAll(String path, String[] words, int start)
-	{
-		for (String word: words)
-		{
-			addWord(word, path, start++);
-		}
-	}
-
-	/**
-	 * perform exact search in the inverted index, and return an ArrayList of
-	 * search results
-	 * 
-	 * @param queries String array of queries for searching
-	 * @return ArrayList of SearchResult objects
-	 */
-	public ArrayList<SearchResult> exactSearch(String[] queries)
-	{
-		log.trace("performing exact search on " + Arrays.toString(queries));
-		HashMap<String, SearchResult> results = new HashMap<>();
-		ArrayList<SearchResult> finalResults = new ArrayList<>();
-
-		for (String query: queries)
-		{
-			if (this.contains(query))
-			{
-				search(query, results, finalResults);
-			}
-		}
-
-		Collections.sort(finalResults);
-		return finalResults;
-	}
-
+	
 	/**
 	 * perform partial search in the inverted index, and return an ArrayList of
 	 * search results
@@ -120,22 +62,30 @@ public class InvertedIndex
 
 		for (String query: queries)
 		{
+			boolean found = false;
+			lock.lockReadOnly();
 			for (String word: invertedMap.tailMap(query).keySet())
 			{
 				if (word.startsWith(query))
 				{
 					search(word, results, finalResults);
+					found = true;
 				} else
 				{
-					break;
+					if (found)
+					{
+						break;
+					}
 				}
 			}
+			lock.unlockReadOnly();
 		}
-
+		
+		
 		Collections.sort(finalResults);
 		return finalResults;
 	}
-
+	
 	/**
 	 * Search for the given query under given path.
 	 * 
@@ -143,8 +93,9 @@ public class InvertedIndex
 	 * @param path the path of the query
 	 * @param results HashMap of the query and the SearchResult object
 	 */
-	private void search(String word, HashMap<String, SearchResult> results, ArrayList<SearchResult> finalResults)
+	public void search(String word, HashMap<String, SearchResult> results, ArrayList<SearchResult> finalResults)
 	{
+		lock.lockReadOnly();
 		for (String path: invertedMap.get(word).keySet())
 		{
 			TreeSet<Integer> indices = invertedMap.get(word).get(path);
@@ -153,7 +104,7 @@ public class InvertedIndex
 			{
 				SearchResult result = results.get(path);
 				result.addFrequency(indices.size());
-				result.setInitialPosition(indices.first());
+				result.setInitialPosition(indices.iterator().next());
 			} else
 			{
 				SearchResult result = new SearchResult(path, indices.size(), indices.iterator().next());
@@ -161,9 +112,16 @@ public class InvertedIndex
 				finalResults.add(result);
 			}
 		}
+		lock.unlockReadOnly();
 
 	}
-
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Send invertedMap to JSONWriter class to output the invertedMap in JSON
 	 * format.
@@ -174,7 +132,9 @@ public class InvertedIndex
 	 */
 	public void toJSON(Path path) throws IOException
 	{
+		lock.lockReadOnly();
 		JSONWriter.writeInvertedIndex(invertedMap, path);
+		lock.unlockReadOnly();
 	}
 
 	/**
@@ -186,7 +146,14 @@ public class InvertedIndex
 	@Override
 	public String toString()
 	{
-		return invertedMap.toString();
+		lock.lockReadOnly();
+		try
+		{
+			return invertedMap.toString();
+		} finally
+		{
+			lock.unlockReadOnly();
+		}
 	}
 
 	/**
@@ -198,7 +165,14 @@ public class InvertedIndex
 	 */
 	public boolean contains(String word)
 	{
-		return invertedMap.containsKey(word);
+		lock.lockReadOnly();
+		try
+		{
+			return invertedMap.containsKey(word);
+		} finally
+		{
+			lock.unlockReadOnly();
+		}
 	}
 
 	/**
@@ -211,7 +185,7 @@ public class InvertedIndex
 	 */
 	public boolean contains(String word, String path)
 	{
-		return contains(word) ? invertedMap.get(word).containsKey(path) : false;
+			return contains(word) ? invertedMap.get(word).containsKey(path) : false;
 	}
 
 	/**
@@ -225,7 +199,7 @@ public class InvertedIndex
 	 */
 	public boolean contains(String word, String path, int index)
 	{
-		return contains(word, path) ? invertedMap.get(word).get(path).contains(index) : false;
+			return contains(word, path) ? invertedMap.get(word).get(path).contains(index) : false;
 	}
 
 	/**
@@ -235,7 +209,14 @@ public class InvertedIndex
 	 */
 	public int size()
 	{
-		return invertedMap.size();
+		lock.lockReadOnly();
+		try
+		{
+			return invertedMap.size();
+		} finally
+		{
+			lock.unlockReadOnly();
+		}
 	}
 
 	/**
@@ -246,7 +227,14 @@ public class InvertedIndex
 	 */
 	public int size(String word)
 	{
-		return contains(word) ? invertedMap.get(word).size() : 0;
+		lock.lockReadOnly();
+		try
+		{
+			return contains(word) ? invertedMap.get(word).size() : 0;
+		} finally
+		{
+			lock.unlockReadOnly();
+		}
 	}
 
 	/**
@@ -260,7 +248,14 @@ public class InvertedIndex
 	 */
 	public int size(String word, String path)
 	{
-		return contains(word, path) ? invertedMap.get(word).get(path).size() : 0;
+		lock.lockReadOnly();
+		try
+		{
+			return contains(word, path) ? invertedMap.get(word).get(path).size() : 0;
+		} finally
+		{
+			lock.unlockReadOnly();
+		}
 	}
 
 }

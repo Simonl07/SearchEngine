@@ -168,6 +168,18 @@ public class ArgumentMap
 			return defaultValue;
 		}
 	}
+	
+	public int getInteger(String flag)
+	{
+		try
+		{
+			return Integer.parseInt(map.get(flag));
+		} catch (Exception e)
+		{
+			return -1;
+		}
+	}
+
 
 	@Override
 	/**
