@@ -21,6 +21,7 @@ public class InvertedIndex
 {
 	private static Logger log = LogManager.getLogger();
 
+	// TODO Must keep this private
 	protected final TreeMap<String, TreeMap<String, TreeSet<Integer>>> invertedMap;
 
 	/**

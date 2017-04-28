@@ -5,6 +5,7 @@ import java.util.TreeMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// TODO Make a nested class
 public class SearchTask implements Runnable
 {
 	private String queries[];
@@ -35,6 +36,7 @@ public class SearchTask implements Runnable
 
 		synchronized (results)
 		{
+			// TODO Do the join() outside the synchronized block
 			results.put(String.join(" ", queries), local);
 		}
 	}

@@ -3,12 +3,14 @@ import java.util.LinkedList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// TODO Javadoc
+
 public class WorkQueue
 {
 	private final Worker[] workers;
 	private final LinkedList<Runnable> queue; 
 	
-	private volatile boolean SHUTDOWN;
+	private volatile boolean SHUTDOWN; // TODO Refactor to lowercase
 	
 	private int pending;
 	
@@ -32,6 +34,7 @@ public class WorkQueue
 			workers[i] = new Worker();
 			workers[i].start();
 		}
+		
 		log.info("WorkQueue with " + threads + " workers initialized");
 	}
 	
@@ -47,7 +50,7 @@ public class WorkQueue
 		}
 	}
 
-	
+	// TODO Make this private
 	public void decrementPending()
 	{
 		synchronized(queue)
@@ -73,7 +76,7 @@ public class WorkQueue
 					queue.wait();
 				} catch (InterruptedException e)
 				{
-					e.printStackTrace();
+					e.printStackTrace(); // TODO
 				}
 			}
 		}
@@ -99,7 +102,7 @@ public class WorkQueue
 	private class Worker extends Thread
 	{
 		
-		Runnable r = null;
+		Runnable r = null; // TODO Move to a local variable?
 		@Override
 		public void run()
 		{
@@ -128,12 +131,12 @@ public class WorkQueue
 				
 				try{
 					r.run();
-					decrementPending();
+					decrementPending(); // TODO Move after the try/catch
 					log.info("Job done, " + pending + " tasks are left in workqueue.");
 				}catch(RuntimeException e)
 				{
 					System.err.println("Encounter err when running runnable r");
-					e.printStackTrace();
+					e.printStackTrace(); // TODO
 					log.fatal("Stuck on " + r.getClass() + " on thread " + Thread.currentThread().getName());
 				}	
 			}
