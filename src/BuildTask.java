@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// TODO Does not need to be its own class
+
 public class BuildTask implements Runnable
 {
 	private Path path;
@@ -20,6 +22,7 @@ public class BuildTask implements Runnable
 	}
 	public void run()
 	{
+		// TODO This is repeated code... same as InvertedIndex.build(...)
 		try (BufferedReader input = Files.newBufferedReader(path, StandardCharsets.UTF_8))
 		{
 			String line = "";

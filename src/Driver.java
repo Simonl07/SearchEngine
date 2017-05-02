@@ -94,7 +94,7 @@ public class Driver
 			{
 				if (multithreaded)
 				{
-					synchronized(queue)
+					synchronized(queue) // TODO Do not need synchronized here
 					{
 						queue.finish();
 					}
@@ -124,7 +124,7 @@ public class Driver
 			log.info("-results flag detected");
 			if(multithreaded)
 			{
-				synchronized(queue)
+				synchronized(queue) // TODO Remove synchronized
 				{
 					queue.finish();
 				}
@@ -141,5 +141,6 @@ public class Driver
 			}
 		}
 
+		// TODO shutdown the work queue
 	}
 }

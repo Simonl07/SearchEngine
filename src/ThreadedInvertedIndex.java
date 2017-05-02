@@ -10,6 +10,9 @@ import java.util.TreeSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// TODO Follow this pattern:
+// https://github.com/usf-cs212-2017/lectures/blob/master/Multithreading%20-%20Synchronization/src/ConcurrentSet.java
+
 public class ThreadedInvertedIndex extends InvertedIndex
 {
 	private static Logger log = LogManager.getLogger();

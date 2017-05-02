@@ -21,6 +21,7 @@ public class QueryHandler
 {
 	private static Logger log = LogManager.getLogger();
 
+	// TODO private
 	protected final TreeMap<String, List<SearchResult>> results;
 	protected final InvertedIndex index;
 

@@ -29,7 +29,7 @@ public class ReadWriteLock {
 				this.wait();
 			} catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				e.printStackTrace(); // TODO 
 			}
 		}
 		
@@ -42,7 +42,7 @@ public class ReadWriteLock {
 	 */
 	public synchronized void unlockReadOnly() {
 		readers--;
-		this.notifyAll();
+		this.notifyAll(); // TODO Can only wake up a writer, only call this if readers is 0.
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class ReadWriteLock {
 				this.wait();
 			} catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				e.printStackTrace(); // TODO 
 			}
 		}
 		writers++;

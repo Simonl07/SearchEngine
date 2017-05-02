@@ -7,13 +7,28 @@ import org.apache.logging.log4j.Logger;
 public class ThreadedInvertedIndexBuilder extends InvertedIndexBuilder
 {
 	private static Logger log = LogManager.getLogger();
+	
 	public static void build(Iterable<Path> htmlFiles, ThreadedInvertedIndex index, WorkQueue queue) throws IOException
 	{
 		int i = 0;
 		for (Path p: htmlFiles)
 		{
-			queue.execute(new BuildTask(p,index));i++;
+			queue.execute(new BuildTask(p,index));
+			i++;
 		}
 		log.info(i + " BuildTask dumped into workqueue.");
 	}
+	
+	/* TODO
+	 * private static class BuildTask {
+	 * 
+	 *   initalize what you need
+	 *   
+	 *   run() {
+	 *   	InvertedIndexBuilder.build(Path path, InvertedIndex index)
+	 *   
+	 *   }
+	 * 
+	 * }
+	 */
 }
