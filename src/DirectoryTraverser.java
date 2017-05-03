@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 public class DirectoryTraverser
 {
 	private static Logger log = LogManager.getLogger();
+
 	/**
 	 * Traverse through given path and return Path of all HTML files found.
 	 * 

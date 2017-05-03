@@ -10,7 +10,7 @@
     </Appenders>
     
     <Loggers>
-        <Root level="ALL">
+        <Root level="INFO">
             <AppenderRef ref="Console" level="INFO"/>
             <AppenderRef ref="MyFile" level="ALL"/>
         </Root>

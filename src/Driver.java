@@ -37,13 +37,13 @@ public class Driver
 			multithreaded = true;
 			queue = new WorkQueue(argsMap.getInteger("-threads", 5));
 			wordIndex = new ThreadedInvertedIndex();
-			queryHandler = new ThreadedQueryHandler(wordIndex, queue);
-		}else{
+			queryHandler = new MultithreadedQueryHandler(wordIndex, queue);
+		} else
+		{
 			wordIndex = new InvertedIndex();
-			queryHandler = new QueryHandler(wordIndex);
+			queryHandler = new SingleThreadedQueryHandler(wordIndex);
 		}
 
-		
 		if (argsMap.hasValue("-path"))
 		{
 			log.info("-path flag detected");
@@ -51,7 +51,7 @@ public class Driver
 			{
 				if (multithreaded)
 				{
-					ThreadedInvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), (ThreadedInvertedIndex)wordIndex, queue);
+					ThreadedInvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), wordIndex, queue);
 				} else
 				{
 					InvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), wordIndex);
@@ -67,9 +67,9 @@ public class Driver
 		if (argsMap.hasFlag("-index"))
 		{
 			log.info("-index flag detected");
-			if(multithreaded)
+			if (multithreaded)
 			{
-				synchronized(queue)
+				synchronized (queue)
 				{
 					queue.finish();
 				}
@@ -94,14 +94,11 @@ public class Driver
 			{
 				if (multithreaded)
 				{
-					synchronized(queue) // TODO Do not need synchronized here
-					{
-						queue.finish();
-					}
-					queryHandler = new ThreadedQueryHandler(wordIndex, queue);
+					queue.finish();
+					queryHandler = new MultithreadedQueryHandler(wordIndex, queue);
 				} else
 				{
-					queryHandler = new QueryHandler(wordIndex);
+					queryHandler = new SingleThreadedQueryHandler(wordIndex);
 				}
 
 				if (argsMap.hasFlag("-exact"))
@@ -122,12 +119,9 @@ public class Driver
 		if (argsMap.hasFlag("-results"))
 		{
 			log.info("-results flag detected");
-			if(multithreaded)
+			if (multithreaded)
 			{
-				synchronized(queue) // TODO Remove synchronized
-				{
-					queue.finish();
-				}
+				queue.finish();
 			}
 			String path = argsMap.getString("-results", "results.json");
 			try
@@ -141,6 +135,10 @@ public class Driver
 			}
 		}
 
-		// TODO shutdown the work queue
+		if (multithreaded)
+		{
+			queue.finish();
+			queue.shutdown();
+		}
 	}
 }

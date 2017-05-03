@@ -179,7 +179,7 @@ public class JSONWriter
 				asSearchResult(writer, iterator.next(), level + 2);
 			}
 		}
-		writer.write("\n" + indent(level+1) + "]");
+		writer.write("\n" + indent(level + 1) + "]");
 		writer.write("\n" + indent(level) + "}");
 	}
 

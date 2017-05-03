@@ -4,31 +4,68 @@ import java.nio.file.Path;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * 
+ * Multi-threaded builder to build inverted index.
+ * 
+ * @author Simonl0425
+ *
+ */
 public class ThreadedInvertedIndexBuilder extends InvertedIndexBuilder
 {
 	private static Logger log = LogManager.getLogger();
-	
-	public static void build(Iterable<Path> htmlFiles, ThreadedInvertedIndex index, WorkQueue queue) throws IOException
+
+	/**
+	 * Override build method that add new buildTask to work queue.
+	 * 
+	 * @param htmlFiles list of HTML files
+	 * @param index WordIndex
+	 * @param queue WorkQueue to add buildTask to
+	 * @throws IOException
+	 */
+	public static void build(Iterable<Path> htmlFiles, InvertedIndex index, WorkQueue queue) throws IOException
 	{
-		int i = 0;
 		for (Path p: htmlFiles)
 		{
-			queue.execute(new BuildTask(p,index));
-			i++;
+			queue.execute(new BuildTask(p, index));
 		}
-		log.info(i + " BuildTask dumped into workqueue.");
 	}
-	
-	/* TODO
-	 * private static class BuildTask {
+
+	/**
+	 * Build the inverted index for each file
 	 * 
-	 *   initalize what you need
-	 *   
-	 *   run() {
-	 *   	InvertedIndexBuilder.build(Path path, InvertedIndex index)
-	 *   
-	 *   }
-	 * 
-	 * }
+	 * @author Simonl0425
+	 *
 	 */
+	public static class BuildTask implements Runnable
+	{
+		private Path path;
+		private InvertedIndex index;
+
+		/**
+		 * Initialized BuildTasks
+		 * 
+		 * @param path of HTML
+		 * @param index to add to.
+		 */
+		public BuildTask(Path path, InvertedIndex index)
+		{
+			log.trace("BuildTask initialized for path " + path);
+			this.path = path;
+			this.index = index;
+		}
+
+		public void run()
+		{
+			try
+			{
+				log.trace(Thread.currentThread().getName() + " is building from " + path + " || " + index.getClass());
+				InvertedIndexBuilder.build(path, index);
+			} catch (IOException e)
+			{
+				System.out.println("Encountered error when reading from file and building the Inverted Index.");
+			}
+		}
+
+	}
 }

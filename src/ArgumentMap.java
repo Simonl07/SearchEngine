@@ -168,7 +168,7 @@ public class ArgumentMap
 			return defaultValue;
 		}
 	}
-	
+
 	public int getInteger(String flag)
 	{
 		try
@@ -179,7 +179,6 @@ public class ArgumentMap
 			return -1;
 		}
 	}
-
 
 	@Override
 	/**

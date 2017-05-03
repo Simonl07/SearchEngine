@@ -13,7 +13,7 @@ import java.nio.file.Path;
 public class InvertedIndexBuilder
 {
 	/**
-	 * Take any iterable collection of HTML files, read the content, clean the
+	 * Take any Iterable collection of HTML files, read the content, clean the
 	 * HTML and construct the inverted Index.
 	 * 
 	 * @param htmlFiles ArrayList of HTML Path to read from.
@@ -49,7 +49,6 @@ public class InvertedIndexBuilder
 				content.append(line);
 				content.append("\n");
 			}
-
 			String[] words = WordParser.parseWords(HTMLCleaner.stripHTML(content.toString()));
 
 			index.addAll(path.toString(), words);

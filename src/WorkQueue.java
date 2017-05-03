@@ -3,46 +3,56 @@ import java.util.LinkedList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-// TODO Javadoc
-
 public class WorkQueue
 {
 	private final Worker[] workers;
-	private final LinkedList<Runnable> queue; 
-	
-	private volatile boolean SHUTDOWN; // TODO Refactor to lowercase
-	
+	private final LinkedList<Runnable> queue;
+
+	private volatile boolean shutdown;
+
 	private int pending;
-	
+
 	private final Logger log = LogManager.getLogger();
-	
+
+	/**
+	 * Starts a work queue with the default number of threads.
+	 *
+	 */
 	public WorkQueue()
 	{
 		this(5);
 	}
-	
-	
+
+	/**
+	 * Starts a work queue with the specified number of threads.
+	 *
+	 * @param threads number of worker threads; should be greater than 1
+	 */
 	public WorkQueue(int threads)
 	{
 		workers = new Worker[threads];
 		queue = new LinkedList<Runnable>();
-		SHUTDOWN = false;
+		shutdown = false;
 		pending = 0;
-		
-		for(int i = 0; i < threads;i++)
+
+		for (int i = 0; i < threads; i++)
 		{
 			workers[i] = new Worker();
 			workers[i].start();
 		}
-		
+
 		log.info("WorkQueue with " + threads + " workers initialized");
 	}
-	
-	
-	
+
+	/**
+	 * Adds a work request to the queue. A thread will process this request when
+	 * available.
+	 *
+	 * @param r runnable object
+	 */
 	public void execute(Runnable r)
 	{
-		synchronized(queue)
+		synchronized (queue)
 		{
 			pending++;
 			queue.addLast(r);
@@ -50,95 +60,114 @@ public class WorkQueue
 		}
 	}
 
-	// TODO Make this private
-	public void decrementPending()
+	/**
+	 * decrease the pending work count by 1
+	 */
+	private void decrementPending()
 	{
-		synchronized(queue)
+		synchronized (queue)
 		{
-			
 			pending--;
-			if(pending <= 0)
+			if (pending <= 0)
 			{
 				queue.notifyAll();
 			}
 		}
 	}
-	
+
+	/**
+	 * Wait until all pending work is finished in the work queue.
+	 */
 	public void finish()
 	{
-		synchronized(queue)
+		synchronized (queue)
 		{
-			while(pending > 0)
+			while (pending > 0)
 			{
-				log.info(pending);
 				try
 				{
 					queue.wait();
 				} catch (InterruptedException e)
 				{
-					e.printStackTrace(); // TODO
+					System.err.println("Warning: Work queue interrupted " + "while waiting.");
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
 	}
-	
+
+	/**
+	 * return the current pending work count.
+	 * 
+	 * @return pending work count
+	 */
 	public int getPending()
 	{
-		synchronized(queue)
+		synchronized (queue)
 		{
 			return pending;
 		}
 	}
-	
+
+	/**
+	 * Asks the queue to shutdown. Any unprocessed work will not be finished,
+	 * but threads in-progress will not be interrupted.
+	 */
 	public void shutdown()
 	{
-		SHUTDOWN = true;
-		synchronized(queue)
+		shutdown = true;
+		synchronized (queue)
 		{
 			queue.notifyAll();
 		}
 	}
-	
+
+	/**
+	 * Worker for work queue, execute work, if there is no work, wait.
+	 * 
+	 */
 	private class Worker extends Thread
 	{
-		
-		Runnable r = null; // TODO Move to a local variable?
 		@Override
 		public void run()
 		{
-			while(true)
+			while (true)
 			{
-				synchronized(queue)
+				Runnable r = null;
+				synchronized (queue)
 				{
-					while(queue.isEmpty() && SHUTDOWN == false)
+					while (queue.isEmpty() && shutdown == false)
 					{
 						try
 						{
 							queue.wait();
 						} catch (InterruptedException e)
 						{
+							System.err.println("Warning: Worker queue interrupted " + "while waiting.");
 							Thread.currentThread().interrupt();
 						}
 					}
-					
-					if(SHUTDOWN)
+
+					if (shutdown)
 					{
 						break;
-					}else{
+					} else
+					{
 						r = queue.removeFirst();
 					}
 				}
-				
-				try{
+
+				try
+				{
 					r.run();
-					decrementPending(); // TODO Move after the try/catch
-					log.info("Job done, " + pending + " tasks are left in workqueue.");
-				}catch(RuntimeException e)
+				} catch (RuntimeException e)
 				{
 					System.err.println("Encounter err when running runnable r");
-					e.printStackTrace(); // TODO
-					log.fatal("Stuck on " + r.getClass() + " on thread " + Thread.currentThread().getName());
-				}	
+					log.warn("Warning: Work queue encountered an " + "exception while running.");
+				}
+
+				log.trace("Job done, " + pending + " tasks are left in workqueue.");
+				decrementPending();
 			}
 		}
 	}

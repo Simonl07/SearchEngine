@@ -6,13 +6,16 @@
  * first thread that acquires the appropriate lock should be allowed to
  * continue.
  */
-public class ReadWriteLock {
+public class ReadWriteLock
+{
 	private int readers;
 	private int writers;
+
 	/**
 	 * Initializes a multi-reader single-writer lock.
 	 */
-	public ReadWriteLock() {
+	public ReadWriteLock()
+	{
 		readers = 0;
 		writers = 0;
 	}
@@ -21,18 +24,20 @@ public class ReadWriteLock {
 	 * Will wait until there are no active writers in the system, and then will
 	 * increase the number of active readers.
 	 */
-	public synchronized void lockReadOnly() {
-		while(writers > 0)
+	public synchronized void lockReadOnly()
+	{
+		while (writers > 0)
 		{
 			try
 			{
 				this.wait();
 			} catch (InterruptedException e)
 			{
-				e.printStackTrace(); // TODO 
+				System.err.println("Warning: Thread interrupted " + "while waiting.");
+				Thread.currentThread().interrupt();
 			}
 		}
-		
+
 		readers++;
 	}
 
@@ -40,25 +45,31 @@ public class ReadWriteLock {
 	 * Will decrease the number of active readers, and notify any waiting
 	 * threads if necessary.
 	 */
-	public synchronized void unlockReadOnly() {
+	public synchronized void unlockReadOnly()
+	{
 		readers--;
-		this.notifyAll(); // TODO Can only wake up a writer, only call this if readers is 0.
+		if (readers <= 0)
+		{
+			this.notifyAll();
+		}
 	}
 
 	/**
 	 * Will wait until there are no active readers or writers in the system, and
 	 * then will increase the number of active writers.
 	 */
-	public synchronized void lockReadWrite() {
-		while(readers > 0 || writers > 0)
+	public synchronized void lockReadWrite()
+	{
+		while (readers > 0 || writers > 0)
 		{
-			
+
 			try
 			{
 				this.wait();
 			} catch (InterruptedException e)
 			{
-				e.printStackTrace(); // TODO 
+				System.err.println("Warning: Thread interrupted " + "while waiting.");
+				Thread.currentThread().interrupt();
 			}
 		}
 		writers++;
@@ -68,8 +79,12 @@ public class ReadWriteLock {
 	 * Will decrease the number of active writers, and notify any waiting
 	 * threads if necessary.
 	 */
-	public synchronized void unlockReadWrite() {
+	public synchronized void unlockReadWrite()
+	{
 		writers--;
-		this.notifyAll();
+		if (writers <= 0)
+		{
+			this.notifyAll();
+		}
 	}
 }

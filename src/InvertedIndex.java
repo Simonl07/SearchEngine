@@ -20,9 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class InvertedIndex
 {
 	private static Logger log = LogManager.getLogger();
-
-	// TODO Must keep this private
-	protected final TreeMap<String, TreeMap<String, TreeSet<Integer>>> invertedMap;
+	private final TreeMap<String, TreeMap<String, TreeSet<Integer>>> invertedMap;
 
 	/**
 	 * Initialize the TreeMap<String, TreeMap<Path, TreeSet<Integer>>>
@@ -30,7 +28,7 @@ public class InvertedIndex
 	public InvertedIndex()
 	{
 		invertedMap = new TreeMap<String, TreeMap<String, TreeSet<Integer>>>();
-		log.trace("invertedMap initialized.");
+		log.trace("Single Thread index initialized.");
 	}
 
 	/**
@@ -144,7 +142,7 @@ public class InvertedIndex
 	 * @param path the path of the query
 	 * @param results HashMap of the query and the SearchResult object
 	 */
-	private void search(String word, HashMap<String, SearchResult> results, ArrayList<SearchResult> finalResults)
+	public void search(String word, HashMap<String, SearchResult> results, ArrayList<SearchResult> finalResults)
 	{
 		for (String path: invertedMap.get(word).keySet())
 		{
