@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class MultithreadedQueryHandler implements QueryHandler
 {
 	private final TreeMap<String, List<SearchResult>> results;
-	private final InvertedIndex index;
+	private final InvertedIndex index; // TODO ThreadedInvertedIndex
 	private final WorkQueue queue;
 	private static final Logger log = LogManager.getLogger();
 
@@ -54,6 +54,8 @@ public class MultithreadedQueryHandler implements QueryHandler
 				queue.execute(new SearchTask(line, exact, index, results));
 			}
 		}
+		
+		// TODO queue.finish();
 	}
 
 	/**
@@ -63,9 +65,11 @@ public class MultithreadedQueryHandler implements QueryHandler
 	 */
 	public void toJSON(Path path) throws IOException
 	{
+		// TODO synchronize on results here too
 		JSONWriter.writeSearchResults(path, results);
 	}
 
+	// TODO Make the class non-static
 	/**
 	 * 
 	 * SearchTask for performing individual search, each search responsible for
@@ -79,6 +83,8 @@ public class MultithreadedQueryHandler implements QueryHandler
 	{
 		private String queryString;
 		private boolean exact;
+		
+		// TODO Remove after removing the static keyword
 		private TreeMap<String, List<SearchResult>> results;
 		private InvertedIndex index;
 

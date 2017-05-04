@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// TODO Refactor to ThreadSafe
+
 /**
  * 
  * A Thread-safe version of InvertedIndex using custom read-write lock.
@@ -40,6 +42,18 @@ public class ThreadedInvertedIndex extends InvertedIndex
 		super.addWord(word, path, index);
 		lock.unlockReadWrite();
 	}
+	
+	/* TODO
+	public void addAll(String path, String[] words, int start)
+	{
+		lock
+		for (String word: words)
+		{
+			super.addWord(word, path, start++);
+		}
+		unlock
+	}
+	*/
 
 	/**
 	 * perform exact search in the inverted index, and return an ArrayList of
@@ -112,4 +126,6 @@ public class ThreadedInvertedIndex extends InvertedIndex
 			lock.unlockReadOnly();
 		}
 	}
+	
+	// TODO Override your contains/size methods too
 }

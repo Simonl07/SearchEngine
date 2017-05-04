@@ -29,6 +29,8 @@ public class ThreadedInvertedIndexBuilder extends InvertedIndexBuilder
 		{
 			queue.execute(new BuildTask(p, index));
 		}
+		
+		// TODO queue.finish();
 	}
 
 	/**
@@ -61,6 +63,13 @@ public class ThreadedInvertedIndexBuilder extends InvertedIndexBuilder
 			{
 				log.trace(Thread.currentThread().getName() + " is building from " + path + " || " + index.getClass());
 				InvertedIndexBuilder.build(path, index);
+				
+				/* TODO
+				InvertedIndex local = new InvertedIndex();
+				InvertedIndexBuilder.build(path, local);
+				index.addAll(local);
+				*/
+				
 			} catch (IOException e)
 			{
 				System.out.println("Encountered error when reading from file and building the Inverted Index.");
