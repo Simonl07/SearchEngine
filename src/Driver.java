@@ -36,12 +36,24 @@ public class Driver
 			log.info("-thread flag detected");
 			multithreaded = true;
 			queue = new WorkQueue(argsMap.getInteger("-threads", 5));
+			
+			// TODO ThreadedInvertedIndex threadSafe = new ThreadedInvertedIndex(); (either do this here, or make a reference otuside this block and check if its null later)
+			// TODO wordIndex = threadSafe;
+			
 			wordIndex = new ThreadedInvertedIndex();
-			queryHandler = new MultithreadedQueryHandler(wordIndex, queue);
+			queryHandler = new MultithreadedQueryHandler(wordIndex, queue); // TODO threadSafe reference
+			
+			/* TODO if (-path) {
+				thread safe reference where needed
+			}*/
 		} else
 		{
 			wordIndex = new InvertedIndex();
 			queryHandler = new SingleThreadedQueryHandler(wordIndex);
+			
+			/*if (-path) {
+				single-threaded version
+			}*/
 		}
 
 		if (argsMap.hasValue("-path"))
@@ -69,7 +81,7 @@ public class Driver
 			log.info("-index flag detected");
 			if (multithreaded)
 			{
-				synchronized (queue)
+				synchronized (queue) // TODO Remove synchronized and the queue.finish()
 				{
 					queue.finish();
 				}
@@ -92,14 +104,16 @@ public class Driver
 			log.info("-query flag detected");
 			try
 			{
-				if (multithreaded)
+				if (multithreaded) // TODO Remove this block
 				{
-					queue.finish();
+					queue.finish(); // TODO Remove
 					queryHandler = new MultithreadedQueryHandler(wordIndex, queue);
 				} else
 				{
 					queryHandler = new SingleThreadedQueryHandler(wordIndex);
 				}
+				
+				// TODO queryHandler.parse(argsMap.getString("-query"), argsMap.hasFlag("-exact"));
 
 				if (argsMap.hasFlag("-exact"))
 				{
@@ -119,6 +133,7 @@ public class Driver
 		if (argsMap.hasFlag("-results"))
 		{
 			log.info("-results flag detected");
+			// TODO Same stuff
 			if (multithreaded)
 			{
 				queue.finish();
