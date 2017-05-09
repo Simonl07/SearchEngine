@@ -34,13 +34,9 @@ public class SingleThreadedQueryHandler implements QueryHandler
 		this.index = index;
 	}
 
-	/**
-	 * Parse the given path and store into the TreeMap.
-	 * 
-	 * @param path of queries
-	 * @param exact search methods
-	 * @throws IOException
-	 */
+
+	
+	@Override
 	public void parse(String path, boolean exact) throws IOException
 	{
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8))
@@ -69,11 +65,6 @@ public class SingleThreadedQueryHandler implements QueryHandler
 	}
 
 	@Override
-	/**
-	 * Write results to given path in JSON format.
-	 * 
-	 * @param path to write results to.
-	 */
 	public void toJSON(Path path) throws IOException
 	{
 		JSONWriter.writeSearchResults(path, results);

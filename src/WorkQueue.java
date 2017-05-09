@@ -3,6 +3,13 @@ import java.util.LinkedList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * 
+ * A WorkQueue consist of a pool of worker thread and a list of Runnable work
+ * 
+ * @author Simonl0425
+ *
+ */
 public class WorkQueue
 {
 	private final Worker[] workers;

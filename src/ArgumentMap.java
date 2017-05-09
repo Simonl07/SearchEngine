@@ -169,6 +169,13 @@ public class ArgumentMap
 		}
 	}
 
+	/**
+	 * return the value with the given path in Integer type, if not found or
+	 * unable to parseInt, -1 is returned.
+	 * 
+	 * @param flag
+	 * @return
+	 */
 	public int getInteger(String flag)
 	{
 		try

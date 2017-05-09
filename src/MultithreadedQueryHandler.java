@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class MultithreadedQueryHandler implements QueryHandler
 {
 	private final TreeMap<String, List<SearchResult>> results;
-	private final InvertedIndex index; // TODO ThreadedInvertedIndex
+	private final ThreadSafeInvertedIndex index;
 	private final WorkQueue queue;
 	private static final Logger log = LogManager.getLogger();
 
@@ -29,7 +29,7 @@ public class MultithreadedQueryHandler implements QueryHandler
 	 * 
 	 * @param index for InvertedIndex
 	 */
-	public MultithreadedQueryHandler(InvertedIndex index, WorkQueue queue)
+	public MultithreadedQueryHandler(ThreadSafeInvertedIndex index, WorkQueue queue)
 	{
 		log.info("MultiThreaded QueryHandler initialized");
 		this.results = new TreeMap<>();
@@ -37,13 +37,7 @@ public class MultithreadedQueryHandler implements QueryHandler
 		this.queue = queue;
 	}
 
-	/**
-	 * Parse the given path and store into the TreeMap.
-	 * 
-	 * @param path of queries
-	 * @param exact search methods
-	 * @throws IOException
-	 */
+	@Override
 	public void parse(String path, boolean exact) throws IOException
 	{
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8))
@@ -51,25 +45,22 @@ public class MultithreadedQueryHandler implements QueryHandler
 			String line = "";
 			while ((line = reader.readLine()) != null)
 			{
-				queue.execute(new SearchTask(line, exact, index, results));
+				queue.execute(new SearchTask(line, exact));
 			}
 		}
-		
-		// TODO queue.finish();
+
+		queue.finish();
 	}
 
-	/**
-	 * write results to given path in JSON format
-	 * 
-	 * @param path path to write to.
-	 */
+	@Override
 	public void toJSON(Path path) throws IOException
 	{
-		// TODO synchronize on results here too
-		JSONWriter.writeSearchResults(path, results);
+		synchronized (results)
+		{
+			JSONWriter.writeSearchResults(path, results);
+		}
 	}
 
-	// TODO Make the class non-static
 	/**
 	 * 
 	 * SearchTask for performing individual search, each search responsible for
@@ -79,14 +70,10 @@ public class MultithreadedQueryHandler implements QueryHandler
 	 * @author Simonl0425
 	 *
 	 */
-	public static class SearchTask implements Runnable
+	public class SearchTask implements Runnable
 	{
 		private String queryString;
 		private boolean exact;
-		
-		// TODO Remove after removing the static keyword
-		private TreeMap<String, List<SearchResult>> results;
-		private InvertedIndex index;
 
 		/**
 		 * Initialize SearchTask
@@ -96,14 +83,13 @@ public class MultithreadedQueryHandler implements QueryHandler
 		 * @param index WordIndex for search
 		 * @param results Map of results to add to.
 		 */
-		public SearchTask(String queryString, boolean exact, InvertedIndex index, TreeMap<String, List<SearchResult>> results)
+		public SearchTask(String queryString, boolean exact)
 		{
 			this.queryString = queryString;
 			this.exact = exact;
-			this.results = results;
-			this.index = index;
 		}
 
+		@Override
 		public void run()
 		{
 			log.trace(Thread.currentThread().getName() + " is performing search on " + queryString);

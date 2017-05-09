@@ -78,22 +78,34 @@ public class InvertedIndex
 			addWord(word, path, start++);
 		}
 	}
-	
-	/* TODO Add this and override in your thread-safe version.
-	public void addAll(InvertedIndex other) {
-		for (String word : other.invertedMap.keySet()) {
-			if (this.invertedMap.containsKey(word) == false) {
+
+	/**
+	 * Add content from another InvertedIndex to this InvertedIndex
+	 * 
+	 * @param other InvertedIndex to add.
+	 */
+	public void addAll(InvertedIndex other)
+	{
+		for (String word: other.invertedMap.keySet())
+		{
+			if (this.invertedMap.containsKey(word) == false)
+			{
 				this.invertedMap.put(word, other.invertedMap.get(word));
-			}
-			else {
-				loop through each path in other
-					if it doesn't exist in this, put
-					else set.addAll to combine the sets
+			} else
+			{
+				for (String path: other.invertedMap.get(word).keySet())
+				{
+					if (!this.invertedMap.get(word).containsKey(path))
+					{
+						this.invertedMap.get(word).put(path, other.invertedMap.get(word).get(path));
+					} else
+					{
+						this.invertedMap.get(word).get(path).addAll(other.invertedMap.get(word).get(path));
+					}
+				}
 			}
 		}
 	}
-	*/
-	
 
 	/**
 	 * perform exact search in the inverted index, and return an ArrayList of

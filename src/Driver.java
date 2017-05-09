@@ -25,6 +25,8 @@ public class Driver
 
 		ArgumentMap argsMap = new ArgumentMap(args);
 
+		ThreadSafeInvertedIndex threadSafe = null;
+
 		InvertedIndex wordIndex = null;
 
 		QueryHandler queryHandler = null;
@@ -36,56 +38,51 @@ public class Driver
 			log.info("-thread flag detected");
 			multithreaded = true;
 			queue = new WorkQueue(argsMap.getInteger("-threads", 5));
+
+			threadSafe = new ThreadSafeInvertedIndex();
 			
-			// TODO ThreadedInvertedIndex threadSafe = new ThreadedInvertedIndex(); (either do this here, or make a reference otuside this block and check if its null later)
-			// TODO wordIndex = threadSafe;
-			
-			wordIndex = new ThreadedInvertedIndex();
-			queryHandler = new MultithreadedQueryHandler(wordIndex, queue); // TODO threadSafe reference
-			
-			/* TODO if (-path) {
-				thread safe reference where needed
-			}*/
+			wordIndex = threadSafe;
+
+			queryHandler = new MultithreadedQueryHandler(threadSafe, queue);
+
+			if (argsMap.hasValue("-path"))
+			{
+				log.info("-path flag detected");
+				try
+				{
+					ThreadedInvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), threadSafe, queue);
+				} catch (IOException e)
+				{
+					log.catching(e);
+					System.out.println("Encountered error when reading from file and building the Inverted Index.");
+					return;
+				}
+			}
 		} else
 		{
 			wordIndex = new InvertedIndex();
-			queryHandler = new SingleThreadedQueryHandler(wordIndex);
-			
-			/*if (-path) {
-				single-threaded version
-			}*/
-		}
 
-		if (argsMap.hasValue("-path"))
-		{
-			log.info("-path flag detected");
-			try
+			queryHandler = new SingleThreadedQueryHandler(wordIndex);
+
+			if (argsMap.hasValue("-path"))
 			{
-				if (multithreaded)
-				{
-					ThreadedInvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), wordIndex, queue);
-				} else
+				log.info("-path flag detected");
+				try
 				{
 					InvertedIndexBuilder.build(DirectoryTraverser.findHTML(Paths.get(argsMap.getString("-path"))), wordIndex);
+				} catch (IOException e)
+				{
+					log.catching(e);
+					System.out.println("Encountered error when reading from file and building the Inverted Index.");
+					return;
 				}
-			} catch (IOException e)
-			{
-				log.catching(e);
-				System.out.println("Encountered error when reading from file and building the Inverted Index.");
-				return;
 			}
 		}
 
 		if (argsMap.hasFlag("-index"))
 		{
 			log.info("-index flag detected");
-			if (multithreaded)
-			{
-				synchronized (queue) // TODO Remove synchronized and the queue.finish()
-				{
-					queue.finish();
-				}
-			}
+
 			String indexPath = argsMap.getString("-index", "index.json");
 			try
 			{
@@ -104,24 +101,7 @@ public class Driver
 			log.info("-query flag detected");
 			try
 			{
-				if (multithreaded) // TODO Remove this block
-				{
-					queue.finish(); // TODO Remove
-					queryHandler = new MultithreadedQueryHandler(wordIndex, queue);
-				} else
-				{
-					queryHandler = new SingleThreadedQueryHandler(wordIndex);
-				}
-				
-				// TODO queryHandler.parse(argsMap.getString("-query"), argsMap.hasFlag("-exact"));
-
-				if (argsMap.hasFlag("-exact"))
-				{
-					queryHandler.parse(argsMap.getString("-query"), true);
-				} else
-				{
-					queryHandler.parse(argsMap.getString("-query"), false);
-				}
+				queryHandler.parse(argsMap.getString("-query"), argsMap.hasFlag("-exact"));
 			} catch (IOException e)
 			{
 				log.catching(e);
@@ -133,11 +113,6 @@ public class Driver
 		if (argsMap.hasFlag("-results"))
 		{
 			log.info("-results flag detected");
-			// TODO Same stuff
-			if (multithreaded)
-			{
-				queue.finish();
-			}
 			String path = argsMap.getString("-results", "results.json");
 			try
 			{
@@ -152,7 +127,6 @@ public class Driver
 
 		if (multithreaded)
 		{
-			queue.finish();
 			queue.shutdown();
 		}
 	}

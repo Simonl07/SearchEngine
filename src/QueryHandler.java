@@ -1,9 +1,8 @@
 import java.io.IOException;
 import java.nio.file.Path;
 
-// TODO Javadoc here, inherit the javadoc in the other classes
-
 /**
+ * QueryHandler interface, As reference.
  * @author Simonl0425
  *
  */
@@ -18,5 +17,12 @@ public interface QueryHandler
 	 */
 	void toJSON(Path path) throws IOException;
 
+	/**
+	 * Parse the given path and store into a local TreeMap.
+	 * 
+	 * @param path of queries
+	 * @param exact search methods
+	 * @throws IOException
+	 */
 	void parse(String path, boolean exact) throws IOException;
 }

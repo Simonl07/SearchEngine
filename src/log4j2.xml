@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration status="OFF">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
                 <PatternLayout pattern="%level %t thread %c{1}:%M %msg%throwable{5}%n"/>
@@ -10,7 +10,7 @@
     </Appenders>
     
     <Loggers>
-        <Root level="INFO">
+        <Root level="OFF">
             <AppenderRef ref="Console" level="INFO"/>
             <AppenderRef ref="MyFile" level="ALL"/>
         </Root>
