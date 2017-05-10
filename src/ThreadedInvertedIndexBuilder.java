@@ -11,9 +11,8 @@ import org.apache.logging.log4j.Logger;
  * @author Simonl0425
  *
  */
-public class ThreadedInvertedIndexBuilder extends InvertedIndexBuilder
+public class ThreadedInvertedIndexBuilder
 {
-	// TODO Remove: extends InvertedIndexBuilder
 	
 	private static Logger log = LogManager.getLogger();
 
