@@ -56,7 +56,7 @@ public class JSONWriter
 		{
 			writer.write(",\n" + indent(level) + it.next());
 		}
-		writer.write(indent(level - 1) + "\n]");
+		writer.write( "\n" + indent(level-1) +"]");
 	}
 
 	/**

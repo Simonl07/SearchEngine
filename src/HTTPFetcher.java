@@ -8,8 +8,12 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * An example class designed to make fetching the results of different HTTP
@@ -23,6 +27,9 @@ public class HTTPFetcher
 	/** Version of HTTP used and supported. */
 	public static final String version = "HTTP/1.1";
 
+	private static Logger log = LogManager.getLogger();
+	
+	
 	// See: http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1.1
 	/** Valid HTTP method types. */
 	public static enum HTTP
@@ -136,6 +143,7 @@ public class HTTPFetcher
 	 */
 	public static String fetchHTML(String url) throws UnknownHostException, MalformedURLException, IOException
 	{
+		log.info("Fetching " + url);
 		URL target = new URL(url);
 		String request = craftHTTPRequest(target, HTTP.GET);
 		List<String> lines = fetchLines(target, request);
@@ -159,7 +167,7 @@ public class HTTPFetcher
 		{
 			return String.join(System.lineSeparator(), lines.subList(start + 1, end));
 		}
-
+		log.warn("NULL returned");
 		return null;
 	}
 

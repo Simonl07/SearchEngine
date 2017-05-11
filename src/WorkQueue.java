@@ -171,9 +171,10 @@ public class WorkQueue
 				{
 					System.err.println("Encounter err when running runnable r");
 					log.warn("Warning: Work queue encountered an " + "exception while running.");
+					e.printStackTrace();
 				}
 
-				log.trace("Job done, " + pending + " tasks are left in workqueue.");
+				log.trace("Completed a " + r.getClass() + ", "+ pending + " tasks are left in workqueue.");
 				decrementPending();
 			}
 		}

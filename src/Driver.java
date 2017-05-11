@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Paths;
 
 import org.apache.logging.log4j.LogManager;
@@ -78,6 +80,26 @@ public class Driver
 				}
 			}
 		}
+		
+		if(argsMap.hasValue("-url"))
+		{
+			log.info("-url flag detected");
+			int limit = argsMap.getInteger("-limit", 50);
+			log.info("Limit set to " + limit);
+			try
+			{
+				Crawler crawler = new Crawler(wordIndex, new URL(argsMap.getString("-url")), limit);
+				if(multithreaded)
+				{
+					crawler.start(queue);
+				}else{
+					crawler.crawl(new URL(argsMap.getString("-url")));
+				}
+			} catch (MalformedURLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 
 		if (argsMap.hasFlag("-index"))
 		{
@@ -124,6 +146,7 @@ public class Driver
 				return;
 			}
 		}
+		
 
 		if (multithreaded)
 		{

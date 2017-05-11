@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 /**
  * Builder for building an invertedIndex Object.
@@ -54,5 +56,12 @@ public class InvertedIndexBuilder
 			index.addAll(path.toString(), words);
 		}
 		return;
+	}
+	
+	public static void build(URL url, String content, InvertedIndex index)
+	{
+		String[] words = WordParser.parseWords(HTMLCleaner.stripHTML(content));
+		
+		index.addAll(url.toString(), words);
 	}
 }
