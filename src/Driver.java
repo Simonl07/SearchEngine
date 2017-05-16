@@ -88,13 +88,8 @@ public class Driver
 			log.info("Limit set to " + limit);
 			try
 			{
-				Crawler crawler = new Crawler(wordIndex, new URL(argsMap.getString("-url")), limit);
-				if(multithreaded)
-				{
-					crawler.start(queue);
-				}else{
-					crawler.crawl(new URL(argsMap.getString("-url")));
-				}
+				Crawler crawler = new Crawler(wordIndex);
+				crawler.crawl(new URL(argsMap.getString("-url")), limit);
 			} catch (MalformedURLException e)
 			{
 				e.printStackTrace();
