@@ -60,8 +60,9 @@ public class SearchServlet extends HttpServlet
 		} else
 		{
 			CookiesConfigServlet.setDNT(true);
-			out.printf("<p>Your visits will not be tracked.</p>");
 		}
+		
+		out.print(CookiesConfigServlet.getDNT() ? "<p>Your visits will not be tracked.</p>" : "");
 
 		if (CookiesConfigServlet.getDNT() == false)
 		{

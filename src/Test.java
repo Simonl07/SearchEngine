@@ -5,7 +5,7 @@ public class Test
 		String arguments[] = {
 				"-url", "http://cs.usfca.edu/",
 				"-index", "index.json",
-				"-limit", "60",
+				"-limit", "300",
 				"-threads", "10",
 				"-port", "80",
 		};
