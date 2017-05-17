@@ -19,8 +19,6 @@ public class SearchServlet extends HttpServlet
 
 	public SearchServlet(InvertedIndex index, QueryHandler queryHandler)
 	{
-		System.out.println("Index is a " + index.getClass());
-		System.out.println("QaueryHandler is a " + queryHandler.getClass());
 		this.index = index;
 		this.queryHandler = queryHandler;
 	}
@@ -50,12 +48,9 @@ public class SearchServlet extends HttpServlet
 
 			for (String q: results.keySet())
 			{
-				System.out.println("q" + q);
-				System.out.println(results.get(q));
 				for (SearchResult result: results.get(q))
 				{
 					out.printf("<a href=\"" + result.getPath() + "\">" + result.getPath() + "</a><br/>");
-					
 				}
 			}
 		}
@@ -101,7 +96,6 @@ public class SearchServlet extends HttpServlet
 	{
 		queryHandler.parse(query, false);
 		
-		System.out.println("CHECKKKKKKKKKKKKKKKK");
 		TreeMap<String, List<SearchResult>> results = queryHandler.getResultsMap();
 
 		return results;

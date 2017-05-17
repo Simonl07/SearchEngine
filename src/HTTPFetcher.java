@@ -28,8 +28,7 @@ public class HTTPFetcher
 	public static final String version = "HTTP/1.1";
 
 	private static Logger log = LogManager.getLogger();
-	
-	
+
 	// See: http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1.1
 	/** Valid HTTP method types. */
 	public static enum HTTP
@@ -148,8 +147,8 @@ public class HTTPFetcher
 		String request = craftHTTPRequest(target, HTTP.GET);
 		List<String> lines = fetchLines(target, request);
 
-		//System.out.println(fetchHeaders(url));
-		
+		// System.out.println(fetchHeaders(url));
+
 		int start = 0;
 		int end = lines.size();
 
@@ -168,7 +167,7 @@ public class HTTPFetcher
 			return String.join(System.lineSeparator(), lines.subList(start + 1, end));
 		}
 		log.warn("NULL returned");
-		return null;
+		return "";
 	}
 
 	/**

@@ -101,7 +101,6 @@ public class MultithreadedQueryHandler implements QueryHandler
 		@Override
 		public void run()
 		{
-			System.out.println("CHECK");
 			log.info(Thread.currentThread().getName() + " is performing search on " + queryString);
 			String queries[] = WordParser.parseWords(queryString);
 			if (queries.length == 0)
@@ -121,8 +120,6 @@ public class MultithreadedQueryHandler implements QueryHandler
 				
 				local = index.partialSearch(queries);
 			}
-
-			log.info("local + " + local);
 			
 			
 			String queryString = String.join(" ", queries);

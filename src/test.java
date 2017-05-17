@@ -3,10 +3,10 @@ public class test
 	public static void main(String args[]) throws Exception 
 	{
 		String arguments[] = {
-				"-url", "http://cs.usfca.edu/~cs212/",
+				"-url", "http://www.google.com",
 				"-index", "index.json",
-				"-limit", "100",
-				"-threads", "5",
+				"-limit", "500",
+				"-threads", "20",
 				"-port", "80",
 		};
 		
