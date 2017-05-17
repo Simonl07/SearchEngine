@@ -4,7 +4,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 
 /**
  * Builder for building an invertedIndex Object.
@@ -57,11 +56,18 @@ public class InvertedIndexBuilder
 		}
 		return;
 	}
-	
+
+	/**
+	 * Build as given url and HTML, no file reading
+	 * 
+	 * @param url the url of the HTML file
+	 * @param content content of HTML
+	 * @param index InvertedIndex to build
+	 */
 	public static void build(URL url, String content, InvertedIndex index)
 	{
 		String[] words = WordParser.parseWords(HTMLCleaner.stripHTML(content));
-		
+
 		index.addAll(url.toString(), words);
 	}
 }

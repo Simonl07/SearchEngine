@@ -1,11 +1,11 @@
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.TreeMap;
 
 /**
  * QueryHandler interface, As reference.
+ * 
  * @author Simonl0425
  *
  */
@@ -28,9 +28,19 @@ public interface QueryHandler
 	 * @throws IOException
 	 */
 	void parse(Path path, boolean exact) throws IOException;
-	
+
+	/**
+	 * Parse individual query instead of a whole file
+	 * 
+	 * @param query query String
+	 * @param exact mode of searching
+	 */
 	void parse(String query, boolean exact);
-	
-	
+
+	/**
+	 * Return a copy of the TreeMap
+	 * 
+	 * @return
+	 */
 	TreeMap<String, List<SearchResult>> getResultsMap();
 }

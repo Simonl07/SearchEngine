@@ -39,11 +39,9 @@ public class Driver
 		WorkQueue queue = null;
 
 		Server server = null;
-		
+
 		Crawler crawler = null;
-		
-		
-		
+
 		if (argsMap.hasValue("-threads") && argsMap.getInteger("-threads") > 0)
 		{
 			log.info("-thread flag detected");
@@ -51,7 +49,7 @@ public class Driver
 			queue = new WorkQueue(argsMap.getInteger("-threads", 5));
 
 			threadSafe = new ThreadSafeInvertedIndex();
-			
+
 			wordIndex = threadSafe;
 
 			queryHandler = new MultithreadedQueryHandler(threadSafe, queue);
@@ -89,9 +87,8 @@ public class Driver
 				}
 			}
 		}
-		
-		
-		if(argsMap.hasValue("-url"))
+
+		if (argsMap.hasValue("-url"))
 		{
 			log.info("-url flag detected");
 			int limit = argsMap.getInteger("-limit", 50);
@@ -105,15 +102,11 @@ public class Driver
 				e.printStackTrace();
 			}
 		}
-		
-		if(argsMap.hasValue("-port"))
+
+		if (argsMap.hasValue("-port"))
 		{
-			System.out.println("Workqueue: " + queue.getClass());
-			System.out.println("Index: " + wordIndex.getClass());
-			System.out.println("Qhandler: " + queryHandler.getClass());
-			
-			server = new Server(argsMap.getInteger("-port", 80));
-			
+			server = new Server(argsMap.getInteger("-port", 8080));
+
 			ServletHandler handler = new ServletHandler();
 			handler.addServletWithMapping(new ServletHolder(new SearchServlet(wordIndex, queryHandler)), "/");
 			handler.addServletWithMapping(CookiesConfigServlet.class, "/history");
@@ -125,7 +118,9 @@ public class Driver
 				server.join();
 			} catch (Exception e)
 			{
-				e.printStackTrace();
+				log.catching(e);
+				System.err.println("Encountered error when initializing the server.");
+				return;
 			}
 		}
 
@@ -174,9 +169,6 @@ public class Driver
 				return;
 			}
 		}
-		
-		
-		
 
 		if (multithreaded)
 		{

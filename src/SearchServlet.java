@@ -5,13 +5,11 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -22,16 +20,27 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * 
+ * Handle the main page of the search engine, also perform search tasks.
+ * 
+ * @author Simonl0425
+ *
+ */
+@SuppressWarnings("serial")
 public class SearchServlet extends HttpServlet
 {
-
-	private InvertedIndex index;
 	private QueryHandler queryHandler;
 	private boolean exact;
 
+	/**
+	 * Initialize the Servlet with necessary data
+	 * 
+	 * @param index
+	 * @param queryHandler
+	 */
 	public SearchServlet(InvertedIndex index, QueryHandler queryHandler)
 	{
-		this.index = index;
 		this.queryHandler = queryHandler;
 		exact = false;
 	}
@@ -53,7 +62,7 @@ public class SearchServlet extends HttpServlet
 		out.printf("<head><title>Search Engine</title></head>%n");
 		out.printf("<body>%n");
 		out.print("<h1>Search Engine</h1>");
-		
+
 		out.print(CookiesConfigServlet.getDNT() ? "<p>Your activities will not be tracked.</p>" : "");
 
 		if (CookiesConfigServlet.getDNT() == false)
@@ -119,13 +128,14 @@ public class SearchServlet extends HttpServlet
 			long start = System.currentTimeMillis();
 			List<SearchResult> results = search(query);
 			long end = System.currentTimeMillis();
-			if(results != null){
-			out.println("<p>" + results.size() + " results. (" + (end - start) / 1000.0 + " seconds)</p>");
-
-			for (SearchResult result: results)
+			if (results != null)
 			{
-				out.println("<a href=\"" + request.getServletPath() + "?visit=" + result.getPath() + "\">" + result.getPath() + "</a><br/>\n");
-			}
+				out.println("<p>" + results.size() + " results. (" + (end - start) / 1000.0 + " seconds)</p>");
+
+				for (SearchResult result: results)
+				{
+					out.println("<a href=\"" + request.getServletPath() + "?visit=" + result.getPath() + "\">" + result.getPath() + "</a><br/>\n");
+				}
 			}
 		}
 
@@ -191,10 +201,16 @@ public class SearchServlet extends HttpServlet
 		out.printf("</form>\n%n");
 	}
 
+	/**
+	 * Perform a search with given query
+	 * 
+	 * @param query query to search
+	 * @return a list of SearchResult objects
+	 */
 	private List<SearchResult> search(String query)
 	{
 		queryHandler.parse(query, exact);
-		
+
 		String queries[] = WordParser.parseWords(query);
 		Arrays.sort(queries);
 		query = String.join(" ", queries);
@@ -202,7 +218,7 @@ public class SearchServlet extends HttpServlet
 		List<SearchResult> results = queryHandler.getResultsMap().get(query);
 
 		System.out.println(queryHandler.getResultsMap());
-		
+
 		return results;
 	}
 

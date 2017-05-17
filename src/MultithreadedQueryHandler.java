@@ -1,10 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
@@ -63,6 +61,11 @@ public class MultithreadedQueryHandler implements QueryHandler
 	}
 
 	@SuppressWarnings("unchecked")
+	/**
+	 * Return a copy of the results object of this handler;
+	 * 
+	 * @return Map of query to results.
+	 */
 	public TreeMap<String, List<SearchResult>> getResultsMap()
 	{
 		log.info("results size: " + results.size());
@@ -93,7 +96,7 @@ public class MultithreadedQueryHandler implements QueryHandler
 		 */
 		public SearchTask(String queryString, boolean exact)
 		{
-			log.info("SearchTask: " + queryString + " constructed, exact = "+exact);
+			log.info("SearchTask: " + queryString + " constructed, exact = " + exact);
 			this.queryString = queryString;
 			this.exact = exact;
 		}
@@ -105,12 +108,12 @@ public class MultithreadedQueryHandler implements QueryHandler
 			String queries[] = WordParser.parseWords(queryString);
 			if (queries.length == 0)
 			{
-				
+
 				log.warn("zero length queries detected");
 				return;
 			}
 			Arrays.sort(queries);
-			
+
 			List<SearchResult> local;
 			if (exact)
 			{
@@ -119,8 +122,7 @@ public class MultithreadedQueryHandler implements QueryHandler
 			{
 				local = index.partialSearch(queries);
 			}
-			
-			
+
 			String queryString = String.join(" ", queries);
 			synchronized (results)
 			{
@@ -130,7 +132,6 @@ public class MultithreadedQueryHandler implements QueryHandler
 
 	}
 
-
 	@Override
 	public void parse(String query, boolean exact)
 	{
@@ -138,7 +139,10 @@ public class MultithreadedQueryHandler implements QueryHandler
 		queue.execute(new SearchTask(query, exact));
 		queue.finish();
 	}
-	
+
+	/**
+	 * Clear the results in the treeMap.
+	 */
 	private void clearResults()
 	{
 		results.clear();

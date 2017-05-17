@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
@@ -34,8 +33,6 @@ public class SingleThreadedQueryHandler implements QueryHandler
 		this.index = index;
 	}
 
-
-	
 	@Override
 	public void parse(Path path, boolean exact) throws IOException
 	{
@@ -48,7 +45,7 @@ public class SingleThreadedQueryHandler implements QueryHandler
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public TreeMap<String, List<SearchResult>> getResultsMap()
 	{
@@ -60,8 +57,6 @@ public class SingleThreadedQueryHandler implements QueryHandler
 	{
 		JSONWriter.writeSearchResults(path, results);
 	}
-
-
 
 	@Override
 	public void parse(String query, boolean exact)

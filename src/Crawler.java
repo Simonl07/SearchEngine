@@ -13,6 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Web crawler for crawling html from urls, and build and invertedIndex.
+ * 
+ * @author Simonl0425
+ *
+ */
+@SuppressWarnings("serial")
 public class Crawler extends HttpServlet
 {
 	private int limit;
@@ -22,6 +29,11 @@ public class Crawler extends HttpServlet
 	private HashSet<URL> seeds;
 	private static Logger log = LogManager.getLogger();
 
+	/**
+	 * Initialize Crawler
+	 * 
+	 * @param index wordIndex to build
+	 */
 	public Crawler(InvertedIndex index)
 	{
 		this.queue = new WorkQueue();
@@ -30,6 +42,12 @@ public class Crawler extends HttpServlet
 		this.seeds = new HashSet<URL>();
 	}
 
+	/**
+	 * Start the crawl process by executing the seed url.
+	 * 
+	 * @param seed the initial url to start
+	 * @param limit maximum links to crawl.
+	 */
 	public void crawl(URL seed, int limit)
 	{
 		this.limit = limit;
@@ -40,6 +58,7 @@ public class Crawler extends HttpServlet
 		log.info(urls.size());
 	}
 
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		log.info("GET " + request.getRequestURL().toString());
@@ -51,16 +70,16 @@ public class Crawler extends HttpServlet
 		out.println("<h1>Crawler</h1>");
 
 		out.println("<h4>Seeds: </h4>");
-		
-		for(URL u: seeds)
+
+		for (URL u: seeds)
 		{
 			out.println("<a href=\"" + u + "\">" + u + "</a>" + "<br/>");
 		}
-		
+
 		out.print("<form id=\"form1\" name=\"form1\" method=\"post\" action=\"/crawler\">" + "<p>Seed URL:  <input type=\"text\" name=\"url\" size=\"20\" maxlength=\"70\"> Links Limit:  "
 				+ "<input type=\"text\" name=\"limit\" size=\"20\" maxlength=\"70\">" + "<input type=\"submit\" name=\"submit\" id=\"submit\" value=\"Crawl\" /> <a href=\"/\">back</a></p></form>");
 
-		if(request.getParameter("error") != null)
+		if (request.getParameter("error") != null)
 		{
 			out.println("<p><strong>Invalid Input or URL</strong></p>");
 		}
@@ -79,35 +98,41 @@ public class Crawler extends HttpServlet
 		out.printf("</html>%n");
 	}
 
+	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		log.info("POST " + request.getRequestURL().toString());
-		PrintWriter out = response.getWriter();
 		try
 		{
 			String urlString = request.getParameter("url");
 			String limit = request.getParameter("limit");
 
 			this.limit = this.limit + Integer.parseInt(limit);
-			
-			if(urlString == null || limit == null)
+
+			if (urlString == null || limit == null)
 			{
 				throw new IllegalArgumentException();
 			}
 			URL url = new URL(urlString);
-			
+
 			crawl(url, this.limit);
-			
-			
+
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.sendRedirect(request.getServletPath());
-			
+
 		} catch (IllegalArgumentException | MalformedURLException e)
 		{
 			response.sendRedirect(request.getServletPath() + "?error=1");
 		}
 	}
 
+	/**
+	 * 
+	 * Individual Crawl task for each url.
+	 * 
+	 * @author Simonl0425
+	 *
+	 */
 	public class CrawlTask implements Runnable
 	{
 		private URL url;
