@@ -1,21 +1,17 @@
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Paths;
-
 public class test
 {
 	public static void main(String args[]) throws Exception 
 	{
-		InvertedIndex index = new ThreadSafeInvertedIndex();
+		String arguments[] = {
+				"-url", "http://cs.usfca.edu/~cs212/",
+				"-index", "index.json",
+				"-limit", "100",
+				"-threads", "5",
+				"-port", "80",
+		};
 		
-		WorkQueue queue = new WorkQueue(10);
 		
-		
-		queue.finish();
-		index.toJSON(Paths.get("results.json"));
-		queue.shutdown();
-		
+		Driver.main(arguments);
 	}
 
 }

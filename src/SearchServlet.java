@@ -1,0 +1,110 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.TreeMap;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class SearchServlet extends HttpServlet
+{
+
+	private InvertedIndex index;
+	private QueryHandler queryHandler;
+
+	public SearchServlet(InvertedIndex index, QueryHandler queryHandler)
+	{
+		System.out.println("Index is a " + index.getClass());
+		System.out.println("QaueryHandler is a " + queryHandler.getClass());
+		this.index = index;
+		this.queryHandler = queryHandler;
+	}
+
+	private static Logger log = LogManager.getLogger();
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		System.out.println(Thread.currentThread().getName() + ": " + request.getRequestURI());
+
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String query = request.getParameter("query");
+		
+		
+		out.printf("<html>%n");
+		out.printf("<head><title>Search Engine V1.0</title></head>%n");
+		out.printf("<body>%n");
+		
+		printForm(request, response);
+		if (query != null)
+		{
+			System.out.println("check");
+			
+			TreeMap<String, List<SearchResult>> results = search(query);
+
+			for (String q: results.keySet())
+			{
+				System.out.println("q" + q);
+				System.out.println(results.get(q));
+				for (SearchResult result: results.get(q))
+				{
+					out.printf("<a href=\"" + result.getPath() + "\">" + result.getPath() + "</a><br/>");
+					
+				}
+			}
+		}
+		
+		out.printf("</body>%n");
+		out.printf("</html>%n");
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+
+		response.setContentType("text/html");
+		response.setStatus(HttpServletResponse.SC_OK);
+
+		log.info("MessageServlet ID " + this.hashCode() + " handling POST request.");
+
+		String query = request.getParameter("query") == null ? "" : request.getParameter("query");
+
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.sendRedirect(request.getServletPath() + "?query=" + query);
+	}
+
+	private void printForm(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		PrintWriter out = response.getWriter();
+		
+		out.printf("<form method=\"post\" action=\"%s\">%n", request.getServletPath());
+		out.printf("<table cellspacing=\"0\" cellpadding=\"2\"%n");
+		out.printf("<tr>%n");
+		out.printf("\t<td nowrap>Query:</td>%n");
+		out.printf("\t<td>%n");
+		out.printf("\t\t<input type=\"text\" name=\"query\" maxlength=\"50\" size=\"20\">%n");
+		out.printf("\t</td>%n");
+		out.printf("</tr>%n");
+		out.printf("</table>%n");
+		out.printf("<p><input type=\"submit\" value=\"Search\"></p>\n%n");
+		out.printf("</form>\n%n");
+	}
+
+	private TreeMap<String, List<SearchResult>> search(String query)
+	{
+		queryHandler.parse(query, false);
+		
+		System.out.println("CHECKKKKKKKKKKKKKKKK");
+		TreeMap<String, List<SearchResult>> results = queryHandler.getResultsMap();
+
+		return results;
+	}
+
+}

@@ -63,6 +63,7 @@ public class WorkQueue
 		{
 			pending++;
 			queue.addLast(r);
+			log.info("Executed " + r.getClass());
 			queue.notifyAll();
 		}
 	}
@@ -157,15 +158,18 @@ public class WorkQueue
 
 					if (shutdown)
 					{
+						System.out.println("SHHUTDOWN!");
 						break;
 					} else
 					{
 						r = queue.removeFirst();
+						System.out.println("R obtained " + r.getClass());
 					}
 				}
 
 				try
 				{
+					log.warn("WorkQueue Excecuting a " + r.getClass());
 					r.run();
 				} catch (RuntimeException e)
 				{

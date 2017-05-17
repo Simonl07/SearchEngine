@@ -5,6 +5,9 @@ import java.nio.file.Paths;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 /**
  * Parses command-line arguments to build an inverted index.
@@ -35,6 +38,10 @@ public class Driver
 
 		WorkQueue queue = null;
 
+		Server server = null;
+		
+		
+		
 		if (argsMap.hasValue("-threads") && argsMap.getInteger("-threads") > 0)
 		{
 			log.info("-thread flag detected");
@@ -81,6 +88,7 @@ public class Driver
 			}
 		}
 		
+		
 		if(argsMap.hasValue("-url"))
 		{
 			log.info("-url flag detected");
@@ -91,6 +99,28 @@ public class Driver
 				Crawler crawler = new Crawler(wordIndex);
 				crawler.crawl(new URL(argsMap.getString("-url")), limit);
 			} catch (MalformedURLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		if(argsMap.hasValue("-port"))
+		{
+			System.out.println("Workqueue: " + queue.getClass());
+			System.out.println("Index: " + wordIndex.getClass());
+			System.out.println("Qhandler: " + queryHandler.getClass());
+			
+			server = new Server(argsMap.getInteger("-port", 80));
+			
+			ServletHandler handler = new ServletHandler();
+			handler.addServletWithMapping(new ServletHolder(new SearchServlet(wordIndex, queryHandler)), "/");
+			
+			server.setHandler(handler);
+			try
+			{
+				server.start();
+				server.join();
+			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
@@ -118,7 +148,7 @@ public class Driver
 			log.info("-query flag detected");
 			try
 			{
-				queryHandler.parse(argsMap.getString("-query"), argsMap.hasFlag("-exact"));
+				queryHandler.parse(Paths.get(argsMap.getString("-query")), argsMap.hasFlag("-exact"));
 			} catch (IOException e)
 			{
 				log.catching(e);
@@ -141,6 +171,8 @@ public class Driver
 				return;
 			}
 		}
+		
+		
 		
 
 		if (multithreaded)

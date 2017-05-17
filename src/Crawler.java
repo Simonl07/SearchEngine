@@ -23,8 +23,10 @@ public class Crawler
 	public void crawl(URL seed, int limit)
 	{
 		this.limit = limit;
+		urls.add(seed);
 		queue.execute(new CrawlTask(seed));
 		queue.finish();
+		log.info(urls.size());
 	}
 	
 
@@ -34,37 +36,38 @@ public class Crawler
 
 		public CrawlTask(URL url)
 		{
+			log.info("CrawlTask constructed: " + url );
 			this.url = url;
 		}
 
 		@Override
 		public void run()
 		{
-			synchronized(urls)
-			{
-				if(urls.size() >= limit || urls.contains(url))
-				{
-					return;
-				}
-				urls.add(url);
-			}
-			
 			try
 			{
 				InvertedIndex local = new InvertedIndex();
 				String html = HTTPFetcher.fetchHTML(url.toString());
 				InvertedIndexBuilder.build(url, html, local);
 				ArrayList<URL> links = LinkParser.listLinks(url, html);
-				
+				log.info("found " + links.size() + " links on " + url);
 				
 				synchronized(index)
 				{
 					index.addAll(local);
 				}
-				
-				
+
+
 				for(URL u: links)
 				{
+					synchronized(urls)
+					{
+						if(urls.size() >= limit || urls.contains(u))
+						{
+							continue;
+						}
+						urls.add(u);
+					}
+
 					queue.execute(new CrawlTask(u));
 				}
 				

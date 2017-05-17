@@ -37,37 +37,51 @@ public class SingleThreadedQueryHandler implements QueryHandler
 
 	
 	@Override
-	public void parse(String path, boolean exact) throws IOException
+	public void parse(Path path, boolean exact) throws IOException
 	{
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8))
+		try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8))
 		{
 			String line = "";
 			while ((line = reader.readLine()) != null)
 			{
-				String queries[] = WordParser.parseWords(line);
-
-				if (queries.length == 0)
-				{
-					log.warn("zero length queries detected");
-					continue;
-				}
-
-				Arrays.sort(queries);
-				if (exact)
-				{
-					results.put(String.join(" ", queries), index.exactSearch(queries));
-				} else
-				{
-					results.put(String.join(" ", queries), index.partialSearch(queries));
-				}
+				parse(line, exact);
 			}
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public TreeMap<String, List<SearchResult>> getResultsMap()
+	{
+		return (TreeMap<String, List<SearchResult>>) results.clone();
 	}
 
 	@Override
 	public void toJSON(Path path) throws IOException
 	{
 		JSONWriter.writeSearchResults(path, results);
+	}
+
+
+
+	@Override
+	public void parse(String query, boolean exact)
+	{
+		String words[] = WordParser.parseWords(query);
+
+		if (words.length == 0)
+		{
+			log.warn("zero length queries detected");
+			return;
+		}
+
+		Arrays.sort(words);
+		if (exact)
+		{
+			results.put(String.join(" ", words), index.exactSearch(words));
+		} else
+		{
+			results.put(String.join(" ", words), index.partialSearch(words));
+		}
 	}
 
 }

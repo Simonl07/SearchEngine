@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,9 +39,9 @@ public class MultithreadedQueryHandler implements QueryHandler
 	}
 
 	@Override
-	public void parse(String path, boolean exact) throws IOException
+	public void parse(Path path, boolean exact) throws IOException
 	{
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8))
+		try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8))
 		{
 			String line = "";
 			while ((line = reader.readLine()) != null)
@@ -59,6 +60,13 @@ public class MultithreadedQueryHandler implements QueryHandler
 		{
 			JSONWriter.writeSearchResults(path, results);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public TreeMap<String, List<SearchResult>> getResultsMap()
+	{
+		log.info("results size: " + results.size());
+		return (TreeMap<String, List<SearchResult>>) results.clone();
 	}
 
 	/**
@@ -85,6 +93,7 @@ public class MultithreadedQueryHandler implements QueryHandler
 		 */
 		public SearchTask(String queryString, boolean exact)
 		{
+			log.info("SearchTask: " + queryString + " constructed, exact = "+exact);
 			this.queryString = queryString;
 			this.exact = exact;
 		}
@@ -92,24 +101,30 @@ public class MultithreadedQueryHandler implements QueryHandler
 		@Override
 		public void run()
 		{
-			log.trace(Thread.currentThread().getName() + " is performing search on " + queryString);
+			System.out.println("CHECK");
+			log.info(Thread.currentThread().getName() + " is performing search on " + queryString);
 			String queries[] = WordParser.parseWords(queryString);
 			if (queries.length == 0)
 			{
+				
 				log.warn("zero length queries detected");
 				return;
 			}
 			Arrays.sort(queries);
-
+			
 			List<SearchResult> local;
 			if (exact)
 			{
 				local = index.exactSearch(queries);
 			} else
 			{
+				
 				local = index.partialSearch(queries);
 			}
 
+			log.info("local + " + local);
+			
+			
 			String queryString = String.join(" ", queries);
 			synchronized (results)
 			{
@@ -117,6 +132,20 @@ public class MultithreadedQueryHandler implements QueryHandler
 			}
 		}
 
+	}
+
+
+	@Override
+	public void parse(String query, boolean exact)
+	{
+		clearResults();
+		queue.execute(new SearchTask(query, exact));
+		queue.finish();
+	}
+	
+	private void clearResults()
+	{
+		results.clear();
 	}
 
 }

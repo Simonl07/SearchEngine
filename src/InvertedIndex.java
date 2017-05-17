@@ -116,7 +116,7 @@ public class InvertedIndex
 	 */
 	public ArrayList<SearchResult> exactSearch(String[] queries)
 	{
-		log.trace("performing exact search on " + Arrays.toString(queries));
+		log.info("performing exact search on " + Arrays.toString(queries));
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
 
@@ -141,7 +141,7 @@ public class InvertedIndex
 	 */
 	public ArrayList<SearchResult> partialSearch(String[] queries)
 	{
-		log.trace("performing partial search on " + Arrays.toString(queries));
+		log.info("performing partial search on " + Arrays.toString(queries));
 		HashMap<String, SearchResult> results = new HashMap<>();
 		ArrayList<SearchResult> finalResults = new ArrayList<>();
 

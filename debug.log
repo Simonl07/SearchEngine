@@ -1,1 +1,655 @@
-[10:28:45.357] TRACE main InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.085] INFO  main Driver:main -thread flag detected
+[00:31:05.090] INFO  main WorkQueue:<init> WorkQueue with 5 workers initialized
+[00:31:05.090] TRACE main InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.090] INFO  main ThreadSafeInvertedIndex:<init> Multithreaded Index initialized
+[00:31:05.091] INFO  main MultithreadedQueryHandler:<init> MultiThreaded QueryHandler initialized
+[00:31:05.091] INFO  main Driver:main -url flag detected
+[00:31:05.091] INFO  main Driver:main Limit set to 100
+[00:31:05.092] INFO  main WorkQueue:<init> WorkQueue with 5 workers initialized
+[00:31:05.095] INFO  main Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/
+[00:31:05.095] INFO  main WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.095] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.095] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.096] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/
+[00:31:05.155] INFO  Thread-10 Crawler:run found 7 links on http://cs.usfca.edu/~cs212/
+[00:31:05.156] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/
+[00:31:05.156] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.156] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/docs/
+[00:31:05.156] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.156] WARN  Thread-6 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.156] TRACE Thread-6 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.156] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/gutenberg/
+[00:31:05.156] INFO  Thread-6 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/
+[00:31:05.156] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.156] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.156] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/
+[00:31:05.156] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.157] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.156] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.157] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/docs/
+[00:31:05.157] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.157] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/
+[00:31:05.157] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/gutenberg/
+[00:31:05.157] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.157] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.157] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.157] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/
+[00:31:05.157] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/
+[00:31:05.157] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.157] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/
+[00:31:05.157] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.158] TRACE Thread-10 WorkQueue:run Completed a class Crawler$CrawlTask, 8 tasks are left in workqueue.
+[00:31:05.158] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.158] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.158] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/
+[00:31:05.171] INFO  Thread-9 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/docs/
+[00:31:05.172] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 7 tasks are left in workqueue.
+[00:31:05.172] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.172] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.172] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/
+[00:31:05.172] INFO  Thread-7 Crawler:run found 4 links on http://cs.usfca.edu/~cs212/gutenberg/
+[00:31:05.172] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/gutenberg/31516-h/31516-h.htm
+[00:31:05.173] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.173] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/gutenberg/32032-h/32032-h.htm
+[00:31:05.173] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.173] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/gutenberg/32154-h/32154-h.htm
+[00:31:05.173] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.173] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/gutenberg/32522-h/32522-h.htm
+[00:31:05.173] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.174] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 10 tasks are left in workqueue.
+[00:31:05.174] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.174] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.174] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/
+[00:31:05.182] INFO  Thread-8 Crawler:run found 20 links on http://cs.usfca.edu/~cs212/numpy/
+[00:31:05.182] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/genindex.html
+[00:31:05.182] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.183] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://scipy.org/
+[00:31:05.183] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.183] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/user/index.html
+[00:31:05.183] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.183] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/reference/index.html
+[00:31:05.183] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.184] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/f2py/index.html
+[00:31:05.184] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.184] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/dev/index.html
+[00:31:05.184] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.184] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/glossary.html
+[00:31:05.184] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.185] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/search.html
+[00:31:05.185] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.185] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/contents.html
+[00:31:05.185] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.185] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/bugs.html
+[00:31:05.185] INFO  Thread-9 Crawler:run found 9 links on http://cs.usfca.edu/~cs212/simple/
+[00:31:05.185] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.185] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/a/b/c/subdir.html
+[00:31:05.185] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/about.html
+[00:31:05.185] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.186] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/capital_extension.HTML
+[00:31:05.186] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.186] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.186] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/neps/index.html
+[00:31:05.186] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/double_extension.html.txt
+[00:31:05.186] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.186] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/release.html
+[00:31:05.186] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.186] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.186] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/empty.html
+[00:31:05.187] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.187] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/numpy/license.html
+[00:31:05.187] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/hello.html
+[00:31:05.187] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.187] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.187] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://www.tramy.us/
+[00:31:05.187] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/mixed_case.htm
+[00:31:05.188] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.188] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.188] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://docs.scipy.org/numpy/
+[00:31:05.188] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/no_extension
+[00:31:05.188] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.188] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://docs.scipy.org/doc/numpy-dev/dev/
+[00:31:05.188] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.188] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.188] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/position.html
+[00:31:05.189] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.189] INFO  Thread-8 Crawler:<init> CrawlTask constructed: http://sphinx.pocoo.org/
+[00:31:05.189] INFO  Thread-9 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/simple/symbols.html
+[00:31:05.189] INFO  Thread-8 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.189] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 36 tasks are left in workqueue.
+[00:31:05.189] INFO  Thread-9 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.189] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 36 tasks are left in workqueue.
+[00:31:05.189] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.189] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.189] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.189] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.189] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/gutenberg/31516-h/31516-h.htm
+[00:31:05.189] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/gutenberg/32032-h/32032-h.htm
+[00:31:05.190] INFO  Thread-7 Crawler:run found 15 links on http://cs.usfca.edu/~cs212/wdgcss/
+[00:31:05.190] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/stylesheets-now.html
+[00:31:05.190] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.191] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/quick-tutorial.html
+[00:31:05.191] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.191] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/structure.html
+[00:31:05.191] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.191] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/properties.html
+[00:31:05.191] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.191] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/style-html.html
+[00:31:05.191] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.191] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/dependence.html
+[00:31:05.191] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.192] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://www.htmlhelp.com/tools/csscheck/
+[00:31:05.192] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.192] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/references.html
+[00:31:05.192] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.192] INFO  Thread-7 Crawler:<init> CrawlTask constructed: mailto:john@htmlhelp.com
+[00:31:05.192] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.192] INFO  Thread-7 Crawler:<init> CrawlTask constructed: mailto:liam@htmlhelp.com
+[00:31:05.192] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.193] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://www.htmlhelp.com/
+[00:31:05.193] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.193] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/wdgcss/index.html
+[00:31:05.193] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.193] INFO  Thread-7 Crawler:<init> CrawlTask constructed: http://www.htmlhelp.com/copyright.html
+[00:31:05.193] INFO  Thread-7 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.193] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 47 tasks are left in workqueue.
+[00:31:05.193] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.193] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.193] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/gutenberg/32154-h/32154-h.htm
+[00:31:05.218] INFO  Thread-6 Crawler:run found 51 links on http://cs.usfca.edu/~cs212/birds/
+[00:31:05.218] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/albatross.html
+[00:31:05.218] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.219] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/birds.html
+[00:31:05.219] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.219] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/blackbird.html
+[00:31:05.219] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.219] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/bluebird.html
+[00:31:05.219] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.220] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/cardinal.html
+[00:31:05.220] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.220] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/chickadee.html
+[00:31:05.220] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.220] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/crane.html
+[00:31:05.220] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.221] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/crow.html
+[00:31:05.221] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.221] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/cuckoo.html
+[00:31:05.221] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.221] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/dove.html
+[00:31:05.221] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.221] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/duck.html
+[00:31:05.222] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.222] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/eagle.html
+[00:31:05.222] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.222] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/egret.html
+[00:31:05.222] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.222] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/falcon.html
+[00:31:05.222] INFO  Thread-10 Crawler:run found 51 links on http://cs.usfca.edu/~cs212/recurse/
+[00:31:05.222] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.223] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/finch.html
+[00:31:05.223] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link01.html
+[00:31:05.223] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.223] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.223] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/goose.html
+[00:31:05.223] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link02.html
+[00:31:05.223] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.223] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.223] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/gull.html
+[00:31:05.223] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link03.html
+[00:31:05.223] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.223] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/hawk.html
+[00:31:05.223] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.224] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link04.html
+[00:31:05.224] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.224] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.224] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/heron.html
+[00:31:05.224] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link05.html
+[00:31:05.224] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.224] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/hummingbird.html
+[00:31:05.224] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.224] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link06.html
+[00:31:05.224] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.224] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.224] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/ibis.html
+[00:31:05.225] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link07.html
+[00:31:05.225] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.225] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/kingfisher.html
+[00:31:05.225] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.225] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link08.html
+[00:31:05.225] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.225] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.225] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/loon.html
+[00:31:05.225] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link09.html
+[00:31:05.225] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.225] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/magpie.html
+[00:31:05.225] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.225] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.225] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link10.html
+[00:31:05.226] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/mallard.html
+[00:31:05.226] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.226] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.226] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link11.html
+[00:31:05.226] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/meadowlark.html
+[00:31:05.226] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.226] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.226] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link12.html
+[00:31:05.226] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/mockingbird.html
+[00:31:05.226] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.226] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link13.html
+[00:31:05.226] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.227] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/nighthawk.html
+[00:31:05.227] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.227] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link14.html
+[00:31:05.227] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.227] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/osprey.html
+[00:31:05.227] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.227] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.227] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link15.html
+[00:31:05.227] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.227] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/owl.html
+[00:31:05.227] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.227] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link16.html
+[00:31:05.228] INFO  Thread-6 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/birds/pelican.html
+[00:31:05.228] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.228] INFO  Thread-6 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.228] INFO  Thread-10 Crawler:<init> CrawlTask constructed: http://cs.usfca.edu/~cs212/recurse/link17.html
+[00:31:05.228] TRACE Thread-6 WorkQueue:run Completed a class Crawler$CrawlTask, 93 tasks are left in workqueue.
+[00:31:05.228] INFO  Thread-10 WorkQueue:execute Executed class Crawler$CrawlTask
+[00:31:05.228] TRACE Thread-10 WorkQueue:run Completed a class Crawler$CrawlTask, 93 tasks are left in workqueue.
+[00:31:05.228] WARN  Thread-6 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.228] TRACE Thread-6 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.228] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.228] INFO  Thread-6 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/gutenberg/32522-h/32522-h.htm
+[00:31:05.228] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.229] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/genindex.html
+[00:31:05.250] INFO  Thread-8 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/gutenberg/31516-h/31516-h.htm
+[00:31:05.251] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 92 tasks are left in workqueue.
+[00:31:05.251] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.251] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.252] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://scipy.org/
+[00:31:05.365] INFO  Thread-9 Crawler:run found 3 links on http://cs.usfca.edu/~cs212/gutenberg/32032-h/32032-h.htm
+[00:31:05.370] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 91 tasks are left in workqueue.
+[00:31:05.370] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.371] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.371] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/user/index.html
+[00:31:05.371] INFO  Thread-6 Crawler:run found 2 links on http://cs.usfca.edu/~cs212/gutenberg/32522-h/32522-h.htm
+[00:31:05.375] TRACE Thread-6 WorkQueue:run Completed a class Crawler$CrawlTask, 90 tasks are left in workqueue.
+[00:31:05.375] WARN  Thread-6 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.375] TRACE Thread-6 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.375] INFO  Thread-6 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/reference/index.html
+[00:31:05.402] INFO  Thread-9 Crawler:run found 16 links on http://cs.usfca.edu/~cs212/numpy/user/index.html
+[00:31:05.402] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 89 tasks are left in workqueue.
+[00:31:05.403] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.403] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.403] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/f2py/index.html
+[00:31:05.414] INFO  Thread-6 Crawler:run found 87 links on http://cs.usfca.edu/~cs212/numpy/reference/index.html
+[00:31:05.414] TRACE Thread-6 WorkQueue:run Completed a class Crawler$CrawlTask, 88 tasks are left in workqueue.
+[00:31:05.415] WARN  Thread-6 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.415] TRACE Thread-6 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.415] INFO  Thread-6 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/dev/index.html
+[00:31:05.417] INFO  Thread-7 Crawler:run found 3 links on http://cs.usfca.edu/~cs212/gutenberg/32154-h/32154-h.htm
+[00:31:05.422] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 87 tasks are left in workqueue.
+[00:31:05.422] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.423] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.423] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/glossary.html
+[00:31:05.431] INFO  Thread-9 Crawler:run found 39 links on http://cs.usfca.edu/~cs212/numpy/f2py/index.html
+[00:31:05.432] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 86 tasks are left in workqueue.
+[00:31:05.432] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.432] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.432] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/search.html
+[00:31:05.445] INFO  Thread-6 Crawler:run found 47 links on http://cs.usfca.edu/~cs212/numpy/dev/index.html
+[00:31:05.446] TRACE Thread-6 WorkQueue:run Completed a class Crawler$CrawlTask, 85 tasks are left in workqueue.
+[00:31:05.446] WARN  Thread-6 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.446] TRACE Thread-6 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.446] INFO  Thread-6 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/contents.html
+[00:31:05.467] INFO  Thread-9 Crawler:run found 3 links on http://cs.usfca.edu/~cs212/numpy/search.html
+[00:31:05.468] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 84 tasks are left in workqueue.
+[00:31:05.468] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.468] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.468] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/bugs.html
+[00:31:05.499] INFO  Thread-7 Crawler:run found 18 links on http://cs.usfca.edu/~cs212/numpy/glossary.html
+[00:31:05.500] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 83 tasks are left in workqueue.
+[00:31:05.500] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.500] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.500] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/a/b/c/subdir.html
+[00:31:05.507] INFO  Thread-8 Crawler:run found 1 links on http://scipy.org/
+[00:31:05.507] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 82 tasks are left in workqueue.
+[00:31:05.508] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.508] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.508] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/about.html
+[00:31:05.518] INFO  Thread-9 Crawler:run found 10 links on http://cs.usfca.edu/~cs212/numpy/bugs.html
+[00:31:05.518] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 81 tasks are left in workqueue.
+[00:31:05.519] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.519] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.519] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/capital_extension.HTML
+[00:31:05.532] INFO  Thread-7 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/simple/a/b/c/subdir.html
+[00:31:05.532] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 80 tasks are left in workqueue.
+[00:31:05.532] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.532] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.533] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/neps/index.html
+[00:31:05.534] INFO  Thread-8 Crawler:run found 28 links on http://cs.usfca.edu/~cs212/numpy/about.html
+[00:31:05.535] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 79 tasks are left in workqueue.
+[00:31:05.535] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.535] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.535] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/double_extension.html.txt
+[00:31:05.546] INFO  Thread-9 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/simple/capital_extension.HTML
+[00:31:05.546] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 78 tasks are left in workqueue.
+[00:31:05.546] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.546] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.546] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/release.html
+[00:31:05.558] WARN  Thread-8 HTTPFetcher:fetchHTML NULL returned
+[00:31:05.558] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 77 tasks are left in workqueue.
+[00:31:05.559] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.559] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.559] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/empty.html
+[00:31:05.561] INFO  Thread-7 Crawler:run found 27 links on http://cs.usfca.edu/~cs212/numpy/neps/index.html
+[00:31:05.561] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 76 tasks are left in workqueue.
+[00:31:05.561] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.562] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.562] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/numpy/license.html
+[00:31:05.600] INFO  Thread-8 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/simple/empty.html
+[00:31:05.600] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 75 tasks are left in workqueue.
+[00:31:05.601] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.601] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.601] INFO  Thread-7 Crawler:run found 8 links on http://cs.usfca.edu/~cs212/numpy/license.html
+[00:31:05.601] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/hello.html
+[00:31:05.602] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 74 tasks are left in workqueue.
+[00:31:05.602] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.602] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.602] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://www.tramy.us/
+[00:31:05.632] INFO  Thread-8 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/simple/hello.html
+[00:31:05.632] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 73 tasks are left in workqueue.
+[00:31:05.632] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.632] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.632] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/mixed_case.htm
+[00:31:05.653] INFO  Thread-10 Crawler:run found 3248 links on http://cs.usfca.edu/~cs212/numpy/genindex.html
+[00:31:05.657] TRACE Thread-10 WorkQueue:run Completed a class Crawler$CrawlTask, 72 tasks are left in workqueue.
+[00:31:05.657] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.657] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.657] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://docs.scipy.org/numpy/
+[00:31:05.676] INFO  Thread-8 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/simple/mixed_case.htm
+[00:31:05.677] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 71 tasks are left in workqueue.
+[00:31:05.677] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.677] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.677] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/no_extension
+[00:31:05.705] WARN  Thread-8 HTTPFetcher:fetchHTML NULL returned
+[00:31:05.705] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 70 tasks are left in workqueue.
+[00:31:05.705] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.705] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.706] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://docs.scipy.org/doc/numpy-dev/dev/
+[00:31:05.835] INFO  Thread-7 Crawler:run found 0 links on http://www.tramy.us/
+[00:31:05.835] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 69 tasks are left in workqueue.
+[00:31:05.836] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.836] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.836] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/position.html
+[00:31:05.849] INFO  Thread-7 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/simple/position.html
+[00:31:05.850] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 68 tasks are left in workqueue.
+[00:31:05.850] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.850] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.850] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://sphinx.pocoo.org/
+[00:31:05.856] INFO  Thread-9 Crawler:run found 749 links on http://cs.usfca.edu/~cs212/numpy/release.html
+[00:31:05.860] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 67 tasks are left in workqueue.
+[00:31:05.861] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.861] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.861] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/simple/symbols.html
+[00:31:05.874] INFO  Thread-9 Crawler:run found 0 links on http://cs.usfca.edu/~cs212/simple/symbols.html
+[00:31:05.874] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 66 tasks are left in workqueue.
+[00:31:05.874] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.875] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.875] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/stylesheets-now.html
+[00:31:05.884] INFO  Thread-10 Crawler:run found 1 links on http://docs.scipy.org/numpy/
+[00:31:05.884] TRACE Thread-10 WorkQueue:run Completed a class Crawler$CrawlTask, 65 tasks are left in workqueue.
+[00:31:05.884] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.884] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.885] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/quick-tutorial.html
+[00:31:05.895] INFO  Thread-9 Crawler:run found 23 links on http://cs.usfca.edu/~cs212/wdgcss/stylesheets-now.html
+[00:31:05.896] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 64 tasks are left in workqueue.
+[00:31:05.896] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.896] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.896] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/structure.html
+[00:31:05.903] INFO  Thread-10 Crawler:run found 16 links on http://cs.usfca.edu/~cs212/wdgcss/quick-tutorial.html
+[00:31:05.904] TRACE Thread-10 WorkQueue:run Completed a class Crawler$CrawlTask, 63 tasks are left in workqueue.
+[00:31:05.904] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.904] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.904] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/properties.html
+[00:31:05.905] INFO  Thread-6 Crawler:run found 3515 links on http://cs.usfca.edu/~cs212/numpy/contents.html
+[00:31:05.908] TRACE Thread-6 WorkQueue:run Completed a class Crawler$CrawlTask, 62 tasks are left in workqueue.
+[00:31:05.908] WARN  Thread-6 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.908] TRACE Thread-6 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.908] INFO  Thread-6 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/style-html.html
+[00:31:05.926] INFO  Thread-8 Crawler:run found 1 links on http://docs.scipy.org/doc/numpy-dev/dev/
+[00:31:05.926] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 61 tasks are left in workqueue.
+[00:31:05.926] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.927] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.927] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/dependence.html
+[00:31:05.930] INFO  Thread-9 Crawler:run found 24 links on http://cs.usfca.edu/~cs212/wdgcss/structure.html
+[00:31:05.931] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 60 tasks are left in workqueue.
+[00:31:05.931] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.931] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.931] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://www.htmlhelp.com/tools/csscheck/
+[00:31:05.938] INFO  Thread-10 Crawler:run found 72 links on http://cs.usfca.edu/~cs212/wdgcss/properties.html
+[00:31:05.938] TRACE Thread-10 WorkQueue:run Completed a class Crawler$CrawlTask, 59 tasks are left in workqueue.
+[00:31:05.938] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.938] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.939] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/references.html
+[00:31:05.953] INFO  Thread-6 Crawler:run found 55 links on http://cs.usfca.edu/~cs212/wdgcss/style-html.html
+[00:31:05.954] INFO  Thread-8 Crawler:run found 11 links on http://cs.usfca.edu/~cs212/wdgcss/dependence.html
+[00:31:05.955] TRACE Thread-6 WorkQueue:run Completed a class Crawler$CrawlTask, 58 tasks are left in workqueue.
+[00:31:05.955] WARN  Thread-6 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.955] TRACE Thread-6 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.955] INFO  Thread-6 HTTPFetcher:fetchHTML Fetching mailto:john@htmlhelp.com
+[00:31:05.955] TRACE Thread-8 WorkQueue:run Completed a class Crawler$CrawlTask, 57 tasks are left in workqueue.
+[00:31:05.955] WARN  Thread-8 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.955] TRACE Thread-8 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.955] INFO  Thread-8 HTTPFetcher:fetchHTML Fetching mailto:liam@htmlhelp.com
+[00:31:05.968] INFO  Thread-10 Crawler:run found 24 links on http://cs.usfca.edu/~cs212/wdgcss/references.html
+[00:31:05.968] TRACE Thread-10 WorkQueue:run Completed a class Crawler$CrawlTask, 56 tasks are left in workqueue.
+[00:31:05.968] WARN  Thread-10 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:05.968] TRACE Thread-10 InvertedIndex:<init> Single Thread index initialized.
+[00:31:05.969] INFO  Thread-10 HTTPFetcher:fetchHTML Fetching http://www.htmlhelp.com/
+[00:31:06.147] INFO  Thread-9 Crawler:run found 9 links on http://www.htmlhelp.com/tools/csscheck/
+[00:31:06.148] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 55 tasks are left in workqueue.
+[00:31:06.148] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.148] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.148] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/wdgcss/index.html
+[00:31:06.163] INFO  Thread-9 Crawler:run found 15 links on http://cs.usfca.edu/~cs212/wdgcss/index.html
+[00:31:06.163] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 54 tasks are left in workqueue.
+[00:31:06.164] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.164] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.164] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://www.htmlhelp.com/copyright.html
+[00:31:06.286] INFO  Thread-7 Crawler:run found 0 links on http://sphinx.pocoo.org/
+[00:31:06.287] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 53 tasks are left in workqueue.
+[00:31:06.287] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.287] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.287] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/albatross.html
+[00:31:06.305] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/albatross.html
+[00:31:06.305] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 52 tasks are left in workqueue.
+[00:31:06.305] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.305] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.305] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/birds.html
+[00:31:06.320] INFO  Thread-7 Crawler:run found 51 links on http://cs.usfca.edu/~cs212/birds/birds.html
+[00:31:06.320] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 51 tasks are left in workqueue.
+[00:31:06.320] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.320] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.321] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/blackbird.html
+[00:31:06.334] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/blackbird.html
+[00:31:06.334] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 50 tasks are left in workqueue.
+[00:31:06.334] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.334] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.334] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/bluebird.html
+[00:31:06.347] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/bluebird.html
+[00:31:06.347] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 49 tasks are left in workqueue.
+[00:31:06.347] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.347] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.348] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/cardinal.html
+[00:31:06.360] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/cardinal.html
+[00:31:06.360] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 48 tasks are left in workqueue.
+[00:31:06.360] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.360] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.360] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/chickadee.html
+[00:31:06.373] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/chickadee.html
+[00:31:06.373] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 47 tasks are left in workqueue.
+[00:31:06.373] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.373] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.373] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/crane.html
+[00:31:06.388] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/crane.html
+[00:31:06.388] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 46 tasks are left in workqueue.
+[00:31:06.388] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.388] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.388] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/crow.html
+[00:31:06.402] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/crow.html
+[00:31:06.402] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 45 tasks are left in workqueue.
+[00:31:06.402] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.402] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.402] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/cuckoo.html
+[00:31:06.414] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/cuckoo.html
+[00:31:06.414] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 44 tasks are left in workqueue.
+[00:31:06.415] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.415] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.415] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/dove.html
+[00:31:06.429] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/dove.html
+[00:31:06.430] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 43 tasks are left in workqueue.
+[00:31:06.430] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.430] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.430] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/duck.html
+[00:31:06.444] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/duck.html
+[00:31:06.444] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 42 tasks are left in workqueue.
+[00:31:06.445] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.445] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.445] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/eagle.html
+[00:31:06.458] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/eagle.html
+[00:31:06.458] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 41 tasks are left in workqueue.
+[00:31:06.458] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.458] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.458] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/egret.html
+[00:31:06.471] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/egret.html
+[00:31:06.471] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 40 tasks are left in workqueue.
+[00:31:06.471] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.471] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.471] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/falcon.html
+[00:31:06.484] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/falcon.html
+[00:31:06.485] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 39 tasks are left in workqueue.
+[00:31:06.485] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.485] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.485] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/finch.html
+[00:31:06.492] INFO  Thread-9 Crawler:run found 14 links on http://www.htmlhelp.com/copyright.html
+[00:31:06.492] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 38 tasks are left in workqueue.
+[00:31:06.492] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.492] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.492] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link01.html
+[00:31:06.500] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/finch.html
+[00:31:06.500] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 37 tasks are left in workqueue.
+[00:31:06.500] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.500] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.500] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/goose.html
+[00:31:06.506] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link01.html
+[00:31:06.506] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 36 tasks are left in workqueue.
+[00:31:06.506] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.506] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.506] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link02.html
+[00:31:06.517] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/goose.html
+[00:31:06.517] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 35 tasks are left in workqueue.
+[00:31:06.517] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.518] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.518] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/gull.html
+[00:31:06.521] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link02.html
+[00:31:06.521] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 34 tasks are left in workqueue.
+[00:31:06.521] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.521] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.521] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link03.html
+[00:31:06.537] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/gull.html
+[00:31:06.538] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 33 tasks are left in workqueue.
+[00:31:06.538] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.538] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.538] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/hawk.html
+[00:31:06.544] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link03.html
+[00:31:06.544] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 32 tasks are left in workqueue.
+[00:31:06.544] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.544] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.544] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link04.html
+[00:31:06.555] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/hawk.html
+[00:31:06.555] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 31 tasks are left in workqueue.
+[00:31:06.555] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.555] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.556] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/heron.html
+[00:31:06.563] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link04.html
+[00:31:06.563] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 30 tasks are left in workqueue.
+[00:31:06.563] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.563] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.564] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link05.html
+[00:31:06.571] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/heron.html
+[00:31:06.571] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 29 tasks are left in workqueue.
+[00:31:06.571] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.571] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.571] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/hummingbird.html
+[00:31:06.579] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link05.html
+[00:31:06.580] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 28 tasks are left in workqueue.
+[00:31:06.580] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.580] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.580] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link06.html
+[00:31:06.588] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/hummingbird.html
+[00:31:06.588] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 27 tasks are left in workqueue.
+[00:31:06.588] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.588] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.588] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/ibis.html
+[00:31:06.597] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link06.html
+[00:31:06.597] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 26 tasks are left in workqueue.
+[00:31:06.597] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.597] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.597] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link07.html
+[00:31:06.604] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/ibis.html
+[00:31:06.604] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 25 tasks are left in workqueue.
+[00:31:06.604] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.604] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.604] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/kingfisher.html
+[00:31:06.614] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link07.html
+[00:31:06.614] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 24 tasks are left in workqueue.
+[00:31:06.615] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.615] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.615] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link08.html
+[00:31:06.622] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/kingfisher.html
+[00:31:06.622] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 23 tasks are left in workqueue.
+[00:31:06.622] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.622] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.622] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/loon.html
+[00:31:06.628] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link08.html
+[00:31:06.628] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 22 tasks are left in workqueue.
+[00:31:06.628] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.628] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.628] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link09.html
+[00:31:06.638] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/loon.html
+[00:31:06.638] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 21 tasks are left in workqueue.
+[00:31:06.639] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.639] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.639] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/magpie.html
+[00:31:06.641] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link09.html
+[00:31:06.642] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 20 tasks are left in workqueue.
+[00:31:06.642] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.642] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.642] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link10.html
+[00:31:06.654] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/magpie.html
+[00:31:06.654] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 19 tasks are left in workqueue.
+[00:31:06.654] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.654] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.654] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/mallard.html
+[00:31:06.657] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link10.html
+[00:31:06.657] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 18 tasks are left in workqueue.
+[00:31:06.657] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.657] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.658] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link11.html
+[00:31:06.672] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/mallard.html
+[00:31:06.672] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 17 tasks are left in workqueue.
+[00:31:06.673] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.673] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.673] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/meadowlark.html
+[00:31:06.674] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link11.html
+[00:31:06.674] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 16 tasks are left in workqueue.
+[00:31:06.674] WARN  Thread-9 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.674] TRACE Thread-9 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.674] INFO  Thread-9 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/recurse/link12.html
+[00:31:06.687] INFO  Thread-7 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/birds/meadowlark.html
+[00:31:06.687] TRACE Thread-7 WorkQueue:run Completed a class Crawler$CrawlTask, 15 tasks are left in workqueue.
+[00:31:06.687] WARN  Thread-7 WorkQueue:run WorkQueue Excecuting a class Crawler$CrawlTask
+[00:31:06.687] TRACE Thread-7 InvertedIndex:<init> Single Thread index initialized.
+[00:31:06.687] INFO  Thread-7 HTTPFetcher:fetchHTML Fetching http://cs.usfca.edu/~cs212/birds/mockingbird.html
+[00:31:06.691] INFO  Thread-9 Crawler:run found 1 links on http://cs.usfca.edu/~cs212/recurse/link12.html
+[00:31:06.691] TRACE Thread-9 WorkQueue:run Completed a class Crawler$CrawlTask, 14 tasks are left in workqueue.

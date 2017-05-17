@@ -118,6 +118,7 @@ public class LinkParser
 
 			if (!temp.getProtocol().equals("mailto") && !temp.getProtocol().equals("javascript"));
 			{
+				temp = clean(temp);
 				links.add(temp);
 			}
 		}

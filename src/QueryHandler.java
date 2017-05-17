@@ -1,5 +1,8 @@
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.TreeMap;
 
 /**
  * QueryHandler interface, As reference.
@@ -24,5 +27,10 @@ public interface QueryHandler
 	 * @param exact search methods
 	 * @throws IOException
 	 */
-	void parse(String path, boolean exact) throws IOException;
+	void parse(Path path, boolean exact) throws IOException;
+	
+	void parse(String query, boolean exact);
+	
+	
+	TreeMap<String, List<SearchResult>> getResultsMap();
 }
