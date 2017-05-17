@@ -19,7 +19,7 @@ public class Crawler extends HttpServlet
 	private HashSet<URL> urls;
 	private WorkQueue queue;
 	private InvertedIndex index;
-	private ArrayList<URL> seeds;
+	private HashSet<URL> seeds;
 	private static Logger log = LogManager.getLogger();
 
 	public Crawler(InvertedIndex index)
@@ -27,7 +27,7 @@ public class Crawler extends HttpServlet
 		this.queue = new WorkQueue();
 		this.index = index;
 		this.urls = new HashSet<>();
-		this.seeds = new ArrayList<URL>();
+		this.seeds = new HashSet<URL>();
 	}
 
 	public void crawl(URL seed, int limit)
