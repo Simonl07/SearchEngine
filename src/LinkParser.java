@@ -116,7 +116,7 @@ public class LinkParser
 				return new ArrayList<URL>();
 			}
 
-			if (!temp.getProtocol().equals("mailto") && !temp.getProtocol().equals("javascript"));
+			if (!(temp.getProtocol().equals("mailto") || temp.getProtocol().equals("javascript")))
 			{
 				temp = clean(temp);
 				links.add(temp);

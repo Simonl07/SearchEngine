@@ -117,7 +117,6 @@ public class MultithreadedQueryHandler implements QueryHandler
 				local = index.exactSearch(queries);
 			} else
 			{
-				
 				local = index.partialSearch(queries);
 			}
 			

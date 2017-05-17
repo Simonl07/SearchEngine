@@ -19,19 +19,22 @@ public class Crawler extends HttpServlet
 	private HashSet<URL> urls;
 	private WorkQueue queue;
 	private InvertedIndex index;
+	private ArrayList<URL> seeds;
 	private static Logger log = LogManager.getLogger();
 
 	public Crawler(InvertedIndex index)
 	{
 		this.queue = new WorkQueue();
 		this.index = index;
-		urls = new HashSet<>();
+		this.urls = new HashSet<>();
+		this.seeds = new ArrayList<URL>();
 	}
 
 	public void crawl(URL seed, int limit)
 	{
 		this.limit = limit;
 		urls.add(seed);
+		seeds.add(seed);
 		queue.execute(new CrawlTask(seed));
 		queue.finish();
 		log.info(urls.size());
@@ -45,8 +48,14 @@ public class Crawler extends HttpServlet
 		out.printf("<head><title>Search Engine Crawler</title></head>%n");
 		out.printf("<body>%n");
 
-		out.println("<h2>Crawler</h2>");
+		out.println("<h1>Crawler</h1>");
 
+		out.println("<h4>Seeds: </h4>");
+		for(URL u: seeds)
+		{
+			out.println("<a href=\"" + u + "\">" + u + "</a>" + "<br/>");
+		}
+		
 		out.print("<form id=\"form1\" name=\"form1\" method=\"post\" action=\"/crawler\">" + "<p>Seed URL:  <input type=\"text\" name=\"url\" size=\"20\" maxlength=\"70\"> Links Limit:  "
 				+ "<input type=\"text\" name=\"limit\" size=\"20\" maxlength=\"70\">" + "<input type=\"submit\" name=\"submit\" id=\"submit\" value=\"Crawl\" /> <a href=\"/\">back</a></p></form>");
 

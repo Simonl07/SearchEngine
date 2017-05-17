@@ -1,9 +1,9 @@
-public class test
+public class Test
 {
 	public static void main(String args[]) throws Exception 
 	{
 		String arguments[] = {
-				"-url", "http://cs.usfca.edu/~cs212/wdgcss/properties.html",
+				"-url", "http://cs.usfca.edu/",
 				"-index", "index.json",
 				"-limit", "60",
 				"-threads", "10",
