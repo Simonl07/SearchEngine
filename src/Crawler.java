@@ -51,6 +51,7 @@ public class Crawler extends HttpServlet
 		out.println("<h1>Crawler</h1>");
 
 		out.println("<h4>Seeds: </h4>");
+		
 		for(URL u: seeds)
 		{
 			out.println("<a href=\"" + u + "\">" + u + "</a>" + "<br/>");

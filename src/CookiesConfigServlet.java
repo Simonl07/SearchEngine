@@ -64,7 +64,7 @@ public class CookiesConfigServlet extends HttpServlet
 			out.print("<p>No search history</p>");
 			String encoded = URLEncoder.encode(",", StandardCharsets.UTF_8.name());
 			queries = new Cookie("queries", encoded);
-			System.out.println("Cookies added" + encoded);
+
 		}
 		out.printf("<form method=\"post\" action=\"%s\">%n", request.getRequestURI());
 		out.printf("\t<input type=\"submit\" name=\"clear\" value=\"Clear search history\">%n");
@@ -109,7 +109,6 @@ public class CookiesConfigServlet extends HttpServlet
 		Map<String, Cookie> cookies = getCookieMap(request);
 
 		String value = request.getParameter("clear");
-		System.out.println(value);
 		if (value.equals("Clear search history"))
 		{
 			Cookie queries = cookies.get("queries");

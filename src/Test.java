@@ -6,7 +6,7 @@ public class Test
 				"-url", "http://cs.usfca.edu/",
 				"-index", "index.json",
 				"-limit", "300",
-				"-threads", "10",
+				"-threads", "30",
 				"-port", "80",
 		};
 		

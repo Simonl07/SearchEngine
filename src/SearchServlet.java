@@ -41,7 +41,7 @@ public class SearchServlet extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		System.out.println(Thread.currentThread().getName() + ": " + request.getRequestURI());
+		log.info(Thread.currentThread().getName() + ": " + request.getRequestURI());
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -53,16 +53,8 @@ public class SearchServlet extends HttpServlet
 		out.printf("<head><title>Search Engine</title></head>%n");
 		out.printf("<body>%n");
 		out.print("<h1>Search Engine</h1>");
-
-		if (request.getIntHeader("DNT") != 1)
-		{
-			CookiesConfigServlet.setDNT(false);
-		} else
-		{
-			CookiesConfigServlet.setDNT(true);
-		}
 		
-		out.print(CookiesConfigServlet.getDNT() ? "<p>Your visits will not be tracked.</p>" : "");
+		out.print(CookiesConfigServlet.getDNT() ? "<p>Your activities will not be tracked.</p>" : "");
 
 		if (CookiesConfigServlet.getDNT() == false)
 		{
@@ -127,14 +119,14 @@ public class SearchServlet extends HttpServlet
 			long start = System.currentTimeMillis();
 			List<SearchResult> results = search(query);
 			long end = System.currentTimeMillis();
-
+			if(results != null){
 			out.println("<p>" + results.size() + " results. (" + (end - start) / 1000.0 + " seconds)</p>");
 
 			for (SearchResult result: results)
 			{
 				out.println("<a href=\"" + request.getServletPath() + "?visit=" + result.getPath() + "\">" + result.getPath() + "</a><br/>\n");
 			}
-
+			}
 		}
 
 		out.printf("</body>%n");
@@ -163,8 +155,6 @@ public class SearchServlet extends HttpServlet
 			exact = true;
 			CookiesConfigServlet.setDNT(false);
 		}
-
-		System.out.println("private set to " + CookiesConfigServlet.getDNT());
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.sendRedirect(request.getServletPath() + "?query=" + query);
 
