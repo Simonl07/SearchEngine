@@ -22,11 +22,12 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("serial")
 public class Crawler extends HttpServlet
 {
+	// TODO final keyword
 	private int limit;
 	private HashSet<URL> urls;
 	private WorkQueue queue;
-	private InvertedIndex index;
-	private HashSet<URL> seeds;
+	private InvertedIndex index; // TODO ThreadSafe?
+	private HashSet<URL> seeds; // TODO Not sure you really need this one...
 	private static Logger log = LogManager.getLogger();
 
 	/**
@@ -154,15 +155,17 @@ public class Crawler extends HttpServlet
 				ArrayList<URL> links = LinkParser.listLinks(url, html);
 				log.info("found " + links.size() + " links on " + url);
 
-				synchronized (index)
+				synchronized (index) // TODO Use a thread-safe index instead
 				{
 					index.addAll(local);
 				}
 
 				for (URL u: links)
 				{
-					synchronized (urls)
+					synchronized (urls) // TODO synchronize outside the for loop
 					{
+						// TODO if (urls.size() >= limit) break;
+						
 						if (urls.size() >= limit || urls.contains(u))
 						{
 							continue;

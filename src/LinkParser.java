@@ -87,6 +87,7 @@ public class LinkParser
 
 		ArrayList<URL> links = new ArrayList<URL>();
 
+		// TODO <a[^>]*href\s*=\s*"([^"]+)"[^>]*>
 		Matcher m = Pattern.compile("(?i)(?s)<a[^>]+?href\\s*?=\\s*?.*?>").matcher(html);
 
 		while (m.find())
@@ -106,6 +107,7 @@ public class LinkParser
 				return new ArrayList<URL>();
 			}
 
+			// TODO getProtocol().startsWith("http")
 			if (!(temp.getProtocol().equals("mailto") || temp.getProtocol().equals("javascript")))
 			{
 				temp = clean(temp);
