@@ -40,6 +40,8 @@ public class Driver
 
 		Server server = null;
 		
+		Crawler crawler = null;
+		
 		
 		
 		if (argsMap.hasValue("-threads") && argsMap.getInteger("-threads") > 0)
@@ -96,7 +98,7 @@ public class Driver
 			log.info("Limit set to " + limit);
 			try
 			{
-				Crawler crawler = new Crawler(wordIndex);
+				crawler = new Crawler(wordIndex);
 				crawler.crawl(new URL(argsMap.getString("-url")), limit);
 			} catch (MalformedURLException e)
 			{
@@ -114,7 +116,8 @@ public class Driver
 			
 			ServletHandler handler = new ServletHandler();
 			handler.addServletWithMapping(new ServletHolder(new SearchServlet(wordIndex, queryHandler)), "/");
-			
+			handler.addServletWithMapping(CookiesConfigServlet.class, "/history");
+			handler.addServletWithMapping(new ServletHolder(crawler), "/crawler");
 			server.setHandler(handler);
 			try
 			{

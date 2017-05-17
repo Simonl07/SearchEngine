@@ -166,7 +166,6 @@ public class HTTPFetcher
 		{
 			return String.join(System.lineSeparator(), lines.subList(start + 1, end));
 		}
-		log.warn("NULL returned");
 		return "";
 	}
 

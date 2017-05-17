@@ -1,9 +1,11 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,10 +42,11 @@ public class SearchServlet extends HttpServlet
 		out.printf("<body>%n");
 		
 		printForm(request, response);
+		
+		
+		
 		if (query != null)
 		{
-			System.out.println("check");
-			
 			TreeMap<String, List<SearchResult>> results = search(query);
 
 			for (String q: results.keySet())
@@ -53,6 +56,19 @@ public class SearchServlet extends HttpServlet
 					out.printf("<a href=\"" + result.getPath() + "\">" + result.getPath() + "</a><br/>");
 				}
 			}
+			if(CookiesConfigServlet.getDNT() == false)
+			{
+				Map<String, Cookie> cookies = CookiesConfigServlet.getCookieMap(request);
+				Cookie queries = cookies.get("query");
+				if(queries != null)
+				{
+					queries.setValue(queries.getValue() + "," + query);
+				}else{
+					queries = new Cookie("query", "");
+				}
+				response.addCookie(queries);
+			}
+			
 		}
 		
 		out.printf("</body>%n");
@@ -84,11 +100,11 @@ public class SearchServlet extends HttpServlet
 		out.printf("<tr>%n");
 		out.printf("\t<td nowrap>Query:</td>%n");
 		out.printf("\t<td>%n");
-		out.printf("\t\t<input type=\"text\" name=\"query\" maxlength=\"50\" size=\"20\">%n");
+		out.printf("\t\t<input type=\"text\" name=\"query\" maxlength=\"50\" size=\"50\">%n");
 		out.printf("\t</td>%n");
 		out.printf("</tr>%n");
 		out.printf("</table>%n");
-		out.printf("<p><input type=\"submit\" value=\"Search\"></p>\n%n");
+		out.printf("<p><input type=\"submit\" value=\"Search\"><a href=\"/history\">view history</a></p>\n%n");
 		out.printf("</form>\n%n");
 	}
 
