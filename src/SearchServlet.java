@@ -1,5 +1,9 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,14 +39,18 @@ public class SearchServlet extends HttpServlet
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String query = request.getParameter("query");
-		
+		String visitURL = request.getParameter("visit");
+		Map<String, Cookie>cookies = CookiesConfigServlet.getCookieMap(request);
+		System.out.println(cookies);
 		
 		out.printf("<html>%n");
-		out.printf("<head><title>Search Engine V1.0</title></head>%n");
+		out.printf("<head><title>Search Engine</title></head>%n");
 		out.printf("<body>%n");
 		
-		printForm(request, response);
+		out.print("<h1>Search Engine</h1>");
 		
+		
+		printForm(request, response);
 		
 		
 		if (query != null)
@@ -53,23 +61,44 @@ public class SearchServlet extends HttpServlet
 			{
 				for (SearchResult result: results.get(q))
 				{
-					out.printf("<a href=\"" + result.getPath() + "\">" + result.getPath() + "</a><br/>");
+					out.println("<a href=\"" + request.getServletPath() + "?visit=" + result.getPath() + "\">" + result.getPath() + "</a><br/>\n");
 				}
 			}
 			if(CookiesConfigServlet.getDNT() == false)
 			{
-				Map<String, Cookie> cookies = CookiesConfigServlet.getCookieMap(request);
-				Cookie queries = cookies.get("query");
+				Cookie queries = cookies.get("queries");
 				if(queries != null)
 				{
-					queries.setValue(queries.getValue() + "," + query);
+					String decoded = URLDecoder.decode(queries.getValue(), StandardCharsets.UTF_8.name());
+					String encoded = URLEncoder.encode(decoded + "," + query, StandardCharsets.UTF_8.name());
+					queries.setValue(encoded);
 				}else{
-					queries = new Cookie("query", "");
+					String encoded = URLEncoder.encode(",", StandardCharsets.UTF_8.name());
+					queries = new Cookie("queries", encoded);
 				}
 				response.addCookie(queries);
 			}
-			
 		}
+		
+		
+		if(visitURL != null)
+		{
+			Cookie visited = cookies.get("visited");
+			if(visited != null)
+			{
+				String decoded = URLDecoder.decode(visited.getValue(), StandardCharsets.UTF_8.name());
+				String encoded = URLEncoder.encode(decoded + "," + visitURL, StandardCharsets.UTF_8.name());
+				visited.setValue(encoded);
+			}else{
+				String encoded = URLEncoder.encode(",", StandardCharsets.UTF_8.name());
+				visited = new Cookie("visited", encoded);
+			}
+			
+			response.addCookie(visited);
+			response.sendRedirect(visitURL);
+		}
+		
+		
 		
 		out.printf("</body>%n");
 		out.printf("</html>%n");
@@ -96,15 +125,18 @@ public class SearchServlet extends HttpServlet
 		PrintWriter out = response.getWriter();
 		
 		out.printf("<form method=\"post\" action=\"%s\">%n", request.getServletPath());
-		out.printf("<table cellspacing=\"0\" cellpadding=\"2\"%n");
+		out.printf("<table cellspacing=\"3\" cellpadding=\"2\"%n");
 		out.printf("<tr>%n");
 		out.printf("\t<td nowrap>Query:</td>%n");
 		out.printf("\t<td>%n");
-		out.printf("\t\t<input type=\"text\" name=\"query\" maxlength=\"50\" size=\"50\">%n");
+		out.printf("\t\t<input type=\"text\" name=\"query\" maxlength=\"50\" size=\"40\"> %n");
+		out.printf("\t</td>%n");
+		out.printf("\t<td>%n");
+		out.printf("<input type=\"submit\" value=\"Search\">");
 		out.printf("\t</td>%n");
 		out.printf("</tr>%n");
 		out.printf("</table>%n");
-		out.printf("<p><input type=\"submit\" value=\"Search\"><a href=\"/history\">view history</a></p>\n%n");
+		out.printf("<p> <a href=\"/history\">view history</a>&nbsp;&nbsp;&nbsp;<a href=\"/crawler\">web crawler</a></p>\n%n");
 		out.printf("</form>\n%n");
 	}
 
