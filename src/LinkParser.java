@@ -6,18 +6,12 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLStreamHandler;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LinkParser
 {
-
-	// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
-	// https://docs.oracle.com/javase/tutorial/networking/urls/creatingUrls.html
-	// https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
-
 	/**
 	 * Removes the fragment component of a URL (if present), and properly
 	 * encodes the query string (if necessary).
@@ -58,11 +52,7 @@ public class LinkParser
 			writer.write("GET " + resource + " HTTP/1.1\r\nHost: " + host + "\r\nConnection: close\r\n\r\n");
 			writer.flush();
 
-			int start = 0;
-			while (!reader.readLine().trim().equals(""))
-			{
-				start++;
-			}
+			while (!reader.readLine().trim().equals("")){}
 
 			String line = "";
 			while ((line = reader.readLine()) != null)
@@ -90,11 +80,11 @@ public class LinkParser
 	public static ArrayList<URL> listLinks(URL base, String html)
 	{
 
-		if(html == null || html.length() <= 0)
+		if (html == null || html.length() <= 0)
 		{
 			return new ArrayList<URL>();
 		}
-		
+
 		ArrayList<URL> links = new ArrayList<URL>();
 
 		Matcher m = Pattern.compile("(?i)(?s)<a[^>]+?href\\s*?=\\s*?.*?>").matcher(html);

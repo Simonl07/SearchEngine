@@ -15,22 +15,41 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("serial")
+/**
+ * This Servlet responsible for handling search history and visit history, using
+ * cookies.
+ * 
+ * @author Simonl0425
+ *
+ */
 public class CookiesConfigServlet extends HttpServlet
 {
 	private static boolean DNT = false;
 	private static Logger log = LogManager.getLogger();
 
+	/**
+	 * return tracking
+	 * 
+	 * @return boolean of Do not track, true for private mode, false for
+	 *         tracking mode.
+	 */
 	public static boolean getDNT()
 	{
 		return DNT;
 	}
 
+	/**
+	 * Set tracking
+	 * 
+	 * @param DNT boolean, true for private mode, false for tracking mode.
+	 */
 	public static void setDNT(boolean DNT)
 	{
 		CookiesConfigServlet.DNT = DNT;
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 
 		log.info("GET " + request.getRequestURL().toString());
@@ -103,7 +122,7 @@ public class CookiesConfigServlet extends HttpServlet
 		response.setStatus(HttpServletResponse.SC_OK);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		log.info("POST " + request.getRequestURL().toString());
 		Map<String, Cookie> cookies = getCookieMap(request);

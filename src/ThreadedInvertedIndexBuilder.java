@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Path;
 
 import org.apache.logging.log4j.LogManager;
@@ -76,41 +75,6 @@ public class ThreadedInvertedIndexBuilder
 			{
 				System.out.println("Encountered error when reading from file and building the Inverted Index.");
 			}
-		}
-	}
-	
-	public static class URLBuildTask implements Runnable
-	{
-		private URL url;
-		private InvertedIndex index;
-		private String html;
-		
-
-		/**
-		 * Initialized BuildTasks
-		 * 
-		 * @param url of HTML
-		 * @param index to add to.
-		 */
-		public URLBuildTask(URL url, String html, InvertedIndex index)
-		{
-			log.trace("URLBuildTask initialized for path " + url);
-			this.url = url;
-			this.index = index;
-			this.html = html;
-		}
-
-		@Override
-		public void run()
-		{
-			log.info("This BuildTask is handled by " + Thread.currentThread().getName());
-			log.trace(Thread.currentThread().getName() + " is building from " + url + " || " + index.getClass());
-
-			InvertedIndex local = new InvertedIndex();
-			
-			InvertedIndexBuilder.build(url, html, local);
-
-			index.addAll(local);
 		}
 	}
 }

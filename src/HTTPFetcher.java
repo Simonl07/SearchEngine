@@ -8,7 +8,6 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -147,18 +146,14 @@ public class HTTPFetcher
 		String request = craftHTTPRequest(target, HTTP.GET);
 		List<String> lines = fetchLines(target, request);
 
-		// System.out.println(fetchHeaders(url));
-
 		int start = 0;
 		int end = lines.size();
 
-		// Determines start of HTML versus headers.
 		while (!lines.get(start).trim().isEmpty() && start < end)
 		{
 			start++;
 		}
 
-		// Double-check this is an HTML file.
 		Map<String, String> fields = parseHeaders(lines.subList(0, start + 1));
 		String type = fields.get("Content-Type");
 
