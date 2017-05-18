@@ -5,7 +5,11 @@ import java.nio.file.Paths;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
@@ -118,7 +122,16 @@ public class Driver
 			handler.addServletWithMapping(new ServletHolder(new SearchServlet(wordIndex, queryHandler)), "/");
 			handler.addServletWithMapping(CookiesConfigServlet.class, "/history");
 			handler.addServletWithMapping(new ServletHolder(crawler), "/crawler");
-			server.setHandler(handler);
+			
+			ResourceHandler resourceHandler = new ResourceHandler();
+			resourceHandler.setResourceBase("bootstrap");
+			
+			ContextHandler resourceContext = new ContextHandler("/bootstrap");
+			resourceContext.setHandler(resourceHandler);
+			
+			HandlerList handlers = new HandlerList();
+			handlers.setHandlers(new Handler[] { resourceContext, handler });
+			server.setHandler(handlers);
 			try
 			{
 				server.start();
