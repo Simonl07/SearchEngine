@@ -5,11 +5,13 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -20,27 +22,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * 
- * Handle the main page of the search engine, also perform search tasks.
- * 
- * @author Simonl0425
- *
- */
-@SuppressWarnings("serial")
 public class SearchServlet extends HttpServlet
 {
+
+	private InvertedIndex index;
 	private QueryHandler queryHandler;
 	private boolean exact;
 
-	/**
-	 * Initialize the Servlet with necessary data
-	 * 
-	 * @param index
-	 * @param queryHandler
-	 */
 	public SearchServlet(InvertedIndex index, QueryHandler queryHandler)
 	{
+		this.index = index;
 		this.queryHandler = queryHandler;
 		exact = false;
 	}
@@ -59,10 +50,11 @@ public class SearchServlet extends HttpServlet
 		Map<String, Cookie> cookies = CookiesConfigServlet.getCookieMap(request);
 
 		out.printf("<html>%n");
-		out.printf("<head><title>Search Engine</title></head>%n");
+		out.printf("<head><meta charset=\"utf-8\">\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Search Engine</title><link href=\"/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\"></head>%n");
+
 		out.printf("<body>%n");
 		out.print("<h1>Search Engine</h1>");
-
+		
 		out.print(CookiesConfigServlet.getDNT() ? "<p>Your activities will not be tracked.</p>" : "");
 
 		if (CookiesConfigServlet.getDNT() == false)
@@ -128,16 +120,16 @@ public class SearchServlet extends HttpServlet
 			long start = System.currentTimeMillis();
 			List<SearchResult> results = search(query);
 			long end = System.currentTimeMillis();
-			if (results != null)
-			{
-				out.println("<p>" + results.size() + " results. (" + (end - start) / 1000.0 + " seconds)</p>");
+			if(results != null){
+			out.println("<p>" + results.size() + " results. (" + (end - start) / 1000.0 + " seconds)</p>");
 
-				for (SearchResult result: results)
-				{
-					out.println("<a href=\"" + request.getServletPath() + "?visit=" + result.getPath() + "\">" + result.getPath() + "</a><br/>\n");
-				}
+			for (SearchResult result: results)
+			{
+				out.println("<a href=\"" + request.getServletPath() + "?visit=" + result.getPath() + "\">" + result.getPath() + "</a><br/>\n");
+			}
 			}
 		}
+		out.println("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js\"></script>\r\n    <script src=\"js/bootstrap.min.js\"></script>\r\n</body>\r\n\r\n</html>");
 
 		out.printf("</body>%n");
 		out.printf("</html>%n");
@@ -201,16 +193,10 @@ public class SearchServlet extends HttpServlet
 		out.printf("</form>\n%n");
 	}
 
-	/**
-	 * Perform a search with given query
-	 * 
-	 * @param query query to search
-	 * @return a list of SearchResult objects
-	 */
 	private List<SearchResult> search(String query)
 	{
 		queryHandler.parse(query, exact);
-
+		
 		String queries[] = WordParser.parseWords(query);
 		Arrays.sort(queries);
 		query = String.join(" ", queries);
@@ -218,7 +204,7 @@ public class SearchServlet extends HttpServlet
 		List<SearchResult> results = queryHandler.getResultsMap().get(query);
 
 		System.out.println(queryHandler.getResultsMap());
-
+		
 		return results;
 	}
 

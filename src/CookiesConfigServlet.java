@@ -58,7 +58,7 @@ public class CookiesConfigServlet extends HttpServlet
 		response.setContentType("text/html");
 
 		out.printf("<html>%n");
-		out.printf("<head><title>Search Engine V1.0</title></head>%n");
+		out.printf("<head><meta charset=\"utf-8\">\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Search Engine</title><link href=\"/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\"></head>%n");
 		out.printf("<body>%n");
 
 		Map<String, Cookie> cookies = getCookieMap(request);
@@ -115,6 +115,7 @@ public class CookiesConfigServlet extends HttpServlet
 		out.printf("\t<a href=\"/\">back</a>%n");
 		out.printf("</form>%n");
 
+		out.print("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js\"></script>\r\n    <script src=\"js/bootstrap.min.js\"></script>");
 		out.printf("</body>%n");
 		out.printf("</html>%n");
 		response.addCookie(queries);
