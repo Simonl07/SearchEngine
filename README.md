@@ -1,1 +1,5 @@
-See the [Projects](https://github.com/usf-cs212-2017/lectures/wiki/Projects) page for details.
+# Simple Search Engine in Java
+
+* Using custom data structure for indexing and searching
+* A broad-crawl web crawler for building search Index
+* A Jetty server handles HTTP Request.
